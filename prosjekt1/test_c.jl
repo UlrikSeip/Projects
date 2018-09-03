@@ -5,9 +5,9 @@ end
 
 #funksjon for radreduksjon og ting
 function rref(n) 
-    a = fill(-1, n-1) #linjen under diagonalen
-    b = fill(2, n) #diagonalen
-    c = fill(-1, n-1) #linjen over diagonalen
+    a = -1 #linjen under diagonalen
+    b = 2 #diagonalen
+    c = -1 #linjen over diagonalen
 
     B = zeros(n) #høyre side av likningen
     b_ = zeros(n) #den reduserte b
@@ -26,18 +26,20 @@ function rref(n)
         B[i] = h^2*f(x[i])
     end 
 
-    b_[1] = b[1]
+    b_[1] = b
     B_[1] = B[1]
 
-    for i in range(2, stop=n, step=1) #forward substitution
-        temp = a[i-1]/b_[i-1]
-        b_[i] = b[i] - temp*c[i-1]
-        B_[i] = B[i] - temp*B_[i-1]
+    a_per_b = a/b
+    ac_per_b = c*a_per_b
+    ac = a*c
+    for i in range(2, stop=n, step=1) #forward substitution, 4 FLOPS
+        b_[i] = 2 - 1/b_[i-1]
+        B_[i] = B[i] + B_[i-1]/b_[i-1]
     end
 
     k[n] = B_[n]
-    for i in range(n-1, stop=1, step=-1) #backward substitution
-        k[i] = B_[i] - c[i]*k[i+1]/b_[i]
+    for i in range(n-1, stop=1, step=-1) #backward substitution, 3 FLOPS
+        k[i] = B_[i] + k[i+1]/b_[i] #-*(-1)
     end
     return x, k, b_, u
 
