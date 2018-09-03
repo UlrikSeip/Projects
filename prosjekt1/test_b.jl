@@ -8,7 +8,6 @@ function rref(n)
     a = fill(-1, n-1) #linjen under diagonalen
     b = fill(2, n) #diagonalen
     c = fill(-1, n-1) #linjen over diagonalen
-    c -= a
 
     B = zeros(n) #høyre side av likningen
     b_ = zeros(n) #den reduserte b
