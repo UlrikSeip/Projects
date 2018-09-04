@@ -6,7 +6,7 @@ function f(x)
 end
 
 #funksjon for radreduksjon og ting
-function rref_b(n) 
+@time function rref_b(n) 
     a = fill(-1, n-1) #linjen under diagonalen
     b = fill(2, n) #diagonalen
     c = fill(-1, n-1) #linjen over diagonalen
@@ -46,7 +46,7 @@ function rref_b(n)
 end
 
 #funksjon for radreduksjon og ting
-function rref_c(n) 
+@time function rref_c(n) 
     a = -1 #linjen under diagonalen
     b = 2 #diagonalen
     c = -1 #linjen over diagonalen

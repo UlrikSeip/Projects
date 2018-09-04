@@ -43,6 +43,9 @@ function rref(n)
 
 end
 
+x, k, b_, u = rref(10)
+x, k, b_, u = rref(100)
+x, k, b_, u = rref(1000)
 x, k, b_, u = rref(10000)
 
 
