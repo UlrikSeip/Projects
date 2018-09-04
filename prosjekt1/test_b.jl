@@ -4,7 +4,7 @@ function f(x)
 end
 
 #funksjon for radreduksjon og ting
-function rref(n) 
+function rref_b(n) 
     a = fill(-1, n-1) #linjen under diagonalen
     b = fill(2, n) #diagonalen
     c = fill(-1, n-1) #linjen over diagonalen
@@ -43,10 +43,10 @@ function rref(n)
 
 end
 
-x, k, b_, u = rref(10)
-x, k, b_, u = rref(100)
-x, k, b_, u = rref(1000)
-x, k, b_, u = rref(10000)
+x, k, b_, u = rref_b(10)
+x, k, b_, u = rref_b(100)
+x, k, b_, u = rref_b(1000)
+x, k, b_, u = rref_b(10000)
 
 
 

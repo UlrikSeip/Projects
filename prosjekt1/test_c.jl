@@ -4,7 +4,7 @@ function f(x)
 end
 
 #funksjon for radreduksjon og ting
-function rref(n) 
+function rref_c(n) 
     a = -1 #linjen under diagonalen
     b = 2 #diagonalen
     c = -1 #linjen over diagonalen
