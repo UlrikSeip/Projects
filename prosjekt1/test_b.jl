@@ -43,10 +43,6 @@ function rref_b(n)
 
 end
 
-x, k, b_, u = rref_b(10)
-x, k, b_, u = rref_b(100)
-x, k, b_, u = rref_b(1000)
-x, k, b_, u = rref_b(10000)
 
 
 
