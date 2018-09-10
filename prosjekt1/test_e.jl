@@ -47,7 +47,7 @@ function til_fil()
         x, k = lu_dec(n)
         res *= "x = " * string(x) * "\nk = " * string(k) * "\n"
     end
-    println(res)
+    #println(res)
     write(f, res)
     close(f)
 end
