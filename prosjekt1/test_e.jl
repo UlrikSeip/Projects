@@ -1,4 +1,5 @@
 using Dates
+using Statistics
 using LinearAlgebra
 include("test_c.jl")
 
@@ -51,6 +52,9 @@ function til_fil()
     write(f, res)
     close(f)
 end
+
+function time_e(n)
+    t = @elasped lu_dec(n)
 
 til_fil()
 
