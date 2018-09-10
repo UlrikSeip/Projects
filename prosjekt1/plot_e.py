@@ -64,6 +64,6 @@ plot(x, k)
 xlabel("x"); ylabel("f(x)")
 
 title("Plot of the aprox. and exact solutions")
-savefig("test_e.pdf")
+savefig("plots/test_e.pdf")
 show()
 
