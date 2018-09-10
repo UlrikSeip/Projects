@@ -29,14 +29,14 @@ function rref_b(n)
     b_[1] = b[1]
     B_[1] = B[1]
 
-    for i in range(2, stop=n, step=1) #forward substitution
+    for i in range(2, stop=n, step=1) #forward substitution 5 FLOPS
         temp = a[i-1]/b_[i-1]
         b_[i] = b[i] - temp*c[i-1]
         B_[i] = B[i] - temp*B_[i-1]
     end
 
     k[n] = B_[n]
-    for i in range(n-1, stop=1, step=-1) #backward substitution
+    for i in range(n-1, stop=1, step=-1) #backward substitution 3 FLOPS
         k[i] = B_[i] - c[i]*k[i+1]/b_[i]
     end
     return x, k, b_, u
