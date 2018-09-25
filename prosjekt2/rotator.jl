@@ -36,7 +36,7 @@ function rotate(a, r)                 #denne må doublifiseres ganske kraftig tr
     while a[k ,l] > tol         
         if (a[k, l] != 0)
             kl = maxKnotL(a)
-            tau = (a[l, l]-a[k, k])/2*a[k, l]
+            tau = (a[l, l]-a[k, k])/2*a[k, l] #blir ikke dette alltid null?
             if (tau > 0) #kan du ikke bare skrive t = abs(1/tau) + sqrt(1+tau^2)?
                 t = 1/tau + sqrt(1+tau^2)
             #elseif tau == 0     #mulig problemet ligger i at man får delt på null her
