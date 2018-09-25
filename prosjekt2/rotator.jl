@@ -2,13 +2,21 @@ using LinearAlgebra
 
 n=Int64(1e2)
 a = ones(Float64, n, n)        #getting an error here, y?
-tol = 0.0001
+tol = 1e-7
 r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
 
 function god_print(noe)
     for i in range(1, step=1, length=n)
         println(noe[i,:])
     end
+end
+
+function dia_print(noe)
+    for i in range(1, step=1, length=n)
+        print(noe[i,i])
+        print(", ")
+    end
+    println(" ")
 end
 
 function off(a)
@@ -87,5 +95,6 @@ end
 thing, r_ = rotate(a, r)
 #println(thing)
 god_print(thing)
-
+println()
+dia_print(thing)
 
