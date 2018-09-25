@@ -1,9 +1,15 @@
 using LinearAlgebra
 
-n=Int(1e2)
+n=Int64(1e2)
 a = ones(Float64, n, n)        #getting an error here, y?
-tol = 1e-8
+tol = 0.1
 r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
+
+function god_print(noe)
+    for i in range(1, step=1, length=n)
+        println(noe[i,:])
+    end
+end
 
 function off(a)
     return maximum(a^2) #this might work? p. 217 lecture notes.
@@ -11,15 +17,17 @@ end
 
 function maxKnotL(a) #using this instead of ^^
     max = 0
-    for k in range(length(a[1]))
-        for l in range(length(a[2]))
+    kl = [1,1]
+    for k in range(1, step=1, length=length(a[1,:]))
+        for l in range(1, step=1, length=length(a[2,:]))
             if ((a[k, l] > max) && (k != l))
                 max = a[k, l]
-                kl = (k, l)
+                kl = [k, l]
             end
         end
     end
-    return kl[0], kl[1]                    #k, l                       
+    god_print(a)
+    return kl[1], kl[2]                    #k, l                       
 end
 
 function rotate(a, r)                 #denne må doublifiseres ganske kraftig tror jeg
@@ -33,7 +41,7 @@ function rotate(a, r)                 #denne må doublifiseres ganske kraftig tr
                 t = 1/tau + sqrt(1+tau^2)
             else
                 t = -1/-tau + sqrt(1+tau^2)
-            c = 1/sqet(1+t*t)
+            c = 1/sqrt(1+t*t)
             s = c*t
             end
         else
@@ -48,7 +56,7 @@ function rotate(a, r)                 #denne må doublifiseres ganske kraftig tr
         a[k, l] = 0
         a[l, k] = 0
         #doing stuff with the remaing matrix elements
-        for i in range(Int64, len(a[0]))
+        for i in range(1, step=1, length=length(a[1,:]))
             if (i != k && i != l)
                 a_ik = a[i, k]
                 a_il = a[i, l]
@@ -68,5 +76,10 @@ function rotate(a, r)                 #denne må doublifiseres ganske kraftig tr
     return a, r
 end
 
-thing = rotate(a, r)
-print(thing)
+
+
+thing, r_ = rotate(a, r)
+#println(thing)
+god_print(thing)
+
+
