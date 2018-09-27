@@ -1,9 +1,15 @@
 using LinearAlgebra
 
-n=Int64(1e2)
-a = ones(Float64, n, n)        #getting an error here, y?
-tol = 1e-7
-r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
+#vars
+n = Int64(20)
+a = ones(Float64, n, n)
+tol = 1e-10
+
+"""
+call rotate(a) to run
+outputs newA, r, n, counter
+print outputs can be de-commented on the final lines of the script
+"""
 
 function god_print(noe)
     for i in range(1, step=1, length=n)
@@ -26,8 +32,8 @@ end
 function maxKnotL(a) #using this instead of ^^
     max = 0
     kl = [1,1]
-    for k in range(1, step=1, length=length(a[1,:]))
-        for l in range(1, step=1, length=length(a[2,:]))
+    for k in range(1, step=1, length = n)
+        for l in range(1, step=1, length = n)
             if ((a[k, l] > max) && (k != l))
                 max = a[k, l]
                 kl = [k, l]
@@ -38,13 +44,19 @@ function maxKnotL(a) #using this instead of ^^
     return kl[1], kl[2]                    #k, l                       
 end
 
-function rotate(a, r)                 #denne må doublifiseres ganske kraftig tror jeg
+function rotate(a)  
+    n = Int64(length(a[1,:]))               #initiates n for later use
+    r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
+    counter = 0                      #teller antall "similarity transformaitons"
     b = true
     k, l = maxKnotL(a)
-    while a[k ,l] > tol         
+    while a[k ,l] > tol 
+        counter += 1        
         if (a[k, l] != 0)
             kl = maxKnotL(a)
             tau = (a[l, l]-a[k, k])/2*a[k, l] #blir ikke dette alltid null?
+            #jupp, fuck all this
+            """
             #if (tau > 0) #kan du ikke bare skrive t = abs(1/tau) + sqrt(1+tau^2)?
                 #t = 1/tau + sqrt(1+tau^2)
             #    t = tau + sqrt(1+tau^2)
@@ -54,6 +66,7 @@ function rotate(a, r)                 #denne må doublifiseres ganske kraftig tr
             #else
                 #t = -1/-tau + sqrt(1+tau^2)
             #    t = tau + sqrt(1+tau^2)
+            """
             t = -tau + sqrt(1+tau^2)
             c = 1/sqrt(1+t^2)
             s = c*t
@@ -79,7 +92,7 @@ function rotate(a, r)                 #denne må doublifiseres ganske kraftig tr
                 a[i, l] = c*a_il + s*a_ik
                 a[l, i] = a[i, l]
             end
-               #calculating eigenvectors
+            #calculating eigenvectors
             r_ik = r[i, k]
             r_il = r[i, l]
             r[i, k] = c*r_ik - s*r_il
@@ -87,14 +100,41 @@ function rotate(a, r)                 #denne må doublifiseres ganske kraftig tr
         end
         k, l = maxKnotL(a)
     end
-    return a, r
+    #god_print(r)
+
+    return a, r, n, counter
+end
+
+#formatted printing functions:
+
+function eigenprinter()
+    println("Egienvectors:")
+    println()
+    god_print(r_)
+    println()
+end
+
+function aprinter()
+    println("Transformed matrix:")
+    println()
+    god_print(a_)
+    println()
+end
+
+function dimprinter()
+    println("Matrix dim: ", n, "*", n)
+    println()
+end
+
+function counterprinter()
+    println("Number of similarity transformations: ", counter)
 end
 
 
 
-thing, r_ = rotate(a, r)
-#println(thing)
-god_print(thing)
-println()
-dia_print(thing)
+a_, r_, n, counter = rotate(a)
 
+#eigenprinter()
+#aprinter()
+#dimprinter()
+counterprinter()
