@@ -1,9 +1,12 @@
 using LinearAlgebra
 
 #vars
+"""
 n = Int64(20)
 a = ones(Float64, n, n)
+"""
 tol = 1e-10
+
 
 """
 call rotate(a) to run
@@ -32,6 +35,7 @@ end
 function maxKnotL(a) #using this instead of ^^
     max = 0
     kl = [1,1]
+    n = Int64(length(a[1,:]))
     for k in range(1, step=1, length = n)
         for l in range(1, step=1, length = n)
             if ((a[k, l] > max) && (k != l))
@@ -130,11 +134,23 @@ function counterprinter()
     println("Number of similarity transformations: ", counter)
 end
 
+function filemaker(start, stop)                             #creates rotated.txt with format "n, counter \n"
+    open("rotated.txt", "w") do f                           #overwrites file
+    end
+    for i in range(start, step = 1, length = stop)
+        n = i
+        a = ones(Float64, n, n)
+        a_, r_, n, counter = rotate(a)
+        open("rotated.txt", "a") do f
+            write(f,string(n, " ", counter, "\n"))
+        end
+    end
+end
 
-
-a_, r_, n, counter = rotate(a)
-
+#a_, r_, n, counter = rotate(a)
 #eigenprinter()
 #aprinter()
 #dimprinter()
-counterprinter()
+#counterprinter()
+
+filemaker(1, 120)
