@@ -133,7 +133,7 @@ function counterprinter()
     println("Number of similarity transformations: ", counter)
 end
 
-function filemaker(start, step, stop, tol)                             #creates rotated.txt with format "n, counter \n"
+function filemaker(start, step, stop, tol, filename)        #creates filename with format "n, counter \n" and name rotated.txt
     open("rotated.txt", "w") do f                           #clears file
     end
     length = Int64(stop/step)
@@ -142,7 +142,7 @@ function filemaker(start, step, stop, tol)                             #creates 
         a = ones(Float64, n, n)
         data, time = @timed rotate(a, tol)
         a_, r_, n, counter = data[1], data[2], data[3], data[4]
-        open("rotated.txt", "a") do f
+        open(filename, "a") do f
             write(f,string(n, " ", counter, " ", time, "\n"))
         end
     end
