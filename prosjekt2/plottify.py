@@ -20,11 +20,10 @@ for i in content:                                   #Stapper data fra filen over
 
 plt.figure()                                        #Plottestuff for "n, simTrans"
 plt.plot(n, sc.array(simTrans)/(sc.array(n)))
-print (sc.shape(n))
-print (sc.shape(time))
 plt.plot(n, time)
 plt.xlabel('Matrix dim')
 plt.ylabel('Similarity transformations per n')
 plt.title('Visulisation of required transformations for larger matrices')
+plt.legend(('simTrans/n', 'computation time'))
 plt.show()
 plt.savefig("requiredRotations.pdf", bbox_inches = "tight")
