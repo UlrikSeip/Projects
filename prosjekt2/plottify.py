@@ -1,3 +1,4 @@
+import seaborn
 import matplotlib.pyplot as plt
 import scipy as sc
 import os

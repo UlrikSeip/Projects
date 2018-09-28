@@ -19,4 +19,8 @@ eigenprinter()
 aprinter()
 #dimprinter()
 #counterprinter()
+<<<<<<< HEAD
 filemaker(5, 5, 300, 1e-10)         #takes (startN, stepN, stopN, tol)
+=======
+filemaker(5, 5, 200, 1e-10, "rotated.txt")
+>>>>>>> 9a0de863a678f90aabdfc144a1ba3d98e2b6dc1c
