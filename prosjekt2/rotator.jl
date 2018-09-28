@@ -13,13 +13,14 @@ call rotate(a) to run
 outputs newA, r, n, counter
 print outputs can be de-commented on the final lines of the script
 """
-
+#prints a matrix in a somewhat readable format
 function god_print(noe)
     for i in range(1, step=1, length=n)
         println(noe[i,:])
     end
 end
 
+#prints the diagonal of a matrix "noe"
 function dia_print(noe)
     for i in range(1, step=1, length=n)
         print(noe[i,i])
@@ -49,13 +50,12 @@ function maxKnotL(a) #using this instead of ^^
 end
 
 function rotate(a)  
-    n = Int64(length(a[1,:]))               #initiates n for later use
+    n = Int64(length(a[1,:]))        #initiates n for later use
     r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
     counter = 0                      #teller antall "similarity transformaitons"
-    b = true
-    k, l = maxKnotL(a)
-    while a[k ,l] > tol 
-        counter += 1        
+    k, l = maxKnotL(a)               #finds indices of matrix element with highest value  
+    while a[k ,l] > tol              #this is the actual loop
+        counter += 1                 #
         if (a[k, l] != 0)
             kl = maxKnotL(a)
             tau = (a[l, l]-a[k, k])/2*a[k, l] #blir ikke dette alltid null?
@@ -135,9 +135,9 @@ function counterprinter()
 end
 
 function filemaker(start, stop)                             #creates rotated.txt with format "n, counter \n"
-    open("rotated.txt", "w") do f                           #overwrites file
+    open("rotated.txt", "w") do f                           #clears file
     end
-    for i in range(start, step = 1, length = stop)
+    for i in range(start, step = 10, length = stop)         #does the actual writing from n = start to n = stop
         n = i
         a = ones(Float64, n, n)
         a_, r_, n, counter = rotate(a)
@@ -153,4 +153,4 @@ end
 #dimprinter()
 #counterprinter()
 
-filemaker(1, 120)
+filemaker(10, 1000)

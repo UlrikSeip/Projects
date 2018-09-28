@@ -1,17 +1,21 @@
-import julia
-import matplotlib.pytplot as plt
+import matplotlib.pyplot as plt
 import scipy as sc
+import os
 
-j = julia.Julia()
-j.include(rotator.jl)
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
 
 n = []
 counter = [] 
-a = sc.ones((i, i))
-for i in range(100):
-    newa, r, n_, counter_ = j.eval(rotate(a))
-    n.append(n_)
-    counter.append(counter_)
+with open("rotated.txt") as f:
+    content = f.readlines()
+content = [(x.strip('\n').split()) for x in content]
+for i in content:
+    n.append(int(i[0]))
+    counter.append(int(i[1]))
 
+plt.figure()
 plt.plot(n, counter)
 plt.show()
+plt.savefig("requiredRotations.pdf", bbox_inches = "tight")
