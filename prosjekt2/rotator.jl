@@ -1,8 +1,5 @@
 using LinearAlgebra
 
-#vars
-n = Int64(4)
-a = ones(Float64, n, n)
 
 """
 call rotate(a) to run
@@ -151,9 +148,3 @@ function filemaker(start, step, stop, tol)                             #creates 
     end
 end
 
-#a_, r_, n, counter, tol = rotate(a, 1e-10)
-#eigenprinter()
-#aprinter()
-#dimprinter()
-#counterprinter()
-filemaker(5, 5, 200, 1e-10)
