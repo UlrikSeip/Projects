@@ -1,9 +1,11 @@
 include("rotator.jl")
 
 #function for making the matrix
-function make_mat(rho_min, rho_max, h)
-    n = Int64((rho_max-rho_min)/h) #the number of steps
+function make_mat(rho_min, rho_max, n)
+    h = (rho_max-rho_min)/n #the number of steps
     e = -1/h^2 #the non-diagonal matrix element
+    println(h)
+    println(e)
 
     rho = range(rho_min, step=h, stop=rho_max) #the values of ρ
     d = zeros(n) #array to hold the diagonal matrix element
@@ -22,16 +24,16 @@ function make_mat(rho_min, rho_max, h)
     end
     a[n,n-1] = e #the last elements
     a[n,n] = d[n]
+    #god_print(a)
     return a
 end
 
 rho_min = 0
-rho_max = 1e2
-h = 1. #the step length
-a = make_mat(rho_min, rho_max, h)
+rho_max = 10
+n = 100 #the step length
+a = make_mat(rho_min, rho_max, n)
 #println(a)
 new_a, r, n, counter, tol = rotate(a, 1e-8)
-#god_print(new_a)
+#god_print(r)
 dia_print(new_a)
 println(tol)
-

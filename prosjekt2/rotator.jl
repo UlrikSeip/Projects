@@ -8,7 +8,7 @@ print outputs can be de-commented on the final lines of the script
 """
 #prints a matrix in a somewhat readable format
 function god_print(noe)
-    for i in range(1, step=1, length = n)
+    for i in range(1, step=1, length = length(noe[1,:]))
         println(noe[i,:])
     end
 end
