@@ -32,6 +32,6 @@ a = make_mat(rho_min, rho_max, h)
 #println(a)
 new_a, r, n, counter, tol = rotate(a, 1e-8)
 #god_print(new_a)
-god_print(r)
+dia_print(new_a)
 println(tol)
 
