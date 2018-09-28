@@ -1,7 +1,7 @@
 using LinearAlgebra
 
 #vars
-n = Int64(5)
+n = Int64(4)
 a = ones(Float64, n, n)
 
 """
@@ -11,14 +11,20 @@ print outputs can be de-commented on the final lines of the script
 """
 #prints a matrix in a somewhat readable format
 function god_print(noe)
-    for i in range(1, step=1, length=n)
+    for i in range(1, step=1, length = n)
         println(noe[i,:])
+    end
+end
+
+function theos_print(noe)
+    for i in range(1, step=1, length = n)
+        println(noe[:, i])
     end
 end
 
 #prints the diagonal of a matrix "noe"
 function dia_print(noe)
-    for i in range(1, step=1, length=n)
+    for i in range(1, step=1, length = n)
         print(noe[i,i])
         print(", ")
     end
@@ -29,28 +35,27 @@ function off(a)
     return maximum(a^2) #this might work? p. 217 lecture notes.
 end
 
-function maxKnotL(a) #using this instead of ^^
+function maxKnotL(a)
     max = 0
     kl = [1,1]
     n = Int64(length(a[1,:]))
     for k in range(1, step=1, length = n)
         for l in range(1, step=1, length = n)
-            if ((a[k, l] > max) && (k != l))
-                max = a[k, l]
+            if ((abs(a[k, l]) > max) && (k != l))
+                max = abs(a[k, l])
                 kl = [k, l]
             end
         end
     end
-    #god_print(a)
     return kl[1], kl[2]                    #k, l                       
 end
 
-function rotate(a, tol)                  #den faktiske rotasjonsløkken. Tar inn en matrise a og nøyaktighet.
+function rotate(a, tol)              #den faktiske rotasjonsløkken. Tar inn en matrise a og nøyaktighet.
     n = Int64(length(a[1,:]))        #initiates n for later use
     r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
     counter = 0                      #teller antall "similarity transformaitons"
     k, l = maxKnotL(a)               #finds indices of matrix element with highest value  
-    while a[k ,l] > tol              #this is the actual loop
+    while abs(a[k ,l]) > tol         #this is the actual loop
         counter += 1                 #
         if (a[k, l] != 0)
             kl = maxKnotL(a)
@@ -99,6 +104,7 @@ function rotate(a, tol)                  #den faktiske rotasjonsløkken. Tar inn
             r[i, l] = c*r_il + s*r_ik
         end
         k, l = maxKnotL(a)
+        #println(a[k, l])
     end
     #god_print(r)
 
@@ -110,7 +116,7 @@ end
 function eigenprinter()
     println("Egienvectors:")
     println()
-    god_print(r_)
+    theos_print(r_)
     println()
 end
 
@@ -130,14 +136,14 @@ function counterprinter()
     println("Number of similarity transformations: ", counter)
 end
 
-function filemaker(start, step, stop)                             #creates rotated.txt with format "n, counter \n"
+function filemaker(start, step, stop, tol)                             #creates rotated.txt with format "n, counter \n"
     open("rotated.txt", "w") do f                           #clears file
     end
     length = Int64(stop/step)
     for i in range(start, step = step, length = length)         #does the actual writing from n = start to n = stop
         n = i
         a = ones(Float64, n, n)
-        data, time = @timed rotate(a)
+        data, time = @timed rotate(a, tol)
         a_, r_, n, counter = data[1], data[2], data[3], data[4]
         open("rotated.txt", "a") do f
             write(f,string(n, " ", counter, " ", time, "\n"))
@@ -145,9 +151,9 @@ function filemaker(start, step, stop)                             #creates rotat
     end
 end
 
-a_, r_, n, counter, tol = rotate(a, 1e-8)
-eigenprinter()
+#a_, r_, n, counter, tol = rotate(a, 1e-10)
+#eigenprinter()
 #aprinter()
 #dimprinter()
 #counterprinter()
-#filemaker(10, 10, 300)
+filemaker(5, 5, 200, 1e-10)
