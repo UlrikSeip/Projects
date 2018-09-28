@@ -29,24 +29,13 @@ function make_mat(rho_min, rho_max, n)
 end
 
 rho_min = 0
-<<<<<<< HEAD
-rho_max = 5
-h = 1. #the step length
-a = make_mat(rho_min, rho_max, h)
-=======
 rho_max = 10
 n = 100 #the step length
 a = make_mat(rho_min, rho_max, n)
->>>>>>> 209008b159fa7d5a46e05d8a4b32a5acbf6c5dca
-#println(a)
-god_print(a)
+#god_print(a)
 
 new_a, r, n, counter, tol = rotate(a, 1e-8)
-<<<<<<< HEAD
 #god_print(new_a)
-god_print(a)
-=======
 #god_print(r)
->>>>>>> 209008b159fa7d5a46e05d8a4b32a5acbf6c5dca
 dia_print(new_a)
 println(tol)
