@@ -7,15 +7,24 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 n = []
-counter = [] 
-with open("rotated.txt") as f:
+simTrans = []
+time = []
+
+with open("rotated.txt") as f:                      #Leser og deler opp filen
     content = f.readlines()
 content = [(x.strip('\n').split()) for x in content]
-for i in content:
+for i in content:                                   #Stapper data fra filen over i plottbare arrays
     n.append(int(i[0]))
-    counter.append(int(i[1]))
+    simTrans.append(int(i[1]))
+    time.append(float(i[2]))
 
-plt.figure()
-plt.plot(n, counter)
+plt.figure()                                        #Plottestuff for "n, simTrans"
+plt.plot(n, sc.array(simTrans)/(sc.array(n)))
+print (sc.shape(n))
+print (sc.shape(time))
+plt.plot(n, time)
+plt.xlabel('Matrix dim')
+plt.ylabel('Similarity transformations per n')
+plt.title('Visulisation of required transformations for larger matrices')
 plt.show()
 plt.savefig("requiredRotations.pdf", bbox_inches = "tight")

@@ -1,12 +1,8 @@
 using LinearAlgebra
 
 #vars
-"""
-n = Int64(20)
+n = Int64(5)
 a = ones(Float64, n, n)
-"""
-tol = 1e-10
-
 
 """
 call rotate(a) to run
@@ -49,7 +45,7 @@ function maxKnotL(a) #using this instead of ^^
     return kl[1], kl[2]                    #k, l                       
 end
 
-function rotate(a)  
+function rotate(a, tol)                  #den faktiske rotasjonsløkken. Tar inn en matrise a og nøyaktighet.
     n = Int64(length(a[1,:]))        #initiates n for later use
     r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
     counter = 0                      #teller antall "similarity transformaitons"
@@ -106,7 +102,7 @@ function rotate(a)
     end
     #god_print(r)
 
-    return a, r, n, counter
+    return a, r, n, counter, tol         #a = newA, r = egenvektorer, n = dim(a), counter = n(simTrans) og tol = max value for ikkediagonale elementer
 end
 
 #formatted printing functions:
@@ -134,23 +130,24 @@ function counterprinter()
     println("Number of similarity transformations: ", counter)
 end
 
-function filemaker(start, stop)                             #creates rotated.txt with format "n, counter \n"
+function filemaker(start, step, stop)                             #creates rotated.txt with format "n, counter \n"
     open("rotated.txt", "w") do f                           #clears file
     end
-    for i in range(start, step = 10, length = stop)         #does the actual writing from n = start to n = stop
+    length = Int64(stop/step)
+    for i in range(start, step = step, length = length)         #does the actual writing from n = start to n = stop
         n = i
         a = ones(Float64, n, n)
-        a_, r_, n, counter = rotate(a)
+        data, time = @timed rotate(a)
+        a_, r_, n, counter = data[1], data[2], data[3], data[4]
         open("rotated.txt", "a") do f
-            write(f,string(n, " ", counter, "\n"))
+            write(f,string(n, " ", counter, " ", time, "\n"))
         end
     end
 end
 
-#a_, r_, n, counter = rotate(a)
-#eigenprinter()
+a_, r_, n, counter, tol = rotate(a, 1e-8)
+eigenprinter()
 #aprinter()
 #dimprinter()
 #counterprinter()
-
-filemaker(10, 1000)
+#filemaker(10, 10, 300)
