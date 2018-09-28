@@ -26,12 +26,15 @@ function make_mat(rho_min, rho_max, h)
 end
 
 rho_min = 0
-rho_max = 1e2
+rho_max = 5
 h = 1. #the step length
 a = make_mat(rho_min, rho_max, h)
 #println(a)
+god_print(a)
+
 new_a, r, n, counter, tol = rotate(a, 1e-8)
 #god_print(new_a)
+god_print(a)
 dia_print(new_a)
 println(tol)
 

@@ -8,20 +8,20 @@ print outputs can be de-commented on the final lines of the script
 """
 #prints a matrix in a somewhat readable format
 function god_print(noe)
-    for i in range(1, step=1, length = n)
+    for i in range(1, step=1, length = length(noe[1, :]))
         println(noe[i,:])
     end
 end
 
 function theos_print(noe)
-    for i in range(1, step=1, length = n)
+    for i in range(1, step=1, length = length(noe[1, :]))
         println(noe[:, i])
     end
 end
 
 #prints the diagonal of a matrix "noe"
 function dia_print(noe)
-    for i in range(1, step=1, length = n)
+    for i in range(1, step=1, length = length(noe[1, :]))
         print(noe[i,i])
         print(", ")
     end
@@ -36,10 +36,11 @@ function maxKnotL(a)
     max = 0
     kl = [1,1]
     n = Int64(length(a[1,:]))
-    for k in range(1, step=1, length = n)
-        for l in range(1, step=1, length = n)
-            if ((abs(a[k, l]) > max) && (k != l))
-                max = abs(a[k, l])
+    for k = 1:n
+        for l = k+1:n
+            ma = abs(a[k, l])
+            if (ma > max)
+                max = ma
                 kl = [k, l]
             end
         end
@@ -53,7 +54,7 @@ function rotate(a, tol)              #den faktiske rotasjonsløkken. Tar inn en 
     counter = 0                      #teller antall "similarity transformaitons"
     k, l = maxKnotL(a)               #finds indices of matrix element with highest value  
     while abs(a[k ,l]) > tol         #this is the actual loop
-        counter += 1                 #
+        counter += 1
         if (a[k, l] != 0.0)
             #kl = maxKnotL(a)
             tau = (a[l, l] - a[k, k])/2*a[k, l] #blir ikke dette alltid null?
@@ -74,13 +75,14 @@ function rotate(a, tol)              #den faktiske rotasjonsløkken. Tar inn en 
         #doing stuff with indices k and l
         c2 = c^2
         s2 = s^2
-        a[k, k] = c2*a_kk - 2.0*c*s*a[k, l] + s2*a_ll
-        a[l, l] = s2*a_kk + 2.0*c*s*a[k, l] + c2*a_ll
+        csakl2 = 2.0*c*s*a[k, l]
+        a[k, k] = c2*a_kk - csakl2 + s2*a_ll
+        a[l, l] = s2*a_kk + csakl2 + c2*a_ll
         a[k, l] = 0
         a[l, k] = 0
         #doing stuff with the remaing matrix elements
-        for i in range(1, step=1, length=length(a[1,:]))
-            if (i != k && i != l)
+        for i = 1:n
+            if ((i != k) && (i != l))
                 a_ik = a[i, k]
                 a_il = a[i, l]
                 a[i, k] = c*a_ik - s*a_il

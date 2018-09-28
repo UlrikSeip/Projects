@@ -16,10 +16,10 @@ for i in range(1, step = 1, length = n)
 end
 """
 
-a_, r_, n, counter, tol = rotate(a, 1e-10)
-eigenprinter()
-aprinter()
+#a_, r_, n, counter, tol = rotate(a, 1e-10)
+#eigenprinter()
+#aprinter()
 #dimprinter()
-counterprinter()
-#filemaker(10, 10, 500, 1e-10, "rotated.txt")
+#counterprinter()
+filemaker(10, 10, 500, 1e-10, "rotated.txt")
 
