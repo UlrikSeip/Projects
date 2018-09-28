@@ -54,10 +54,14 @@ function rotate(a, tol)              #den faktiske rotasjonsløkken. Tar inn en 
     k, l = maxKnotL(a)               #finds indices of matrix element with highest value  
     while abs(a[k ,l]) > tol         #this is the actual loop
         counter += 1                 #
-        if (a[k, l] != 0)
-            kl = maxKnotL(a)
-            tau = (a[l, l]-a[k, k])/2*a[k, l] #blir ikke dette alltid null?
-            t = -tau + sqrt(1+tau^2)
+        if (a[k, l] != 0.0)
+            #kl = maxKnotL(a)
+            tau = (a[l, l] - a[k, k])/2*a[k, l] #blir ikke dette alltid null?
+            if (tau > 0)
+                t = -tau + sqrt(1+tau^2)
+            else
+                t = -tau - sqrt(1+tau^2)
+            end
             c = 1/sqrt(1+t^2)
             s = c*t
         #end
@@ -68,8 +72,10 @@ function rotate(a, tol)              #den faktiske rotasjonsløkken. Tar inn en 
         a_kk = a[k, k]
         a_ll = a[l, l]
         #doing stuff with indices k and l
-        a[k, k] = c*c*a_kk - 2*c*s*a[k, l] + s^2*a_ll
-        a[l, l] = s*s*a_kk + 2*s*s*a[k, l] + c^2*a_ll
+        c2 = c^2
+        s2 = s^2
+        a[k, k] = c2*a_kk - 2.0*c*s*a[k, l] + s2*a_ll
+        a[l, l] = s2*a_kk + 2.0*c*s*a[k, l] + c2*a_ll
         a[k, l] = 0
         a[l, k] = 0
         #doing stuff with the remaing matrix elements
