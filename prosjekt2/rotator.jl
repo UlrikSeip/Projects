@@ -8,7 +8,11 @@ print outputs can be de-commented on the final lines of the script
 """
 #prints a matrix in a somewhat readable format
 function god_print(noe)
+<<<<<<< HEAD
     for i in range(1, step=1, length = length(noe[1, :]))
+=======
+    for i in range(1, step=1, length = length(noe[1,:]))
+>>>>>>> 209008b159fa7d5a46e05d8a4b32a5acbf6c5dca
         println(noe[i,:])
     end
 end
