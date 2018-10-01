@@ -1,25 +1,30 @@
 include("rotator.jl")
-
+include("project2.jl")
+using LinearAlgebra
 #vars
 n = Int64(5)
-a = ones(Float64, n, n)
-"""
+a = zeros(Float64, n, n)
+
 for i in range(1, step = 1, length = n)
     for j in range(1, step = 1, length = n)
         if ((j == i+1) || (j == i-1))
-            a[i, j] = 2                     # b = 2
+            a[i, j] = 1                     # b = 2
         end
         if (i == j)
-            a[i, j] = 5                     # a = 5
+            a[i, j] = 2                     # a = 5
         end
     end
 end
-"""
 
-#a_, r_, n, counter, tol = rotate(a, 1e-10)
-#eigenprinter()
+a__ = eigvals(a)
+#a_ = jacobi_method(a)
+
+a_, r_, n, counter, tol = rotate(a, 1e-4)
+#god_print(a_)
+println(a__)
+println(find_eigvals(a_))
 #aprinter()
 #dimprinter()
 #counterprinter()
-filemaker(10, 10, 500, 1e-10, "rotated.txt")
+#filemaker(10, 10, 500, 1e-10, "rotated.txt")
 
