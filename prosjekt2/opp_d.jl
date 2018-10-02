@@ -68,8 +68,8 @@ function main(rho_min, rho_max, n)
     l_mean = stat.mean(diff)
     l_std = stat.std(diff)
     println("l_mean: " * string(l_mean) * " l_std: " * string(l_std))
-    println(dia[1:20])
-    #println(eigen[1:20])
+    println(dia)
+    println(eigen)
     println()
     return dia, eigen
 end
@@ -126,7 +126,9 @@ main(1e-6, 14, 400)
 """
 
 
-main(1e-6, 4, 400)
-main(1e-6, 5, 400)
+#main(1e-6, 4, 400)
+#main(1e-6, 5, 400)
 #main(1e-6, 6, 400)
 #main(1e-6, 7, 400)
+main(1e-6, 23, 500)
+

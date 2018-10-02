@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.1.25)  2 OCT 2018 19:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.1.25)  3 OCT 2018 00:46
 entering extended mode
 **./project2.tex
 (project2.tex
@@ -781,30 +781,23 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 44.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 105.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 107.
  [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 105.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 107.
  (project2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 105.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 105.
-
-
-Package rerunfilecheck Warning: File `project2.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `project2.out':
-(rerunfilecheck)             Before: 8070A8A2D25E018E3BC045D51A6D6C92;338
-(rerunfilecheck)             After:  1C836F0758F5DE48FD6E44279AFC45AB;670.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 105.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 107.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 107.
+Package rerunfilecheck Info: File `project2.out' has not changed.
+(rerunfilecheck)             Checksum: 5764879DE802413EA5088699C7BF58D3;716.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 107.
  ) 
 Here is how much of TeX's memory you used:
- 9224 strings out of 493335
- 128496 string characters out of 3139257
+ 9230 strings out of 493335
+ 128580 string characters out of 3139257
  264044 words of memory out of 3000000
- 12621 multiletter control sequences out of 15000+200000
+ 12626 multiletter control sequences out of 15000+200000
  9496 words of font info for 36 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  29i,7n,40p,282b,336s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -812,9 +805,9 @@ Here is how much of TeX's memory you used:
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on project2.pdf (1 page, 60640 bytes).
+Output written on project2.pdf (1 page, 62497 bytes).
 PDF statistics:
- 63 PDF objects out of 1000 (max. 8388607)
- 13 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 79 PDF objects out of 1000 (max. 8388607)
+ 14 named destinations out of 1000 (max. 500000)
+ 97 words of extra memory for PDF output out of 10000 (max. 10000000)
 
