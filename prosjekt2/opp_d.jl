@@ -60,12 +60,13 @@ function main(rho_min, rho_max, n)
     new_a, r, n, counter, tol = rotate(a, 1e-4) #runs the algorytm with a
     dia = find_dia(new_a) #finds the diagonal values, the eigenvalues
     dia = sort(dia)
-    print(string(rho_max) * ": ")
+    
 
     eigen = ana_eigen(n) #finds the eigenvalues analyticaly
     diff = dia-eigen #the difference between the numeric and analytical
     l_mean = Statistics.mean(diff)
     l_std = Statistics.std(diff)
+    print(string(rho_max) * ": ")
     println("l_mean: " * string(l_mean) * " l_std: " * string(l_std))
     println(dia)
     #println(eigen)
@@ -151,7 +152,7 @@ end
 #println(findfirst(isequal(minimum(diff1[2:25])), diff1[2:25]))
 
 
-main(1e-6, 4, 100)
+#main(1e-6, 4, 100)
 
-#main(1e-6, 14, 400)
+main(1e-6, 15, 200)
 #main(1e-6, 23, 400)

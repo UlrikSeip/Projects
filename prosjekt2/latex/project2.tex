@@ -146,7 +146,7 @@ u_{N}
 \label{eq:sematrix}
 \end{equation}
 
-To solve the problem we implemented the matrix in Julia, and ran it through the algorithm in section \ref{rotator.jl}, with a tolerance of $10^{-4}$. The implemtation of the matrix can be seen in section \ref{opp_d matrix}. What we then did was test different approximations for $\rho_{max}$ and $N$ to find some values that are accurate and don't require a extemly large $N$. Our goal was to reproduce the analytical eigenvalues with four leading digits after the decimal point. We looked both at the accuracy of the first eigenvalue, and used the Julia function $Statistics.std()$ on the difference between our numerical apppoximation and the analytical solutions, to get an idea of how close the results were overall. $std()$ is an function that finds the standar diviation for an array.
+To solve the problem we implemented the matrix in Julia, and ran it through the algorithm in section \ref{rotator.jl}, with a tolerance of $10^{-4}$. The implemtation of the matrix can be seen in section \ref{opp_d matrix}. What we then did was test different approximations for $\rho_{max}$ and $N$ to find some values that are accurate and don't require a extemly large $N$. Our goal was to reproduce the analytical eigenvalues with four leading digits after the decimal point for the lowest eigenvalue. We looked both at the accuracy of the lowest eigenvalue, and used the Julia function $Statistics.std()$ on the difference between our numerical apppoximation and the analytical solutions, to get an idea of how close the results were overall. $std()$ is an function that finds the standar diviation for an array.
 
 
 \subsection{Quantum dots in three dimensions, two electrons}
@@ -184,9 +184,47 @@ We see a fairly linear correlation between the number of matrix elements $n^2$ a
 \end{figure}
 
 \subsection{Quantum dots in three dimensions, one electron}
+We firstly tested with $\rho_{max}$ equal to all the whole numbers beteen 1 and 100 with $N=100$. We found that $\rho_{max} = 4$ had the closest lowest eigenvalue, with $2.9995$ to the analytical 3. This was within our desired four leading digits after the decimal point, however the standard deviation was quite high, as the error increased rapidly. You can see this in figure \ref{rhomaks 4}. The lowest std was for $\rho_{max} = 14$, but for it the lowest eigenvalue was only 2.99374, so we had to increase $N$. 
 
+We then tested for values of $\rho_{max}$ between 2 and 25, with $N=200$. Again $\rho_{max} = 4$ had the closest lowest eigenvalue, but now $\rho_{max} = 15$ had the lowest std. Still, the lowest eigenvalue for $\rho_{max} = 15$ was only 2.99824.
+
+We the increased $N$ to 400, which took a lot of processing time. The $\rho_{max}$ with the lowest std was now 23, but it had a lowest eigenvalue of 2.99897, which still wasn't close enough. 
+We also ran the algorithm for $\rho_{max}=23$ and $N=500$, but it took a really long time, so we didn't run it for any other values. This time the lowest eigenvalue was 2.99934, which was within our desired limit. Due to the long calculation time we chose to use $\rho_{max}=23$ and $N=400$ when we calculated the interaction between two electrons. A plot of the eigenvalues for $\rho_{max}=23$ can be seen in figure \ref{rhomaks 23}, with both $N=400$ and $N=500$.
+
+\begin{figure}[h!]
+\centering 
+%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+\includegraphics[scale=0.7]{../oppd_rho-4n-100.pdf}
+\caption{A plot of the numerical solution against the analytical solution, when $\rho_{max}=4$ and $N=100$}
+%Label gjør det enkelt å referere til ulike bilder.
+\label{rhomaks 4}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{../oppd_rho-23n-400.pdf}
+	\includegraphics[scale=0.7]{../oppd_rho-23n-500.pdf}
+	\caption{A plot of the numerical solution against the analytical solution, when $\rho_{max}=23$, and $N=400$ and $N=500$}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{rhomaks 23}
+\end{figure}
+	
 
 \subsection{Quantum dots in three dimensions, two electrons}
+The plots of the eigenvaules we found with diiferent $\omega_r$ can be seen in \ref{opp e res}.
+
+\begin{figure}[h!]
+\centering 
+%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+\includegraphics[scale=0.45]{../oppe_rho-23n-400l0-0122946.pdf}
+\includegraphics[scale=0.45]{../oppe_rho-23n-400l0-224796.pdf}
+\includegraphics[scale=0.45]{../oppe_rho-23n-400l0-412688.pdf}
+\includegraphics[scale=0.45]{../oppe_rho-23n-400l0-186125.pdf}
+\caption{A plot of the numerical solution of numerical solution of two electrons in a harmonic oscillator well which also interact via a repulsive Coulomb interaction with $\omega_r$ equal to 0.01, 0.5, 1, and 5 respectively}
+%Label gjør det enkelt å referere til ulike bilder.
+\label{opp e res}
+\end{figure}
 
 
 \section{CONCLUSIONS}
@@ -197,9 +235,10 @@ With an accuracy of more digits than our editor cared to print out the Jacobi me
 on a normal laptop. On a supercomputer this would of course be different, and i presume our implementation could have been further vectorised for greater efficiency.
 
 
+
 \section{APENDICES}
 \subsection{Integration loop from rotator.jl}\label{rotator.jl}
-\lstinputlisting[language = python, firstline = 35, lastline = 98]{../rotator.jl}
+\lstinputlisting[language = python, firstline = 56, lastline = 131]{../rotator.jl}
 
 \subsection{Test functions}\label{opp_c.jl}
 \lstinputlisting[language = python, firstline = 3, lastline = 45]{../opp_c.jl}

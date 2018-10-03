@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.1.25)  3 OCT 2018 23:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.1.25)  3 OCT 2018 23:49
 entering extended mode
 **./project2.tex
 (project2.tex
@@ -790,9 +790,73 @@ File: ../requiredRotations.pdf Graphic file (type pdf)
 Package pdftex.def Info: ../requiredRotations.pdf used on input line 180.
 (pdftex.def)             Requested size: 404.70924pt x 278.2376pt.
  [3 <../requiredRotations.pdf>]
+<../oppd_rho-4n-100.pdf, id=173, 578.16pt x 397.485pt>
+File: ../oppd_rho-4n-100.pdf Graphic file (type pdf)
+
+<use ../oppd_rho-4n-100.pdf>
+Package pdftex.def Info: ../oppd_rho-4n-100.pdf used on input line 197.
+(pdftex.def)             Requested size: 404.70924pt x 278.2376pt.
+
+<../oppd_rho-23n-400.pdf, id=174, 578.16pt x 397.485pt>
+File: ../oppd_rho-23n-400.pdf Graphic file (type pdf)
+
+<use ../oppd_rho-23n-400.pdf>
+Package pdftex.def Info: ../oppd_rho-23n-400.pdf used on input line 206.
+(pdftex.def)             Requested size: 404.70924pt x 278.2376pt.
+
+<../oppd_rho-23n-500.pdf, id=175, 578.16pt x 397.485pt>
+File: ../oppd_rho-23n-500.pdf Graphic file (type pdf)
+
+<use ../oppd_rho-23n-500.pdf>
+Package pdftex.def Info: ../oppd_rho-23n-500.pdf used on input line 207.
+(pdftex.def)             Requested size: 404.70924pt x 278.2376pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<../oppe_rho-23n-400l0-0122946.pdf, id=177, 578.16pt x 397.485pt>
+File: ../oppe_rho-23n-400l0-0122946.pdf Graphic file (type pdf)
+
+<use ../oppe_rho-23n-400l0-0122946.pdf>
+Package pdftex.def Info: ../oppe_rho-23n-400l0-0122946.pdf used on input line 2
+20.
+(pdftex.def)             Requested size: 260.16959pt x 178.8666pt.
+
+<../oppe_rho-23n-400l0-224796.pdf, id=178, 578.16pt x 397.485pt>
+File: ../oppe_rho-23n-400l0-224796.pdf Graphic file (type pdf)
+
+<use ../oppe_rho-23n-400l0-224796.pdf>
+Package pdftex.def Info: ../oppe_rho-23n-400l0-224796.pdf used on input line 22
+1.
+(pdftex.def)             Requested size: 260.16959pt x 178.8666pt.
+
+<../oppe_rho-23n-400l0-412688.pdf, id=179, 578.16pt x 397.485pt>
+File: ../oppe_rho-23n-400l0-412688.pdf Graphic file (type pdf)
+
+<use ../oppe_rho-23n-400l0-412688.pdf>
+Package pdftex.def Info: ../oppe_rho-23n-400l0-412688.pdf used on input line 22
+2.
+(pdftex.def)             Requested size: 260.16959pt x 178.8666pt.
+
+<../oppe_rho-23n-400l0-186125.pdf, id=180, 578.16pt x 397.485pt>
+File: ../oppe_rho-23n-400l0-186125.pdf Graphic file (type pdf)
+
+<use ../oppe_rho-23n-400l0-186125.pdf>
+Package pdftex.def Info: ../oppe_rho-23n-400l0-186125.pdf used on input line 22
+3.
+(pdftex.def)             Requested size: 260.16959pt x 178.8666pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 202.
- (../rotator.jl
+nput line 240.
+(../rotator.jl [4 <../oppd_rho-4n-100.pdf>] [5 <../oppd_rho-23n-400.pdf> <../op
+pd_rho-23n-500.pdf
+
+pdfTeX warning: pdflatex.exe (file ../oppd_rho-23n-500.pdf): PDF inclusion: mul
+tiple pdfs with page group included in a single page
+>]
 Overfull \hbox (47.89648pt too wide) in paragraph at lines 72--73
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -808,25 +872,37 @@ Overfull \hbox (164.12997pt too wide) in paragraph at lines 83--84
 [][][][][][][][][][] 
  []
 
-[4]) (../opp_c.jl) [5] (../opp_d.jl) [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 293.
- [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 293.
+[6 <../oppe_rho-23n-400l0-0122946.pdf> <../oppe_rho-23n-400l0-224796.pdf
+
+pdfTeX warning: pdflatex.exe (file ../oppe_rho-23n-400l0-224796.pdf): PDF inclu
+sion: multiple pdfs with page group included in a single page
+> <../oppe_rho-23n-400l0-412688.pdf
+
+pdfTeX warning: pdflatex.exe (file ../oppe_rho-23n-400l0-412688.pdf): PDF inclu
+sion: multiple pdfs with page group included in a single page
+> <../oppe_rho-23n-400l0-186125.pdf
+
+pdfTeX warning: pdflatex.exe (file ../oppe_rho-23n-400l0-186125.pdf): PDF inclu
+sion: multiple pdfs with page group included in a single page
+>]) (../opp_c.jl [7]) (../opp_d.jl) [8]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 331.
+ [9]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 331.
  (project2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 293.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 293.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 331.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 331.
 Package rerunfilecheck Info: File `project2.out' has not changed.
 (rerunfilecheck)             Checksum: 2B40386D31B8B4512E8E3D881EA0D035;1367.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 293.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 331.
  ) 
 Here is how much of TeX's memory you used:
- 9910 strings out of 493335
- 135558 string characters out of 3139257
- 296044 words of memory out of 3000000
- 13111 multiletter control sequences out of 15000+200000
+ 9965 strings out of 493335
+ 136896 string characters out of 3139257
+ 298044 words of memory out of 3000000
+ 13142 multiletter control sequences out of 15000+200000
  12588 words of font info for 49 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 29i,10n,40p,826b,2003s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 30i,10n,40p,853b,2005s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
@@ -841,9 +917,9 @@ es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Program Files/MiKTeX 2.9/font
 s/type1/public/amsfonts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
 ype1/public/amsfonts/symbols/msbm7.pfb>
-Output written on project2.pdf (7 pages, 233982 bytes).
+Output written on project2.pdf (9 pages, 317341 bytes).
 PDF statistics:
- 422 PDF objects out of 1000 (max. 8388607)
- 190 named destinations out of 1000 (max. 500000)
- 158 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 645 PDF objects out of 1000 (max. 8388607)
+ 207 named destinations out of 1000 (max. 500000)
+ 193 words of extra memory for PDF output out of 10000 (max. 10000000)
 
