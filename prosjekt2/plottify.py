@@ -24,14 +24,6 @@ plt.plot(n, sc.array(simTrans)/(sc.array(n)**2))
 plt.plot(n, time)
 plt.xlabel('Matrix dim')
 plt.ylabel('Similarity transformations per n^2')
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-plt.title('Visulisation of required transformations for larger matrices')
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
-=======
-plt.title('Visulisation of required transformations for larger matrices')
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
 plt.legend(('simTrans/n^2', 'computation time'))
 plt.savefig("requiredRotations.pdf")
 plt.show()
