@@ -41,14 +41,14 @@ function main(rho_min, rho_max, n, om)
     new_a, r, n, counter, tol = rotate(a, 1e-4)
     dia = find_dia(new_a)
     dia = sort(dia)
-    print("rho_max " * string(rho_max) * " ohm " * string(om) * ": ")
+    println("rho_max " * string(rho_max) * " ohm " * string(om) * ": ")
 
     println(dia)
     println()
     return dia
 end
 
-main(1e-6, 14, 400, 0.01)
-main(1e-6, 14, 400, 0.5)
-main(1e-6, 14, 400, 1)
-main(1e-6, 14, 400, 5)
+main(1e-6, 23, 400, 0.01)
+main(1e-6, 23, 400, 0.5)
+main(1e-6, 23, 400, 1)
+main(1e-6, 23, 400, 5)
