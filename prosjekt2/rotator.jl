@@ -48,7 +48,7 @@ function maxKnotL(a)
     return kl[1], kl[2]                    #k, l                       
 end
 
-function rotate(a, tol)              #den faktiske rotasjonsløkken. Tar inn en matrise a og nøyaktighet.
+function rotate(a, tol)              #the actual integration loop. Takes tridiagonal matrix an tolerance for precission
     n = Int64(length(a[1,:]))        #initiates n for later use
     r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
     counter = 0                      #teller antall "similarity transformaitons"
