@@ -1,6 +1,6 @@
 include("rotator.jl")
-include("project2.jl")
 using LinearAlgebra
+
 #vars
 n = Int64(5)
 a = zeros(Float64, n, n)
@@ -16,15 +16,13 @@ for i in range(1, step = 1, length = n)
     end
 end
 
-a__ = eigvals(a)
+#a__ = eigvals(a)
 #a_ = jacobi_method(a)
-
-a_, r_, n, counter, tol = rotate(a, 1e-4)
+#a_, r_, n, counter, tol = rotate(a, 1e-4)
 #god_print(a_)
-println(a__)
-println(find_eigvals(a_))
+#println(a__)
+#println(find_eigvals(a_))
 #aprinter()
 #dimprinter()
 #counterprinter()
-#filemaker(10, 10, 500, 1e-10, "rotated.txt")
-
+filemaker(10, 10, 300, 1e-4, "rotated.txt")
