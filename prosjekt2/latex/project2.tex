@@ -53,16 +53,6 @@ Finding eigenvectors analytically is complicated, and can be tedious, and this i
 \section{METHOD}
 
 \subsection{Implementing the Jacobian algorithm}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
-=======
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
-=======
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
 The implementation follows a standard recipe:
 We start with the relation
 \begin{equation*}\cot 2\theta=\tau = \frac{a_{ll}-a_{kk}}{2a_{kl}}.
@@ -72,7 +62,6 @@ $a_{kl} = 0$. The quadratic equation is obtained using $\cot 2\theta=1/2(\cot\th
 
 \begin{align}
 t^2+2\tau t-1=0
-<<<<<<< HEAD
 \end{align}
 Which gives us
 \begin{align}
@@ -82,8 +71,6 @@ $c$ and $s$ are then obtained by
 \begin{align}
 c = \frac{1}{\sqrt{1+t^2}}
 \end{align}
-=======
-\end{align}
 Which gives us
 \begin{align}
 t = -\tau \pm \sqrt{1+\tau^2}
@@ -92,7 +79,6 @@ $c$ and $s$ are then obtained by
 \begin{align}
 c = \frac{1}{\sqrt{1+t^2}}
 \end{align}
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
 and
 \begin{align}
 s=tc
@@ -117,31 +103,12 @@ We decided to limit our experiment to the ground state of $l=0$. After introduci
 \begin{align}
 -\frac{d^2}{d\rho^2} u(\rho) + \rho^2 u(\rho) = \lambda u(\rho). \label{simpel SE}
 \end{align}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 See section \ref{opp d math} for futher details. 
-=======
-Since we are working in radial coordinates we have $\rho \in [0,\infty)$. Since we can't represent infinity on a computer we have to find an approximation, which we will come back to later. For now we define $\rho_{min}=0$ and $\rho_{max}$ to represent the  minimum and maximum values of $\rho$. 
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
-=======
-Since we are working in radial coordinates we have $\rho \in [0,\infty)$. Since we can't represent infinity on a computer we have to find an approximation, which we will come back to later. For now we define $\rho_{min}=0$ and $\rho_{max}$ to represent the  minimum and maximum values of $\rho$. 
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
 
 Since we are working in radial coordinates we have $\rho \in [0,\infty)$. Since we can't represent infinity on a computer we have to find an aproximation, which we will come back to later. For now we define $\rho_{min}=10^{-6}$ and $\rho_{max}$ to represent the  minimum and maximum values of $\rho$. We used $10^{-6}$ instead of $0$ to avoid any potential divisions by zero.
 
 Function \ref{simpel SE} is an differential equation that can be modeled similarly to earlier. If we have $N$ mesh points we get a step length
-=======
-=======
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
-=======
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
-Since we are working in radial coordinates we have $\rho \in [0,\infty)$. Since we can't represent infinity on a computer we have to find an approximation, which we will come back to later. For now we define $\rho_{min}=0$ and $\rho_{max}$ to represent the  minimum and maximum values of $\rho$. 
 
-Function \ref{simpel SE} is an differential equation that can be modeled similarly to (ting). If we have $n$ mesh points we get a step length
->>>>>>> 9424cd94b453e522fd2ee81f1c10716390c79e9f
 \begin{align}
 h = \frac{\rho_{max} - \rho_{min}}{N}.
 \end{align}
