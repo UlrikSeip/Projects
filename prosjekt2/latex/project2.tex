@@ -99,7 +99,7 @@ equation for one electron, which reads
 \end{align}
 This problem also has analytical solutions, so we can test how accurate our algorithm is.
 
-We decided to limit our experiment to the ground state of $l=0$. After introducing the constant $\alpha = \left(\frac{\hbar^2}{mk}\right)^{1/4}$, and the variables $\lambda = \frac{2m\alpha^2}{\hbar^2}E$ and $\rho = \frac{r}{\alpha}$, the Schroedinger’s equation becomes
+We decided to limit our experiment to the ground state of $l=0$. After introducing the constant $\alpha = \left(\frac{\hbar^2}{mk}\right)^{1/4}$, and the variables $\lambda = \frac{2m\alpha^2}{\hbar^2}E$ and $\rho = r/\alpha$, the Schroedinger’s equation becomes
 \begin{align}
 -\frac{d^2}{d\rho^2} u(\rho) + \rho^2 u(\rho) = \lambda u(\rho). \label{simpel SE}
 \end{align}
@@ -193,7 +193,17 @@ Firstly we had that $l=0$. We then substitued $R(r) = u(r)/r$, and got
   -\frac{\hbar^2}{2 m} \frac{d^2}{dr^2} u(r) 
 + V(r)u(r)  = E u(r) .
 \end{align}
-In our case $V(r)$ is equal to $(1/2)kr^2$. We now introduce a dimensionless vaiable, $\rho = r/\alpha$
+In our case $V(r)$ is equal to $(1/2)kr^2$, where $k=m\omega^2$. We now introduce a dimensionless vaiable, $\rho = r/\alpha$, which means $V(\rho) = (1/2) k \alpha^2\rho^2$. This gives us
+\begin{align}
+-\frac{\hbar^2}{2 m \alpha^2} \frac{d^2}{d\rho^2} u(\rho) 
++ \frac{k}{2} \alpha^2\rho^2u(\rho)  &= E u(\rho) \\
+ -\frac{d^2}{d\rho^2} u(\rho) 
++ \frac{mk}{\hbar^2} \alpha^4\rho^2u(\rho)  &= \frac{2m\alpha^2}{\hbar^2}E u(\rho) .
+\end{align}
+Finally we scale $\alpha$ so that $\frac{mk}{\hbar^2} \alpha^4 = 1$, and define $\lambda = \frac{2m\alpha^2}{\hbar^2}E$, which gives us
+\begin{align}
+  -\frac{d^2}{d\rho^2} u(\rho) + \rho^2u(\rho)  = \lambda u(\rho) .
+\end{align}
 
 
 \subsection{Implementing a matrix in Julia}\label{opp_d matrix}
