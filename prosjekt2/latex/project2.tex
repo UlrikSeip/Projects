@@ -48,7 +48,9 @@ In this project we have implemented Jacobian algorithm, to find eigenvectors, an
 
 \section{INTRODUCTION}
 
-Finding eigenvectors analytically is complicated, and can be tedious, and this is why it is much more convenient to do so numerically. A common way of doing this is by the application of the Jacobian method. Essentially we rotate one matrix element at a time, always taking the one with the highest absolute value, until all but the diagonal elements are essentially zero. All transformations are also applied to an identity matrix that then turns into our eigenvectors. 
+Finding eigenvectors analytically is complicated, can be tedious, and can sometimes be impossible, and this is why it is much more convenient to do so numerically. A common way of doing this is by the application of the Jacobian method. Essentially we rotate one matrix element at a time, always taking the one with the highest absolute value, until all but the diagonal elements are essentially zero. All transformations are also applied to an identity matrix that then turns into our eigenvectors. 
+
+The modelling of an electron in a harmonic oscillator potential is one of the most classical problems in quantum mechanics. This has a simple analytical solution, however the interaction between multiple electrons can be harder to solve analyticaly, but does follow similar principles. Therefore any good numerical solution of the first problem, should very easily be able to calculate the interaction between two or more electrons. What we have done in this experiment is to customize the method described above to solve for one electron, and then used that same method on two electrons. 
 
 \section{METHOD}
 
@@ -62,14 +64,6 @@ $a_{kl} = 0$. The quadratic equation is obtained using $\cot 2\theta=1/2(\cot\th
 
 \begin{align}
 t^2+2\tau t-1=0
-\end{align}
-Which gives us
-\begin{align}
-t = -\tau \pm \sqrt{1+\tau^2}
-\end{align}
-$c$ and $s$ are then obtained by
-\begin{align}
-c = \frac{1}{\sqrt{1+t^2}}
 \end{align}
 Which gives us
 \begin{align}
@@ -188,6 +182,12 @@ We see a fairly linear correlation between the number of matrix elements $n^2$ a
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{computation time plot}
 \end{figure}
+
+\subsection{Quantum dots in three dimensions, one electron}
+
+
+\subsection{Quantum dots in three dimensions, two electrons}
+
 
 \section{CONCLUSIONS}
 With an accuracy of more digits than our editor cared to print out the Jacobi method, with a tolerance for non diagonal values of up to $1e-4$, seems to be an efficient and precise algorithm for computing eigenvectors and eigenvalues. The computation time is proportional to the number of matrix elements, and so the realistic limit for matrix size should be around $10^4 \cdot 10^4$. With $300 \cdot 300$ taking 12 seconds, $10^4 \cdot 10^4$ should take about
