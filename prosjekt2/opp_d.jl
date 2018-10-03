@@ -1,5 +1,6 @@
+using Printf
+using Statistics
 include("rotator.jl")
-include("project2.jl")
 
 #function for making the matrix
 function make_mat(rho_minn, rho_max, n)
@@ -7,8 +8,7 @@ function make_mat(rho_minn, rho_max, n)
     e = -1/h^2 #the non-diagonal matrix element
 
     d = zeros(n) #array to hold the diagonal matrix element
-    #finds the diagonal matrix element for each ρ
-    #d[1] = 2/h^2 + rho_minn^2
+    #finds the diagonal matrix element for each rho
     for r=1:n
         d[r] = 2/h^2 + (rho_minn + r*h)^2
     end
@@ -65,8 +65,8 @@ function main(rho_min, rho_max, n)
 
     eigen = ana_eigen(n)
     diff = dia-eigen
-    l_mean = stat.mean(diff)
-    l_std = stat.std(diff)
+    l_mean = Statistics.mean(diff)
+    l_std = Statistics.std(diff)
     println("l_mean: " * string(l_mean) * " l_std: " * string(l_std))
     println(dia[1:20])
     #println(eigen)

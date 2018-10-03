@@ -1,3 +1,5 @@
+using Printf
+using Statistics
 include("rotator.jl")
 
 #function for making the matrix

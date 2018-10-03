@@ -32,7 +32,7 @@ function off(a)
     return maximum(a^2) #this might work? p. 217 lecture notes.
 end
 
-function maxKnotL(a)
+function maxKnotL(a)    #finds the largest matrix element that is not on the diagonal
     max = 0
     kl = [1,1]
     n = Int64(length(a[1,:]))
