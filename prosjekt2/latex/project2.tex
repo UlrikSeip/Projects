@@ -52,34 +52,29 @@ Finding eigenvectors analytically is complicated, and can be tedious, and this i
 
 \subsection{Implementing the Jacobian algorithm}
 The implementation follows a standard recipe:
-See the documentation in section \ref{rotator.jl} for further explanation.
-
-
+We start with the relation
 \begin{equation*}\cot 2\theta=\tau = \frac{a_{ll}-a_{kk}}{2a_{kl}}.
 \end{equation*}
-We can then define the angle $\theta$ so that the non-diagonal matrix elements of the transformed matrix 
-$a_{kl}$ become non-zero and
-we obtain the quadratic equation (using $\cot 2\theta=1/2(\cot \theta-\tan\theta)$
-
-\begin{equation*}
-t^2+2\tau t-1= 0,
-\end{equation*}
-resulting in
-
-\begin{equation*}
-t = -\tau \pm \sqrt{1+\tau^2},
-\end{equation*}
-and $c$ and $s$ are easily obtained via
-
-\begin{equation*}
-c = \frac{1}{\sqrt{1+t^2}},
-\end{equation*}
-and $s=tc$.  
+This can be used to find the angle $\theta$ that makes the  non-diagonal matrix elements of the transformed matrix 
+$a_{kl} = 0$. The quadratic equation is obtained using $\cot 2\theta=1/2(\cot\theta-\tan\theta)$.
 
 \begin{align}
-1&=2 \\
-3&=
+t^2+2\tau t-1=0
 \end{align}
+Which gives us
+\begin{align}
+t = -\tau \pm \sqrt{1+\tau^2}
+\end{align}
+$c$ and $s$ are then obtained by
+\begin{align}
+c = \frac{1}{\sqrt{1+t^2}}
+\end{align}
+and
+\begin{align}
+s=tc
+\end{align}  
+
+We then use the rotational factors $c$ and $s$ to rotate every other element in the matrix according to their position, giving us a new diagonal, that is slightly closer to the eigenvalues, and new matrix elements elsewhere, slightly closer to 0. The same is done for a matrix that tarts out as an identity matrix, with the purpose of transforming it into the original matrix' eigenvectors. See the documentation in section \ref{rotator.jl} for further explanation.
 
 \subsection{Testing the code}
 For testing the algorithm we have implemented two tests. One for checking if the largest element in the matrix is correctly located, and one for testing if the resulting eigenvalues are correct. The first one is more useful for development purposes, whilst the second one is essential for validating that our implementation works correctly.
@@ -98,7 +93,7 @@ The Schroedinger’s equation then becomes
 \begin{align}
 -\frac{d^2}{d\rho^2} u(\rho) + \rho^2 u(\rho) = \lambda y(\rho). \label{simpel SE}
 \end{align}
-Since we are working in radial coordinates we have $\rho \in [0,\infty)$. Since we can't represent infinity on a computer we have to find an aproximation, which we will come back to later. For now we define $\rho_{min}=0$ and $\rho_{max}$ to represent the  minimum and maximum values of $\rho$. 
+Since we are working in radial coordinates we have $\rho \in [0,\infty)$. Since we can't represent infinity on a computer we have to find an approximation, which we will come back to later. For now we define $\rho_{min}=0$ and $\rho_{max}$ to represent the  minimum and maximum values of $\rho$. 
 
 Function \ref{simpel SE} is an differential equation that can be modeled similarly to (ting). If we have $n$ mesh points we get a step length
 \begin{align}
@@ -110,10 +105,23 @@ h = \frac{\rho_{max} - \rho_{min}}{n}.
 
 
 \section{RESULTS}
-
+\subsection{The implementation}
+We see a fairly linear correlation between the number of matrix elements $n^2$ and the required amount similarity transformations. The computation time for each matrix was also proportional to $n^2$ In figure \ref{computation time plot} the tolerance for deviation from 0 in the non diagonal elements was $1e-4$. We found this to be the best balance between accuracy and efficiency. 
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{requiredRotations.pdf}
+	\caption{A plot of the required number of rotations as a function of n: $rotations/n^2$, and the time used for calculating the eigenvalues of a $n\cdot n$ matrix.}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{computation time plot}
+\end{figure}
 
 \section{CONCLUSIONS}
-
+With an accuracy of more digits than our editor cared to print out the Jacobi method, with a tolerance for non diagonal values of up to $1e-4$, seems to be an efficient and precise algorithm for computing eigenvectors and eigenvalues. The computation time is proportional to the number of matrix elements, and so the realistic limit for matrix size should be around $10^4 \cdot 10^4$. With $300 \cdot 300$ taking 12 seconds, $10^4 \cdot 10^4$ should take about
+\begin{align}
+\frac{(10^4)^2}{300^2}\cdot 12s\approx 4h
+\end{align}
+on a normal laptop. On a supercomputer this would of course be different, and i presume our implementation could have been further vectorised for greater efficiency.
 \section{APENDICES}
 \subsection{Integration loop from rotator.jl}\label{rotator.jl}
 \lstinputlisting[language = python, firstline = 35, lastline = 98]{../rotator.jl}
