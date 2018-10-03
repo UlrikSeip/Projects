@@ -43,16 +43,46 @@
 \maketitle
 
 \section{ABSTRACT}
-In this project we have coded a implementation of Jacobi’s rotation algorithm, that finds an approximation to differential equations. We then then used this to model a harmonic oscillator problem in three dimensions, with one and two electrons. 
+In this project we have implemented Jacobian algorithm, to find eigenvectors, and their corresponding eigenvalues in tridiagonal matrices. We then used this to model a harmonic oscillator problem in three dimensions, with one and two electrons. This turned out to be a computationally heavy, but relatively accurate method.
 
 \section{INTRODUCTION}
-
+Finding eigenvectors analytically is complicated, and can be tedious, and this is why it is much more convenient to do so numerically. A common way of doing this is by the application of the Jacobian method. Essentially we rotate one matrix element at a time, always taking the one with the highest absolute value, until all but the diagonal elements are essentially zero. All transformations are also applied to an identity matrix that then turns into our eigenvectors. 
 
 \section{METHOD}
 
-\subsection{Basic code, eller noe}
+\subsection{Implementing the Jacobian algorithm}
+The implementation follows a standard recipe:
+See the documentation in section \ref{rotator.jl} for further explanation.
+
+
+\begin{equation*}\cot 2\theta=\tau = \frac{a_{ll}-a_{kk}}{2a_{kl}}.
+\end{equation*}
+We can then define the angle $\theta$ so that the non-diagonal matrix elements of the transformed matrix 
+$a_{kl}$ become non-zero and
+we obtain the quadratic equation (using $\cot 2\theta=1/2(\cot \theta-\tan\theta)$
+
+\begin{equation*}
+t^2+2\tau t-1= 0,
+\end{equation*}
+resulting in
+
+\begin{equation*}
+t = -\tau \pm \sqrt{1+\tau^2},
+\end{equation*}
+and $c$ and $s$ are easily obtained via
+
+\begin{equation*}
+c = \frac{1}{\sqrt{1+t^2}},
+\end{equation*}
+and $s=tc$.  
+
+\begin{align}
+1&=2 \\
+3&=
+\end{align}
 
 \subsection{Testing the code}
+For testing the algorithm we have implemented two tests. One for checking if the largest element in the matrix is correctly located, and one for testing if the resulting eigenvalues are correct. The first one is more useful for development purposes, whilst the second one is essential for validating that our implementation works correctly.
 
 \subsection{Quantum dots in three dimensions, one electron}
 Now that we had a general algorithm we used it to model a electron that moves in a three-dimensional harmonic oscillator potential. In other words, we looked for the solution of the radial part of Schroedinger’s
@@ -85,9 +115,14 @@ h = \frac{\rho_{max} - \rho_{min}}{n}.
 \section{CONCLUSIONS}
 
 \section{APENDICES}
+\subsection{Integration loop from rotator.jl}\label{rotator.jl}
+\lstinputlisting[language = python, firstline = 35, lastline = 98]{../rotator.jl}
 
 \section{REFERENCES}
-
+\begin{thebibliography}{9}
+	\bibitem{lecture notes}
+	Computational Physics, Lecture Notes Fall 2015, Morten Hjort-Jensen p.215-220
+\end{thebibliography}
 
 
 
