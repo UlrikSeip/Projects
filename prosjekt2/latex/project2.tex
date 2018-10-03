@@ -84,11 +84,11 @@ and
 s=tc
 \end{align}  
 
-We then use the rotational factors $c$ and $s$ to rotate every other element in the matrix according to their position, giving us a new diagonal, that is slightly closer to the eigenvalues, and new matrix elements elsewhere, slightly closer to 0. The same is done for a matrix that tarts out as an identity matrix, with the purpose of transforming it into the original matrix' eigenvectors. See the documentation in section \ref{rotator.jl} for further explanation.
+We then use the rotational factors $c$ and $s$ to rotate every other element in the matrix according to their position, giving us a new diagonal, that is slightly closer to the eigenvalues, and new matrix elements elsewhere, slightly closer to 0. The same is done for a matrix that tarts out as an identity matrix, with the purpose of transforming it into the original matrix' eigenvectors. This is all done in the programming language Julia for high efficiency. See the documentation in section \ref{rotator.jl} for further explanation.
 
 \subsection{Testing the code}
 
-For testing the algorithm we have implemented two tests. One for checking if the largest element in the matrix is correctly located, and one for testing if the resulting eigenvalues are correct. The first one is more useful for development purposes, whilst the second one is essential for validating that our implementation works correctly.
+For testing the algorithm we have implemented two tests. One for checking if the largest element in the matrix is correctly located, and one for testing if the resulting eigenvalues are correct. The first one is more useful for development purposes, whilst the second one is essential for validating that our implementation works correctly. See section \ref{opp_c.jl} for the test functions.
 
 \subsection{Quantum dots in three dimensions, one electron}
 
@@ -179,7 +179,8 @@ on a normal laptop. On a supercomputer this would of course be different, and i 
 \section{APENDICES}
 \subsection{Integration loop from rotator.jl}\label{rotator.jl}
 \lstinputlisting[language = python, firstline = 35, lastline = 98]{../rotator.jl}
-
+\subsection{Test functions}\label{opp_c.jl}
+\lstinputlisting[language = python, firstline = 3, lastline = 45]{../opp_c.jl}
 \subsection{Math for Quantum dots in three dimensions, one electron}\label{opp d math}
 We begin with 
 \begin{align}
