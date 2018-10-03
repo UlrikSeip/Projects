@@ -153,7 +153,7 @@ u_{N}
 \end{equation}
 This is effectively the same problem as earlier, only that we have to add $\rho_{i}^2$ to the diagonal elements. 
 
-To solve the problem we implemented the matrix in Julia, and run it through the algorithm in section \ref{rotator.jl}, with a tolerance of $10^{-4}$. The implemtation of the matrix can be seen in section \ref{opp_d matrix}. What we then did was test different approximations for $\rho_{max}$ and $N$ to find some values that are accurate and don't require a extemly large $N$. Our goal was to reproduce the analytical results with four leading digits after the decimal point.
+To solve the problem we implemented the matrix in Julia, and ran it through the algorithm in section \ref{rotator.jl}, with a tolerance of $10^{-4}$. The implemtation of the matrix can be seen in section \ref{opp_d matrix}. What we then did was test different approximations for $\rho_{max}$ and $N$ to find some values that are accurate and don't require a extemly large $N$. Our goal was to reproduce the analytical eigenvalues with four leading digits after the decimal point. We looked both at the accuracy of the first eigenvalue, and used the Julia function $Statistics.std()$ on the difference between our numerical apppoximation and the analytical solutions, to get an idea of how close the results were overall. $std()$ is an function that finds the standar diviation for an array.
 
 \subsection{Quantum dots in three dimensions, two electrons}
 
@@ -176,6 +176,8 @@ With an accuracy of more digits than our editor cared to print out the Jacobi me
 \frac{(10^4)^2}{300^2}\cdot 12s\approx 4h
 \end{align}
 on a normal laptop. On a supercomputer this would of course be different, and i presume our implementation could have been further vectorised for greater efficiency.
+
+
 \section{APENDICES}
 \subsection{Integration loop from rotator.jl}\label{rotator.jl}
 \lstinputlisting[language = python, firstline = 35, lastline = 98]{../rotator.jl}
@@ -186,7 +188,12 @@ We begin with
 \begin{align}
 - \frac{\hbar^2}{2m} \left( \frac{1}{r^2} \frac{d}{dr} r^2 \frac{d}{dr} - \frac{l(l+1)}{r^2}\right) R(r) + V(r) R(r) = ER(r).
 \end{align}
-Firstly we had that $l=0$. We then substitue $R(r) = u(r)/r$
+Firstly we had that $l=0$. We then substitued $R(r) = u(r)/r$, and got
+\begin{align}
+  -\frac{\hbar^2}{2 m} \frac{d^2}{dr^2} u(r) 
++ V(r)u(r)  = E u(r) .
+\end{align}
+In our case $V(r)$ is equal to $(1/2)kr^2$. We now introduce a dimensionless vaiable, $\rho = r/\alpha$
 
 
 \subsection{Implementing a matrix in Julia}\label{opp_d matrix}

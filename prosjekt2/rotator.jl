@@ -69,7 +69,7 @@ function maxKnotL(a)    #finds larges element that is not on the diagonal on mat
     return kl[1], kl[2]                    #k, l                       
 end
 
-function rotate(a, tol)              #den faktiske rotasjonsløkken. Tar inn en matrise a og nøyaktighet.
+function rotate(a, tol)              #den faktiske rotasjonslokken. Tar inn en matrise a og noyaktighet.
     n = Int64(length(a[1,:]))        #initiates n for later use
     r = Matrix{Float64}(I, n, n)     #initialising eigenvector matrix
     counter = 0                      #teller antall "similarity transformaitons"

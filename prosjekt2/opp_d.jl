@@ -55,26 +55,23 @@ end
 
 #the main part of the task, we go from rho_min to rho_max with n itterations
 function main(rho_min, rho_max, n)
-    a = make_mat(rho_min, rho_max, n)
-    #a = SQM_Tridiag(n)
+    a = make_mat(rho_min, rho_max, n) #makes the matrix
 
-    new_a, r, n, counter, tol = rotate(a, 1e-4)
-    dia = find_dia(new_a)
+    new_a, r, n, counter, tol = rotate(a, 1e-4) #runs the algorytm with a
+    dia = find_dia(new_a) #finds the diagonal values, the eigenvalues
     dia = sort(dia)
     print(string(rho_max) * ": ")
 
-    eigen = ana_eigen(n)
-    diff = dia-eigen
+    eigen = ana_eigen(n) #finds the eigenvalues analyticaly
+    diff = dia-eigen #the difference between the numeric and analytical
     l_mean = Statistics.mean(diff)
     l_std = Statistics.std(diff)
     println("l_mean: " * string(l_mean) * " l_std: " * string(l_std))
-    println(dia[1:20])
+    println(dia)
     #println(eigen)
     #println()
     return dia, eigen, diff, l_mean, l_std
 end
-
-
 
 """
 main(1e-6, 1, 100)
@@ -132,6 +129,7 @@ main(1e-6, 14, 400)
 #main(1e-6, 7, 400)
 #main(1e-6, 23, 500)
 
+"""
 std_array = zeros(25)
 diff1 = zeros(25)
 
@@ -143,16 +141,17 @@ for i=2:25
         println(dia[1])
     end
 end
+"""
 
 #println(std_array)
 #println(diff1)
 
-println(minimum(diff1[2:25]))
-println(findfirst(isequal(minimum(std_array[2:25])), std_array[2:25]))
-println(findfirst(isequal(minimum(diff1[2:25])), diff1[2:25]))
+#println(minimum(diff1[2:25]))
+#println(findfirst(isequal(minimum(std_array[2:25])), std_array[2:25]))
+#println(findfirst(isequal(minimum(diff1[2:25])), diff1[2:25]))
 
 
-#main(1e-6, 4, 100)
+main(1e-6, 4, 100)
 
 #main(1e-6, 14, 400)
 #main(1e-6, 23, 400)
