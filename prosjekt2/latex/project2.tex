@@ -234,7 +234,9 @@ With an accuracy of more digits than our editor cared to print out the Jacobi me
 \end{align}
 on a normal laptop. On a supercomputer this would of course be different, and i presume our implementation could have been further vectorised for greater efficiency.
 
+When modeling the electrons we found that values for $\rho_{max}$ that had a low difference between the analytical and numerical solution for the lowest eigenvalue, often had a high standard deviation, and wise versa. From plot \ref{rhomaks 23} we do see that numerical and analytical solutions are very close, while the opposite is true for \ref{rhomaks 4}. Overall having a lower standard deviation is probally more important than having a small difference between the analytical and numerical solution for the lowest eigenvalue, but maybe a better compromise could have been achived. 
 
+For the models of two electrons, we see that they vaguely follow a straigth line (or an s-curve maybye). If this is because of $\omega_r$ or something else is unknown.
 
 \section{APENDICES}
 \subsection{Integration loop from rotator.jl}\label{rotator.jl}
