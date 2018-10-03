@@ -151,11 +151,30 @@ u_{N}
 \end{bmatrix}.  
 \label{eq:sematrix}
 \end{equation}
-This is effectively the same problem as earlier, only that we have to add $\rho_{i}^2$ to the diagonal elements. 
 
 To solve the problem we implemented the matrix in Julia, and ran it through the algorithm in section \ref{rotator.jl}, with a tolerance of $10^{-4}$. The implemtation of the matrix can be seen in section \ref{opp_d matrix}. What we then did was test different approximations for $\rho_{max}$ and $N$ to find some values that are accurate and don't require a extemly large $N$. Our goal was to reproduce the analytical eigenvalues with four leading digits after the decimal point. We looked both at the accuracy of the first eigenvalue, and used the Julia function $Statistics.std()$ on the difference between our numerical apppoximation and the analytical solutions, to get an idea of how close the results were overall. $std()$ is an function that finds the standar diviation for an array.
 
+
 \subsection{Quantum dots in three dimensions, two electrons}
+We then wanted to study two electrons in a harmonic oscillator well which also interact via a repulsive Coulomb interaction. The Schroedinger equation for two electrons with no repulsive Coulomb interaction is
+\begin{align}
+\left(  -\frac{\hbar^2}{2 m} \frac{d^2}{dr_1^2} -\frac{\hbar^2}{2 m} \frac{d^2}{dr_2^2}+ \frac{1}{2}k r_1^2+ \frac{1}{2}k r_2^2\right)u(r_1,r_2)  = E^{(2)} u(r_1,r_2) ,
+\end{align}
+and the repulsive Coulomb interaction between two electrons is
+\begin{align}
+V(r_1,r_2) = \frac{\beta e^2}{|\mathbf{r}_1-\mathbf{r}_2|}=\frac{\beta e^2}{r},
+\end{align}
+with $ \beta e^2 = 1.44 eVnm$. We introduce the relative coordinate $\mathbf{r} = \mathbf{r}_1-\mathbf{r}_2$, and the center-of-mass coordinate $\mathbf{R} = 1/2(\mathbf{r}_1+\mathbf{r}_2)$. The Schroedinger equation now reads
+\begin{align}
+\left(  -\frac{\hbar^2}{m} \frac{d^2}{dr^2} -\frac{\hbar^2}{4 m} \frac{d^2}{dR^2}+ \frac{1}{4} k r^2+  kR^2\right)u(r,R)  = E^{(2)} u(r,R).
+\end{align}
+The equations for $r$ and $R$ can be separated so that $u(r,R) = \psi(r)\phi(R)$ and the energy is given by the sumof the relative energy $E_r$ and the center-of-mass energy $E_R$, that is $ E^{(2)} = E_r + E_R$. After introducing the variables $\rho = r/\alpha$ and $\omega_r^2=\frac{1}{4}\frac{mk}{\hbar^2} \alpha^4$, the constants $\alpha = \frac{\hbar^2}{m\beta e^2}$ and $\lambda = \frac{m\alpha^2}{\hbar^2}E$, and only looking at $\psi (r)$ we are left with 
+\begin{align}
+  -\frac{d^2}{d\rho^2} \psi(\rho) + \omega_r^2\rho^2\psi(\rho) +\frac{1}{\rho} = \lambda \psi(\rho), \label{se 2 easy}
+\end{align}
+see section \ref{opp e math} for more details. Function \ref{se 2 easy} can be solved in almost the same way as for when we had one electron, only that the diagonal values $d_i$ now are $d_i = \frac{2}{h^2} + \omega_r^2\rho^2+1/\rho$. 
+
+We now have an additional unknown value in $\omega_r$. We then studied the cases of $\omega_r = 0.01$, $\omega_r = 0.5$, $\omega_r = 1$, and $\omega_r = 5$, and use the values of $\rho_{max}$ and $N$ we found worked best for one electron.
 
 
 \section{RESULTS}
@@ -181,8 +200,10 @@ on a normal laptop. On a supercomputer this would of course be different, and i 
 \section{APENDICES}
 \subsection{Integration loop from rotator.jl}\label{rotator.jl}
 \lstinputlisting[language = python, firstline = 35, lastline = 98]{../rotator.jl}
+
 \subsection{Test functions}\label{opp_c.jl}
 \lstinputlisting[language = python, firstline = 3, lastline = 45]{../opp_c.jl}
+
 \subsection{Math for Quantum dots in three dimensions, one electron}\label{opp d math}
 We begin with 
 \begin{align}
@@ -208,6 +229,27 @@ Finally we scale $\alpha$ so that $\frac{mk}{\hbar^2} \alpha^4 = 1$, and define 
 
 \subsection{Implementing a matrix in Julia}\label{opp_d matrix}
 \lstinputlisting[language = python, firstline = 5, lastline = 27]{../opp_d.jl}
+
+
+\subsection{Math for Quantum dots in three dimensions, two electrons}\label{opp e math}
+\begin{align}
+\left(  -\frac{\hbar^2}{m} \frac{d^2}{dr^2} -\frac{\hbar^2}{4 m} \frac{d^2}{dR^2}+ \frac{1}{4} k r^2+  kR^2\right)u(r,R)  = E^{(2)} u(r,R).
+\end{align}
+Firstly we split $u(r,R)$ into  $\psi(r)$ and $\phi(R)$, with $E^{(2)} = E_r + E_R$. We are only interested in $E_r$, so we can remove everything related to $R$. We then add the repulsive Coulomb interaction $V(r_1,r_2)$, giving us
+\begin{align}
+\left(  -\frac{\hbar^2}{m} \frac{d^2}{dr^2}+ \frac{1}{4}k r^2+\frac{\beta e^2}{r}\right)\psi(r)  = E_r \psi(r).
+\end{align}
+We then introduced the dimensionless vaiable $\rho = r/\alpha$, giving us
+\begin{align}
+  -\frac{d^2}{d\rho^2} \psi(\rho) 
++ \frac{1}{4}\frac{mk}{\hbar^2} \alpha^4\rho^2\psi(\rho)+\frac{m\alpha \beta e^2}{\rho\hbar^2}\psi(\rho)  = 
+\frac{m\alpha^2}{\hbar^2}E_r \psi(\rho) .
+\end{align}
+We then define $\omega_r^2=\frac{1}{4}\frac{mk}{\hbar^2} \alpha^4$, $\frac{m\alpha \beta e^2}{\hbar^2}=1$ and $\lambda = \frac{m\alpha^2}{\hbar^2}E$, giving us
+\begin{align}
+  -\frac{d^2}{d\rho^2} \psi(\rho) + \omega_r^2\rho^2\psi(\rho) +\frac{1}{\rho} = \lambda \psi(\rho).
+\end{align}
+
 
 \section{REFERENCES}
 \begin{thebibliography}{9}

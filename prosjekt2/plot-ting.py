@@ -7,16 +7,21 @@ Created on Tue Oct  2 22:02:26 2018
 
 import seaborn
 from numpy import linspace, abs, array
-from matplotlib.pyplot import plot, show, xlabel, ylabel
+from matplotlib.pyplot import plot, show, xlabel, ylabel, legend, savefig
 import plot_verdier
 
 def run_plot(rho, l, n, pl_ana):
     x = linspace(1e-6, rho, n)
     plot(x[:-1], l[:-1])
     if(pl_ana):    
-        plot(x, A0[:n])
+        plot(x, plot_verdier.A0[:n])
+        navn = "oppd_rho-" + str(rho) + "n-" + str(n) + ".pdf"
+    else:
+        navn = "oppe_rho-" + str(rho) + "n-" + str(n) + "l0-" + str(l[0]) + ".pdf"
     xlabel("ρ")
     ylabel("Eigenvalue")
+    legend(["Numerical", "Analytical"])
+    savefig(navn)
     show()
 
 def diff_plot(rho, l, n, ana):
@@ -25,8 +30,9 @@ def diff_plot(rho, l, n, ana):
     plot(x, diff)
     show()
 
-#run_plot(23, l2, 400, True)
-#run_plot(23, l3, 500, True)
+run_plot(23, plot_verdier.l2, 400, True)
+run_plot(23, plot_verdier.l3, 500, True)
+run_plot(4, plot_verdier.l5, 100, True)
 
 """
 diff_plot(23, l2, 400, A)
@@ -51,8 +57,12 @@ run_plot(14, plot_verdier.L1, 400, False)
 run_plot(14, plot_verdier.L2, 400, False)
 run_plot(14, plot_verdier.L3, 400, False)
 """
+
 run_plot(23, plot_verdier.L4, 400, False)
 run_plot(23, plot_verdier.L5, 400, False)
 run_plot(23, plot_verdier.L6, 400, False)
 run_plot(23, plot_verdier.L7, 400, False)
+
+
+
 
