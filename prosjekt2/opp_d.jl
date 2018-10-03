@@ -68,10 +68,10 @@ function main(rho_min, rho_max, n)
     l_mean = stat.mean(diff)
     l_std = stat.std(diff)
     println("l_mean: " * string(l_mean) * " l_std: " * string(l_std))
-    println(dia)
-    println(eigen)
-    println()
-    return dia, eigen
+    println(dia[1:20])
+    #println(eigen)
+    #println()
+    return dia, eigen, diff, l_mean, l_std
 end
 
 
@@ -130,5 +130,29 @@ main(1e-6, 14, 400)
 #main(1e-6, 5, 400)
 #main(1e-6, 6, 400)
 #main(1e-6, 7, 400)
-main(1e-6, 23, 500)
+#main(1e-6, 23, 500)
 
+std_array = zeros(25)
+diff1 = zeros(25)
+
+for i=2:25
+    dia, eigen, diff, l_mean, l_std = main(1e-6, i, 100)
+    std_array[i] = l_std
+    diff1[i] = abs(diff[1])
+    if i == 14
+        println(dia[1])
+    end
+end
+
+#println(std_array)
+#println(diff1)
+
+println(minimum(diff1[2:25]))
+println(findfirst(isequal(minimum(std_array[2:25])), std_array[2:25]))
+println(findfirst(isequal(minimum(diff1[2:25])), diff1[2:25]))
+
+
+#main(1e-6, 4, 100)
+
+#main(1e-6, 14, 400)
+#main(1e-6, 23, 400)
