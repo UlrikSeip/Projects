@@ -1,6 +1,6 @@
 using PyCall
 using PyPlot
-@pyimport matplotlib.pyplot as plotter
+@pyimport matplotlib.pyplot as pl
 @pyimport numpy as np
 #import LinearAlgebra: norm
 using LinearAlgebra
@@ -51,7 +51,7 @@ otherwise return entire pos and vel array
     end
     #return related stuff
     if endvalue
-        return pos[:, -1], vel[:, -1]
+        return pos[:, end], vel[:, end]
     end
     return pos, vel
 end
@@ -83,7 +83,7 @@ otherwise return entire pos and vel array
     end
     #return related stuff
     if endvalue
-        return pos[:, -1], vel[:, -1]
+        return pos[:, end], vel[:, end]
     end
     return pos, vel
 end
@@ -92,8 +92,9 @@ end
 v0 = [2.24e-03, 1.51e-02, 2.61e-0]
 x0 = [9.41e-01, 3.38e-01, -9.33e-05]
 stopTime = 3.154e+7
-pos, vel = velocity_verlet(v0, x0, stopTime, 3600, true)
+pos, vel = velocity_verlet(v0, x0, stopTime, 3600, false)
+#println(pos[1,:])
 
 #read info from file
-plt.plot(pos, np.linspace(0, stopTime))
-plt.show()
+pl.plot(np.linspace(0, stopTime, 8761), pos[1,:])
+pl.show()
