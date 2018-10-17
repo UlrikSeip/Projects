@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/latex,julia,python
+# Created by https://www.gitignore.io/api/text,latex,julia,python
 
 ### Julia ###
 *.jl.cov
@@ -395,5 +395,15 @@ dmypy.json
 pyvenv.cfg
 pip-selfcheck.json
 
+### Text ###
+*.doc
+*.docx
+*.msg
+*.pages
+*.rtf
+*.txt
+*.wpd
+*.wps
 
-# End of https://www.gitignore.io/api/latex,julia,python
+
+# End of https://www.gitignore.io/api/text,latex,julia,python
