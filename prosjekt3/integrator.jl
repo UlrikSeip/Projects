@@ -30,10 +30,10 @@ end
 """
 
 function acc_sirc(pos)
-"""
-Finds the acceleration for an object in a constant circular motion, in a spesific position.
-Takes the position of the object.
-"""    
+    """
+    Finds the acceleration for an object in a constant circular motion, in a spesific position.
+    Takes the position of the object.
+    """    
     r = norm(pos)
     th = pos/r
     a = -4*pi^2/(r^2)*th
@@ -41,7 +41,7 @@ Takes the position of the object.
 end
 
 
-function forward_euler(vel0, pos0, t, dt, endvalue)
+function forward_euler(vel0, pos0, t, dt, endvalue = false)
 """
 NB!! simplified for circular motion in G-field
 vel0 and pos0 should be (x, y, z) arrays with initial values for vel an pos
@@ -50,7 +50,7 @@ otherwise return entire pos and vel array
 """
     
     #creating initial values
-    length = int(t/dt)
+    length = Int64(t/dt)
     vel = ones(3, length)
     vel[:, 1] = vel0
     pos = ones(3, length)
@@ -62,8 +62,8 @@ otherwise return entire pos and vel array
         #print(pos[:, i-1])
         #th = pos[:, i-1]/rip #new angle
         a = acc_sirc(pos[:, i-1])
-        v[:, i] = vel[:, i-1]-a*dt #new vel
-        pos[:, i] = pos[:, i-1] + dt*v[:, i] #new pos
+        vel[:, i] = vel[:, i-1]-a*dt #new vel
+        pos[:, i] = pos[:, i-1] + dt*vel[:, i] #new pos
     end
     #return related stuff
     if endvalue
@@ -136,7 +136,7 @@ v0 = [2.24e-03, 1.51e-02, 2.61e-0]
 x0 = [9.41e-01, 3.38e-01, -9.33e-05]
 stopTime = 3
 #3.154e+7
-pos, vel = velocity_verlet(v0, x0, stopTime, stopTime/36000)
+pos, vel = forward_euler(v0, x0, stopTime, stopTime/36000)
 filewriter(pos)
 #read info from file
 
