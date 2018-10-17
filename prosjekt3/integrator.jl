@@ -81,7 +81,7 @@ otherwise return entire pos and vel array
 """
     
     #creating initial values
-    length = Int64(t/dt)
+    length = Int64(round(t/dt))
     vel = ones(3, length)
     vel[:, 1] = vel0
     pos = ones(3, length)
@@ -143,8 +143,8 @@ end
 #i think we need a function for acceleration. our orbits mainly have positive values...
 
 
-function aFunk(pos, mass = 1)
-    G = -0.01720209895
+function aFunk(pos, mass = 5.97219e24)
+    G = 6.67408e-11
     r = norm(pos)
     th = pos/r
     return G*mass/(r^2)*th
@@ -154,10 +154,12 @@ end
 
 
 x0 = [9.41e-01, 3.38e-01, -9.33e-05]    #earth
-v0 = 100*[-5.99e-03, 1.62e-02, -1.73e-07]    #earth
-stopTime = 3    #nr of years for the simulation
+v0 = 365.2422*[-5.99e-03, 1.62e-02, -1.73e-07]    #earth
+#x0 = [1,0,0]
+#v0 = [0,2,0]
+stopTime = 10    #nr of years or days for the simulation 
 #3.154e+7
-pos, vel = forward_euler(v0, x0, stopTime, stopTime/360000, acc_sirc)
+pos, vel = forward_euler(v0, x0, stopTime, stopTime/1e5, acc_sirc)
 filewriter(pos)
 #read info from file
 
