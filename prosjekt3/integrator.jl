@@ -72,7 +72,7 @@ function acc_sirc(pos)
 end
 
 
-function forward_euler(vel0, pos0, t, dt, endvalue = false)
+function forward_euler(vel0, pos0, t, dt, func, endvalue = false) 
 """
 NB!! simplified for circular motion in G-field
 vel0 and pos0 should be (x, y, z) arrays with initial values for vel an pos
@@ -89,19 +89,9 @@ otherwise return entire pos and vel array
 
     #integration loop
     for i = 2:length
-        #rip = norm(pos[:, i-1]) #new r
-        #print(pos[:, i-1])
-        #th = pos[:, i-1]/rip #new angle
-        a = aFunk(pos[:, i-1])
+        a = func(pos[:, i-1])
         vel[:, i] = vel[:, i-1] + a*dt #new vel
         pos[:, i] = pos[:, i-1] + dt*vel[:, i] #new pos
-        """
-        if pos[1, i]<0.01
-            println(pos[:, i])
-            println(a)
-            #println()
-        end
-        """
     end
     #return related stuff
     if endvalue
@@ -110,7 +100,7 @@ otherwise return entire pos and vel array
     return pos, vel
 end
 
-function velocity_verlet(vel0, pos0, t, dt, endvalue = false)
+function velocity_verlet(vel0, pos0, t, dt, func, endvalue = false)
 """
 vel0 and pos0 should be (x, y, z) arrays with initial values for vel an pos
 endvalues is a bool, return only resulting value after time t
@@ -128,19 +118,9 @@ otherwise return entire pos and vel array
 
     #integration loop
     for i = 2:length
-        #rip = norm(pos[:, i-1]) #current radius
-        #th = pos[:, i-1]/rip #current angle
-
         aip = ai   #current acceleration
-        #println(pos[:, i-1], vel[:, i-1], aip)
         pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*[aip[1], aip[2], aip[3]]  #new position, don't know why, but we need to write [aip[1], aip[2], aip[3]] instead of aip
-        #if i == 2
-        #    println(th)
-        #    println(aip)
-        #    println(pos[:, i])
-        #end
-        #rip = norm(pos[:, i])  #new radius
-        ai = acc_sirc(pos[:, i]) #new acceleration based on new radius
+        ai = func(pos[:, i]) #new acceleration based on new radius
         vel[:, i] = vel[:, i-1] + dt*([ai[1], ai[2], ai[3]] + [aip[1], aip[2], aip[3]])/2   #new velocity based on new acceleration
 
     end
@@ -151,7 +131,7 @@ otherwise return entire pos and vel array
     return pos, vel
 end
 
-function filewriter(dataArray, filename = "orbits.txt")
+function filewriter(dataArray, filename = "C:/Users/Bendik/Documents/GitHub/Projects/prosjekt3/orbits.txt")
     #dataArray should be a 3d array, and is written to filename as a[:, 1]\n, a[:, 2]\n...
     f = open(filename,"w")
     for i = 1:Int64(length(dataArray)/3)
@@ -174,14 +154,14 @@ end
 
 
 x0 = [9.41e-01, 3.38e-01, -9.33e-05]    #earth
-v0 = 8*[-5.99e-03, 1.62e-02, -1.73e-07]    #earth
-stopTime = 365    #nr of years for the simulation
+v0 = 100*[-5.99e-03, 1.62e-02, -1.73e-07]    #earth
+stopTime = 3    #nr of years for the simulation
 #3.154e+7
-pos, vel = forward_euler(v0, x0, stopTime, stopTime/36000)
+pos, vel = forward_euler(v0, x0, stopTime, stopTime/360000, acc_sirc)
 filewriter(pos)
 #read info from file
 
-#println(size(pos))
+println(size(pos))
 #println(pos)
 #plotter.plot(pos[1], pos[2]) #np.linspace(0, stopTime, length(pos[1])))
 #when written to file, the data is better presented by the plitting function in solarsystem.py
