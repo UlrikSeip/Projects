@@ -1,3 +1,4 @@
+import seaborn
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -23,7 +24,11 @@ class solsys():
             counter += 1
 
     def plottXYOrbit(self):
+        plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[0])
+        plt.show()
         plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[1])
+        plt.show()
+        plt.plot(self.planPos[0], self.planPos[1])
         plt.show()
 
 solarsystem = solsys()

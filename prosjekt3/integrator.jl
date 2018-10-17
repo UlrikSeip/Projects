@@ -36,7 +36,7 @@ Takes the position of the object.
 """    
     r = norm(pos)
     th = pos/r
-    a = -4*pi^2/(r^2)*th 
+    a = -4*pi^2/(r^2)*th
     return a
 end
 
@@ -94,7 +94,8 @@ otherwise return entire pos and vel array
         #th = pos[:, i-1]/rip #current angle
 
         aip = ai   #current acceleration
-        pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*aip   #new position
+        #println(pos[:, i-1], vel[:, i-1], aip)
+        pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*[aip[1], aip[2], aip[3]]  #new position, don't know why, but we need to write [aip[1], aip[2], aip[3]] instead of aip
         #if i == 2
         #    println(th)
         #    println(aip)
@@ -102,7 +103,7 @@ otherwise return entire pos and vel array
         #end
         #rip = norm(pos[:, i])  #new radius
         ai = acc_sirc(pos[:, i]) #new acceleration based on new radius
-        vel[:, i] = vel[:, i-1] + dt*(ai + aip)/2   #new velocity based on new acceleration
+        vel[:, i] = vel[:, i-1] + dt*([ai[1], ai[2], ai[3]] + [aip[1], aip[2], aip[3]])/2   #new velocity based on new acceleration
     end
     #return related stuff
     if endvalue
