@@ -16,11 +16,11 @@ class solsys():
             if counter == 3:
                 counter = 0
             if counter == 0:
-                self.planPos[0, int(np.ceil(i/3)-1)] = float(data[i])
+                self.planPos[0, int(np.ceil((i+1)/3)-1)] = float(data[i])
             if counter == 1:
-                self.planPos[1, int(np.ceil(i/3)-1)] = float(data[i])
+                self.planPos[1, int(np.ceil((i+1)/3)-1)] = float(data[i])
             if counter == 2:
-                self.planPos[2, int(np.ceil(i/3)-1)] = float(data[i])
+                self.planPos[2, int(np.ceil((i+1)/3)-1)] = float(data[i])
             counter += 1
 
     def plottXYOrbit(self):
@@ -34,4 +34,4 @@ class solsys():
 solarsystem = solsys()
 solarsystem.importValues("orbits.txt")
 solarsystem.plottXYOrbit()
-print(solarsystem.planPos[2, -4])
+print(solarsystem.planPos[0, -2])

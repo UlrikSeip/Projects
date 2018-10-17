@@ -36,7 +36,7 @@ function acc_sirc(pos)
     """    
     r = norm(pos)
     th = pos/r
-    a = -4*pi^2/(r^2)*th
+    a = 4*pi^2/(r^2)*th
     return a
 end
 
@@ -142,5 +142,6 @@ filewriter(pos)
 
 println(size(pos))
 #println(pos)
-plotter.plot(pos[1], pos[2]) #np.linspace(0, stopTime, length(pos[1])))
-plotter.show()
+#plotter.plot(pos[1], pos[2]) #np.linspace(0, stopTime, length(pos[1])))
+#when written to file, the data is better presented by the plitting function in solarsystem.py
+#plotter.show()
