@@ -29,6 +29,17 @@ function double(x::MyType)
 end
 """
 
+function acc_sirc(pos)
+"""
+Finds the acceleration for an object in a constant circular motion, in a spesific position.
+Takes the position of the object.
+"""    
+    r = norm(pos)
+    th = pos/r
+    a = -4*pi^2/(r^2)*th 
+    return a
+end
+
 
 function forward_euler(vel0, pos0, t, dt, endvalue)
 """
@@ -44,12 +55,14 @@ otherwise return entire pos and vel array
     vel[:, 1] = vel0
     pos = ones(3, length)
     pos[:, 1] = pos0
+
     #integration loop
     for i = 2:length
-        rip = norm(pos[:, i-1]) #new r
+        #rip = norm(pos[:, i-1]) #new r
         #print(pos[:, i-1])
-        th = pos[:, i-1]/rip #new angle
-        v[:, i] = vel[:, i-1]-4*pi*dt/(rip^2)*th #new vel
+        #th = pos[:, i-1]/rip #new angle
+        a = acc_sirc(pos[:, i-1])
+        v[:, i] = vel[:, i-1]-a*dt #new vel
         pos[:, i] = pos[:, i-1] + dt*v[:, i] #new pos
     end
     #return related stuff
@@ -72,22 +85,23 @@ otherwise return entire pos and vel array
     vel[:, 1] = vel0
     pos = ones(3, length)
     pos[:, 1] = pos0
-    rip = norm(pos[:, 1])
+    #rip = norm(pos[:, 1])
+    ai = acc_sirc(pos[:, 1]) 
 
     #integration loop
     for i = 2:length
         #rip = norm(pos[:, i-1]) #current radius
-        th = pos[:, i-1]/rip #current angle
+        #th = pos[:, i-1]/rip #current angle
 
-        aip = -4*pi^2/(rip^2)*th   #current acceleration
+        aip = ai   #current acceleration
         pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*aip   #new position
-        if i == 2
-            println(th)
-            println(aip)
-            println(pos[:, i])
-        end
-        rip = norm(pos[:, i])  #new radius
-        ai = -4*pi^2/(rip^2)*th #new acceleration based on new radius
+        #if i == 2
+        #    println(th)
+        #    println(aip)
+        #    println(pos[:, i])
+        #end
+        #rip = norm(pos[:, i])  #new radius
+        ai = acc_sirc(pos[:, i]) #new acceleration based on new radius
         vel[:, i] = vel[:, i-1] + dt*(ai + aip)/2   #new velocity based on new acceleration
     end
     #return related stuff
