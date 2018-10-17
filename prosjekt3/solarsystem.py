@@ -28,10 +28,12 @@ class solsys():
         plt.show()
         plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[1])
         plt.show()
+        plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[2])
+        plt.show()
         plt.plot(self.planPos[0], self.planPos[1])
         plt.show()
 
 solarsystem = solsys()
 solarsystem.importValues("orbits.txt")
 solarsystem.plottXYOrbit()
-print(solarsystem.planPos[0, -2])
+#print(solarsystem.planPos[0, -2])
