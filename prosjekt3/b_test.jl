@@ -1,4 +1,11 @@
 include("integrator.jl")
+using PyCall
+using PyPlot
+using LinearAlgebra
+#using Math
+@pyimport matplotlib.pyplot as plotter
+@pyimport numpy as np
+import LinearAlgebra: norm
 
 
 function aFunk(pos, mass = sunM)

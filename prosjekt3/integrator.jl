@@ -1,11 +1,4 @@
-using PyCall
-using PyPlot
-using LinearAlgebra
 using DelimitedFiles
-#using Math
-@pyimport matplotlib.pyplot as plotter
-@pyimport numpy as np
-import LinearAlgebra: norm
 
 #by starting a julia shell, and typing "]" you cna then "add PyCall"
 #and "add PyPlot" to install packages
@@ -94,4 +87,3 @@ function filewriter(dataArray, filename = "../prosjekt3/orbits.txt")
     end
     close(f)
 end
-
