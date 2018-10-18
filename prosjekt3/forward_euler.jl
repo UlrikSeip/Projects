@@ -8,10 +8,10 @@ Simply run the file with the required command line arguments to integrate the su
 The values should be stored in a file with the format:
 
 ####
-9.413801075750535E-01 3.379019986046322E-01 -9.334104672733438E-05      #initial positions of object 1
--5.994522787486753E-03 1.617377250092178E-02 -1.732657683299539E-07     #initial velocity of object 1
-1.375357774690336E+00 -1.627517936385902E-01 -3.738675132962930E-02     #initial positions of object 2
-2.243217631343320E-03 1.508628660091320E-02 2.610262676274213E-04       #initial velocity of object 2
+9.413801075750535E-01 3.379019986046322E-01 -9.334104672733438E-05      #initial positions of object 1 x, y z
+-5.994522787486753E-03 1.617377250092178E-02 -1.732657683299539E-07     #initial velocity of object 1 x, y z
+1.375357774690336E+00 -1.627517936385902E-01 -3.738675132962930E-02     #initial positions of object 2 x, y z
+2.243217631343320E-03 1.508628660091320E-02 2.610262676274213E-04       #initial velocity of object 2 x, y z
 ####
 
 I am still not sure how one should go about supplying a custom force function
