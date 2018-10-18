@@ -32,7 +32,7 @@ class solsys():
         #plt.show()
         plt.plot(self.planPos[0], self.planPos[1])
         plt.show()
-        print(len(self.planPos[1]))
+        #print(len(self.planPos[1]))
 
 solarsystem = solsys()
 solarsystem.importValues("orbits.txt")

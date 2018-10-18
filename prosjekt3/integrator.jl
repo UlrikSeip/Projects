@@ -18,11 +18,8 @@ type MyType
 a::Int64
 b::Float64
 end
-
 x = MyType(3, 4)
-
 x.a
-
 ---------------------
 function double(x::MyType)
     x.a *= 2
@@ -30,6 +27,8 @@ end
 """
 
 #planetinfo
+sunM = 1
+#sunM = 2e30
 mercuryM = 3.302e23
 mercuryPos0 = [-1.741425018981730E-01, -4.236575369435728E-01, -1.932082627282657E-02]
 mercyryVel0 = [2.042279845238355E-02, -9.147939192029718E-03, -2.621780116213209E-03]
@@ -114,14 +113,14 @@ otherwise return entire pos and vel array
     pos = ones(3, length)
     pos[:, 1] = pos0
     #rip = norm(pos[:, 1])
-    ai = acc_sirc(pos[:, 1]) 
+    ai = func(pos[:, 1]) 
 
     #integration loop
     for i = 2:length
         aip = ai   #current acceleration
-        pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*[aip[1], aip[2], aip[3]]  #new position, don't know why, but we need to write [aip[1], aip[2], aip[3]] instead of aip
+        pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*aip  #new position, don't know why, but we need to write [aip[1], aip[2], aip[3]] instead of aip
         ai = func(pos[:, i]) #new acceleration based on new radius
-        vel[:, i] = vel[:, i-1] + dt*([ai[1], ai[2], ai[3]] + [aip[1], aip[2], aip[3]])/2   #new velocity based on new acceleration
+        vel[:, i] = vel[:, i-1] + dt*(ai + aip)/2   #new velocity based on new acceleration
 
     end
     #return related stuff
@@ -131,7 +130,7 @@ otherwise return entire pos and vel array
     return pos, vel
 end
 
-function filewriter(dataArray, filename = "C:/Users/Bendik/Documents/GitHub/Projects/prosjekt3/orbits.txt")
+function filewriter(dataArray, filename = "orbits.txt")
     #dataArray should be a 3d array, and is written to filename as a[:, 1]\n, a[:, 2]\n...
     f = open(filename,"w")
     for i = 1:Int64(length(dataArray)/3)
@@ -143,11 +142,14 @@ end
 #i think we need a function for acceleration. our orbits mainly have positive values...
 
 
-function aFunk(pos, mass = 5.97219e24)
-    G = 6.67408e-11
+function aFunk(pos, mass = sunM)
+    #G = 6.67408e-11
+    G = -4*(pi^2)
+    #auToM = 149.60*10^9
     r = norm(pos)
     th = pos/r
-    return G*mass/(r^2)*th
+    a = G*mass*th/((r)^2)
+    return a
 end
 
 
@@ -159,7 +161,7 @@ v0 = 365.2422*[-5.99e-03, 1.62e-02, -1.73e-07]    #earth
 #v0 = [0,2,0]
 stopTime = 10    #nr of years or days for the simulation 
 #3.154e+7
-pos, vel = forward_euler(v0, x0, stopTime, stopTime/1e5, acc_sirc)
+pos, vel = velocity_verlet(365.2422*earthVel0, earthPos0, stopTime, stopTime/1e5, aFunk)
 filewriter(pos)
 #read info from file
 
