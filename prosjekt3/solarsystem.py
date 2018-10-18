@@ -1,11 +1,15 @@
 import seaborn
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+import subprocess
+from celestialBodies import celestialBodies
 
 class solsys():
 
     def __init__(self):
         self.time = 0
+        self.planets = []
 
     def importValues(self, filename):
         with open(filename, "r") as infile:
@@ -23,6 +27,9 @@ class solsys():
                 self.planPos[2, int(np.ceil((i+1)/3)-1)] = float(data[i])
             counter += 1
 
+    def addBody(self, name, vel0, pos0):
+        self.planets.append(celestialBodies(name, vel0, pos0))
+
     def plottXYOrbit(self):
         plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[0])
         plt.show()
@@ -33,6 +40,19 @@ class solsys():
         plt.plot(self.planPos[0], self.planPos[1])
         plt.show()
         #print(len(self.planPos[1]))
+
+    def simulate(self, time, dt = 1e-5):
+        subprocess.Popen(["julia", "integrator.jl"])
+
+    def storeSystem(self, filename):
+        nroPlanets = len(self.planets)
+        vels = np.zeros((nroPlanets, 3))
+        poss = np.zeros((nroPlanets, 3))
+        for i in range(nroPlanets):
+            vels[i] = self.planets[i].vel
+            poss[i] = self.planets[i].pos
+
+            
 
 solarsystem = solsys()
 solarsystem.importValues("orbits.txt")

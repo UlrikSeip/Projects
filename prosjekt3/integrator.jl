@@ -3,26 +3,8 @@ using DelimitedFiles
 #by starting a julia shell, and typing "]" you cna then "add PyCall"
 #and "add PyPlot" to install packages
 
-#julia integrator class, probably, eventually
-#essentially an ode solver with several different integration methods
-#object oriented syntax in julia:
-"""
-type MyType
-a::Int64
-b::Float64
-end
-x = MyType(3, 4)
-x.a
----------------------
-function double(x::MyType)
-    x.a *= 2
-end
-"""
-
-
 function forward_euler(vel0, pos0, t, dt, func, endvalue = false) 
 """
-NB!! simplified for circular motion in G-field
 vel0 and pos0 should be (x, y, z) arrays with initial values for vel an pos
 endvalues is a bool, return only resulting value after time t
 otherwise return entire pos and vel array
