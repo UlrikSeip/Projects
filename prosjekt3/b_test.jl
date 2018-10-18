@@ -7,29 +7,6 @@ using LinearAlgebra
 @pyimport numpy as np
 import LinearAlgebra: norm
 
-
-function aFunk(pos, mass = sunM)
-    #G = 6.67408e-11
-    G = -4*(pi^2)
-    #auToM = 149.60*10^9
-    r = norm(pos)
-    th = pos/r
-    a = G*mass*th/((r)^2)
-    return a
-end
-
-function acc_sirc(pos)
-    """
-    Finds the acceleration for an object in a constant circular motion, in a spesific position.
-    Takes the position of the object.
-    """    
-    r = norm(pos)
-    th = pos/r
-    a = -4*pi^2/(r^2)*th
-    return a
-end
-
-
 #planetinfo
 sunM = 1
 #sunM = 2e30
@@ -62,13 +39,34 @@ plutoPos0 = [1.164087973998699E+01, -3.157554534292389E+01, 1.155639944820950E-0
 plutoVel0 = [3.024320808138397E-03, 4.313236772252202E-04, -9.237227795187408E-04]
 
 
+function aFunk(pos, mass = sunM)
+    #G = 6.67408e-11
+    G = -4*(pi^2)
+    #auToM = 149.60*10^9
+    r = norm(pos)
+    th = pos/r
+    a = G*mass*th/((r)^2)
+    return a
+end
+
+function acc_sirc(pos)
+    """
+    Finds the acceleration for an object in a constant circular motion, in a spesific position.
+    Takes the position of the object.
+    """    
+    r = norm(pos)
+    th = pos/r
+    a = -4*pi^2/(r^2)*th
+    return a
+end
+
+
 x0 = [9.41e-01, 3.38e-01, -9.33e-05]    #earth
 v0 = 365.2422*[-5.99e-03, 1.62e-02, -1.73e-07]    #earth
-#x0 = [1,0,0]
-#v0 = [0,2,0]
-stopTime = 10    #nr of years or days for the simulation 
+stopTime = 3    #nr of years or days for the simulation 
 #3.154e+7
-pos, vel = velocity_verlet(365.2422*earthVel0, earthPos0, stopTime, stopTime/1e5, aFunk)
+pos, vel = forward_euler(365.2422*earthVel0, earthPos0, stopTime, stopTime/1e5, aFunk)
+#pos, vel = velocity_verlet([2,0,0], [1,0,0], stopTime, stopTime/1e5, aFunk)
 filewriter(pos)
 #read info from file
 
@@ -77,4 +75,5 @@ println(size(pos))
 #plotter.plot(pos[1], pos[2]) #np.linspace(0, stopTime, length(pos[1])))
 #when written to file, the data is better presented by the plitting function in solarsystem.py
 #plotter.show()
+
 
