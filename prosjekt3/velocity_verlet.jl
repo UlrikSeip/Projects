@@ -2,6 +2,7 @@ include("integrator.jl")
 include("b_test.jl")
 using ArgParse
 using DelimitedFiles
+using NPZ
 
 """
 Simply run the file with the required command line arguments to integrate the supplied values.
@@ -44,26 +45,32 @@ end
 
 function parse() #reads and returns initial info from file 
     parsed_args = parse_commandline()
-    data = readdlm(parsed_args["readfile"])
+    data = npzread(parsed_args["readfile"])
     writefile = parsed_args["writefile"]
     t = parsed_args["t"]
     dt = parsed_args["dt"]
     return data, writefile, t, dt
 end
 
-function dataSorter(data) #does black magic. Endrer fra default formatet til "readdlm", til det vi bruker i integrator
-    items = Int64(length(data[:, 1])/2)
-    varsPerItem = Int64(length(data[1, :]))
-    pos0 = zeros((items, varsPerItem))
-    vel0 = zeros((items, varsPerItem))
+function dataSorter(data) #does black magic. Endrer fra default formatet til "npz", til det vi bruker i integrator
+    #println(Base.axes(data))
+    println(data)
+    items = Int64(length(data[1, :, 1]))
+    dims = Int64(length(data[1, 1, :]))
+    pos0 = zeros((items, dims))
+    vel0 = zeros((items, dims))
     for i = 1:items
-        pos0[i, :] = data[i, :]
-        vel0[i, :] = data[i*2, :]
+        for j = 1:dims
+            pos0[i, j] = data[1, i, j]
+            vel0[i, j] = data[2, i, j]
+        end
     end
     return vel0, pos0
 end
 
 data, writefile, t, dt = parse()    #creates variables for arguments
 vel0, pos0 = dataSorter(data)   #sorts the data
+println(vel0)
+println(pos0)
 poss, vels = velocity_verlet(365.2422*vel0, pos0, t, dt, aFunk) #integrates
 filewriter(poss, writefile) #writes to file
