@@ -27,8 +27,8 @@ class solsys():
                 self.planPos[2, int(np.ceil((i+1)/3)-1)] = float(data[i])
             counter += 1
 
-    def addBody(self, name, vel0, pos0):
-        self.planets.append(celestialBodies(name, vel0, pos0))
+    def addBody(self, name, vel0, pos0, mass):
+        self.planets.append(celestialBodies(name, vel0, pos0, mass))
 
     def plottXYOrbit(self):
         plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[0])
