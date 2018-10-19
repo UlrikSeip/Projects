@@ -29,6 +29,14 @@ class solsys():
 
     def addBody(self, name, vel0, pos0, mass):
         self.planets.append(celestialBodies(name, vel0, pos0, mass))
+        
+    def addSun(self, name, mass):
+        pos0 = [0,0,0]
+        vel0 = [0,0,0]
+        for i in self.planets:
+            vel0 += i.vel0*i.mass
+        vel0 = vel0/mass
+        self.planets.append(celestialBodies(name, vel0, pos0, mass))
 
     def plottXYOrbit(self):
         plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[0])
