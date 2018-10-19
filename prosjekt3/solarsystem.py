@@ -1,4 +1,4 @@
-#import seaborn
+import seaborn
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -53,8 +53,9 @@ class solsys():
             poss[i] = self.planets[i].pos
 
             
-
-solarsystem = solsys()
-solarsystem.importValues("orbits.txt")
-solarsystem.plottXYOrbit()
-#print(solarsystem.planPos[0, -2])
+if __name__ == '__main__' :    
+    solarsystem = solsys()
+    solarsystem.importValues("orbits.txt")
+    solarsystem.plottXYOrbit()
+    #print(solarsystem.planPos[0, -2])
+    
