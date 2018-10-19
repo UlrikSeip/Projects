@@ -65,5 +65,5 @@ end
 
 data, writefile, t, dt = parse()    #creates variables for arguments
 vel0, pos0 = dataSorter(data)   #sorts the data
-poss, vels = forward_euler(365.2422*vel0, pos0, t, dt, aFunk) #integrates
+poss, vels = forward_euler(365.2422*vel0, pos0, t, dt, aFunk, []) #integrates
 filewriter(poss, writefile) #writes to file

@@ -70,7 +70,11 @@ end
 
 data, writefile, t, dt = parse()    #creates variables for arguments
 vel0, pos0 = dataSorter(data)   #sorts the data
+<<<<<<< HEAD
 println(vel0)
 println(pos0)
 poss, vels = velocity_verlet(365.2422*vel0, pos0, t, dt, aFunk) #integrates
+=======
+poss, vels = velocity_verlet(365.2422*vel0, pos0, t, dt, aFunk, []) #integrates
+>>>>>>> d0fb0ef73ec4f468eb4641dba08fd393c040835b
 filewriter(poss, writefile) #writes to file

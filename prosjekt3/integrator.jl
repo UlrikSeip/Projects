@@ -3,7 +3,7 @@ using DelimitedFiles
 #by starting a julia shell, and typing "]" you cna then "add PyCall"
 #and "add PyPlot" to install packages
 
-function forward_euler(vel0, pos0, t, dt, func, endvalue = false) 
+function forward_euler(vel0, pos0, t, dt, func, par, endvalue = false) 
 """
 vel0 and pos0 should be (x, y, z) arrays with initial values for vel an pos
 endvalues is a bool, return only resulting value after time t
@@ -11,15 +11,15 @@ otherwise return entire pos and vel array
 """
     
     #creating initial values
-    length = Int64(round(t/dt))
-    vel = ones(3, length)
+    len = Int64(round(t/dt))
+    vel = ones(3, len)
     vel[:, 1] = vel0
-    pos = ones(3, length)
+    pos = ones(3, len)
     pos[:, 1] = pos0
 
     #integration loop
-    for i = 2:length
-        a = func(pos[:, i-1])
+    for i = 2:len
+        a = func(pos[:, i-1], par)
         vel[:, i] = vel[:, i-1] + a*dt #new vel
         pos[:, i] = pos[:, i-1] + dt*vel[:, i] #new pos
     end
@@ -30,7 +30,7 @@ otherwise return entire pos and vel array
     return pos, vel
 end
 
-function velocity_verlet(vel0, pos0, t, dt, func, endvalue = false)
+function velocity_verlet(vel0, pos0, t, dt, func, par, endvalue = false)
 """
 vel0 and pos0 should be (x, y, z) arrays with initial values for vel an pos
 endvalues is a bool, return only resulting value after time t
@@ -38,19 +38,20 @@ otherwise return entire pos and vel array
 """
 
     #initial values
-    length = Int64(round(t/dt))
-    vel = ones(3, length)
+    len = Int64(round(t/dt))
+    pl_len = length(vel0)
+    vel = ones(pl_len, len)
     vel[:, 1] = vel0
-    pos = ones(3, length)
+    pos = ones(pl_len, len)
     pos[:, 1] = pos0
     #rip = norm(pos[:, 1])
-    ai = func(pos[:, 1]) 
+    ai = func(pos[:, 1], par) 
 
     #integration loop
-    for i = 2:length
+    for i = 2:len
         aip = ai   #current acceleration
         pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*aip  #new position, don't know why, but we need to write [aip[1], aip[2], aip[3]] instead of aip
-        ai = func(pos[:, i]) #new acceleration based on new radius
+        ai = func(pos[:, i], par) #new acceleration based on new radius
         vel[:, i] = vel[:, i-1] + dt*(ai + aip)/2   #new velocity based on new acceleration
 
     end
