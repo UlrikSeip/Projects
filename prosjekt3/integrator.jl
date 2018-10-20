@@ -32,7 +32,7 @@ end
 
 function velocity_verlet(vel0, pos0, t, dt, func, par, endvalue = false)
 """
-vel0 and pos0 should be (x, y, z) arrays with initial values for vel an pos
+vel0 and pos0 should be [[planets],[x, y, z]] arrays with initial values for vel an pos
 endvalues is a bool, return only resulting value after time t
 otherwise return entire pos and vel array
 """
