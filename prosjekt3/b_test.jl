@@ -71,7 +71,7 @@ pos, vel = velocity_verlet(365.2422*earthVel0, earthPos0, stopTime, stopTime/1e5
 filewriter(pos)
 #read info from file
 
-println(size(pos))
+#println(size(pos))
 #println(pos)
 #plotter.plot(pos[1], pos[2]) #np.linspace(0, stopTime, length(pos[1])))
 #when written to file, the data is better presented by the plitting function in solarsystem.py
