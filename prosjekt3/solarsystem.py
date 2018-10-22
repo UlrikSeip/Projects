@@ -102,9 +102,17 @@ class solsys():
                 k = 2
             elif k == 2:
                 pos0 = i.split(',')
+                pos0[0] = float(pos0[0])
+                pos0[1] = float(pos0[1])
+                pos0[2] = float(pos0[2])
+                pos0 = np.asarray(pos0)
                 k = 3
             elif k == 3:
                 vel0 = i.split(',')
+                vel0[0] = float(vel0[0])
+                vel0[1] = float(vel0[1])
+                vel0[2] = float(vel0[2])
+                vel0 = np.asarray(vel0)
                 break
             
         if k == 0:
@@ -114,15 +122,15 @@ class solsys():
             self.planets.append(celestialBodies(name, vel0, pos0, mass))
 
     def addAllPlanets(self):
-        solarsystem.addBodyFromFile("MERCURY")
-        solarsystem.addBodyFromFile("VENUS")
-        solarsystem.addBodyFromFile("EARTH")
-        solarsystem.addBodyFromFile("MARS")
-        solarsystem.addBodyFromFile("JUPITER")
-        solarsystem.addBodyFromFile("SATURN")
-        solarsystem.addBodyFromFile("URANUS")
-        solarsystem.addBodyFromFile("NEPTUNE")
-        solarsystem.addBodyFromFile("PLUTO")
+        self.addBodyFromFile("MERCURY")
+        self.addBodyFromFile("VENUS")
+        self.addBodyFromFile("EARTH")
+        self.addBodyFromFile("MARS")
+        self.addBodyFromFile("JUPITER")
+        self.addBodyFromFile("SATURN")
+        self.addBodyFromFile("URANUS")
+        self.addBodyFromFile("NEPTUNE")
+        self.addBodyFromFile("PLUTO")
 
     def exportValues(self, filename): #.npy
         nroPlanets = len(self.planets)

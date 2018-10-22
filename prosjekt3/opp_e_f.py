@@ -29,8 +29,10 @@ sSystem2.planets[1].mass *= 1000
 sSystem3 = solarsystem.solsys()
 sSystem3.addBodyFromFile("EARTH")
 sSystem3.addBodyFromFile("JUPITER")
+sSystem3.addSun("Sun", 1)
 
 
 sSystem4 = solarsystem.solsys()
 sSystem4.addAllPlanets()
+sSystem4.addSun("Sun", 1)
 
