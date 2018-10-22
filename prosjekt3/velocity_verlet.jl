@@ -62,35 +62,32 @@ function parse() #reads and returns initial info from file
     return data, writefile, t, dt, plott
 end
 
-function dataSorter(data) #does black magic. Endrer fra default formatet til "npz", til det vi bruker i integrator
+function dataSorter(data) #does black magic. Endrer fra defaultformatet i "npz", til det vi bruker i integrator
     items = Int64(length(data[1, :, 1]))
     dims = Int64(length(data[1, 1, :]))
     pos0 = zeros((items, dims))
     vel0 = zeros((items, dims))
     for i = 1:items
-        for j = 1:dims
-            pos0[i, j] = data[1, i, j]
-            vel0[i, j] = data[2, i, j]
-        end
+        pos0[i, :] = data[1, i, :]
+        vel0[i, :] = data[2, i, :]
     end
-    return items, vel0, pos0
+    return items, vel0, pos0, dims
 end
 
 function plottify(items)
     counter = 1
-    for i = 1:items
-        println(poss[counter], poss[counter+1], poss[counter+2])
-        plt.plot3D(poss[counter], poss[counter+1], poss[counter+2])
+    for i = 1:Int64(items/3)
+        println(poss[counter, 1], " ", poss[counter+1, 1]," ", poss[counter+2, 1])
+        println(vels[counter, 1], " ", vels[counter+1, 1]," ", vels[counter+2, 1])
+        println()
+        plt.plot3D(poss[counter, :], poss[counter+1, :], poss[counter+2, :])
         counter += 3
     end
     plt.show()
 end
 
 data, writefile, t, dt, plott= parse()    #creates variables for arguments
-items, vel0, pos0 = dataSorter(data)   #sorts the data
+items, vel0, pos0, dims = dataSorter(data)   #sorts the data
 poss, vels = velocity_verlet(365.2422*vel0, pos0, t, dt, aFunk, []) #integrates
-println(size(poss))
-if plott
-    plottify(items)
-end
-filewriter(poss, writefile) #writes to file
+plottify(items)
+#filewriter(poss, writefile) #writes to file

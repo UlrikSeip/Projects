@@ -1,4 +1,4 @@
-#import seaborn
+import seaborn
 import numpy as np
 import os
 import subprocess
@@ -57,33 +57,12 @@ class solsys():
         plt.show()
         #print(len(self.planPos[1]))
 
-    def simulate(self, inFile, outFile, time = 10, dt = 1e-5, plott = "true"):
-        simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt), plott])
+    def simulate(self, inFile, outFile, time = 10, dt = 1e-4, plott = "true", intgrat = 1):
+        if intgrat == 1:
+            simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt), plott])
+        elif itgrat == 2:
+            simulation = subprocess.Popen(["julia", "forward_euler.jl", inFile, outFile, str(time), str(dt), plott])
         simulation.wait() #waits for simulation to finish before doing anything else
-
-
-    def addMercury(self):
-        self.addBody("Mercury", [2.042279845238355E-02,-9.147939192029718E-03,-2.621780116213209E-03],
-        [-1.741425018981730E-01,-4.236575369435728E-01,-1.932082627282657E-02], 1.66e-7)
-
-    def addVenus(self):
-        self.addBody("Venus", [-3.997930253479682E-03,1.975505990962758E-02,5.014443552290667E-04],
-        [7.108874104850517E-01,1.475289827913959E-01,-3.917897844928585E-02], 2.448e-6)
-
-    def addEarth(self):
-        self.addBody("Earth", [-5.994522787486753E-03, 1.617377250092178E-02, -1.732657683299539E-07],
-        [9.413801075750535E-01, 3.379019986046322E-01, -9.334104672733438E-05], 3.04e-6)
-
-    def addMars(self):
-        self.addBody("Mars", [2.243217631343320E-03, 1.508628660091320E-02, 2.610262676274213E-04],
-        [1.375357774690336E+00, -1.627517936385902E-01, -3.738675132962930E-02], 3.23e-7)
-        """
-        .
-        .
-        mwar planets
-        .
-        .
-        """
         
     def addBodyFromFile(self, name):
         """
@@ -151,11 +130,11 @@ if __name__ == '__main__' :
     solarsystem.addAllPlanets()
     #solarsystem.addEarth()
     #solarsystem.addVenus()
-#    solarsystem.addBodyFromFile("MERCURY")
-#    solarsystem.addBodyFromFile("VENUS")
-#    solarsystem.addBodyFromFile("EARTH")
+    #solarsystem.addBodyFromFile("MERCURY")
+    #solarsystem.addBodyFromFile("VENUS")
+    #solarsystem.addBodyFromFile("EARTH")
     solarsystem.exportValues("testValues.npy")
-    solarsystem.simulate("testValues.npy", "orbitsTest.txt", time = 2)
+    solarsystem.simulate("testValues.npy", "orbitsTest.txt", time = 10)
     #solarsystem.importValues("orbitsTest.txt")
     #solarsystem.plottXYOrbit()
     #print(solarsystem.planPos[0, -2])

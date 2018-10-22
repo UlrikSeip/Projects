@@ -1,7 +1,12 @@
 include("integrator.jl")
 include("b_test.jl")
+import PyPlot
+const plt = PyPlot
 using ArgParse
 using DelimitedFiles
+using NPZ
+using PyPlot
+
 
 """
 Simply run the file with the required command line arguments to integrate the supplied values.
@@ -38,32 +43,54 @@ function parse_commandline() #equivalent to argparse in python
             help = "dt"
             required = true
             arg_type = Float64
+        "plot"
+            help = "plot function"
+            required = false
+            default = false
+            arg_type = Bool
     end
     return parse_args(args)
 end
 
 function parse() #reads and returns initial info from file 
     parsed_args = parse_commandline()
-    data = readdlm(parsed_args["readfile"])
+    data = npzread(parsed_args["readfile"])
     writefile = parsed_args["writefile"]
     t = parsed_args["t"]
     dt = parsed_args["dt"]
-    return data, writefile, t, dt
+    plott = parsed_args["plot"]
+    return data, writefile, t, dt, plott
 end
 
-function dataSorter(data) #does black magic. Endrer fra default formatet til "readdlm", til det vi bruker i integrator
-    items = Int64(length(data[:, 1])/2)
-    varsPerItem = Int64(length(data[1, :]))
-    pos0 = zeros((items, varsPerItem))
-    vel0 = zeros((items, varsPerItem))
+function dataSorter(data) #does black magic. Endrer fra default formatet til "npz", til det vi bruker i integrator
+    items = Int64(length(data[1, :, 1]))
+    dims = Int64(length(data[1, 1, :]))
+    pos0 = zeros((items, dims))
+    vel0 = zeros((items, dims))
     for i = 1:items
-        pos0[i, :] = data[i, :]
-        vel0[i, :] = data[i*2, :]
+        for j = 1:dims
+            pos0[i, j] = data[1, i, j]
+            vel0[i, j] = data[2, i, j]
+        end
     end
-    return vel0, pos0
+    return items, vel0, pos0
 end
 
-data, writefile, t, dt = parse()    #creates variables for arguments
-vel0, pos0 = dataSorter(data)   #sorts the data
+function plottify(items)
+    counter = 1
+    for i = 1:items
+        println(poss[counter], poss[counter+1], poss[counter+2])
+        plt.plot3D(poss[counter], poss[counter+1], poss[counter+2])
+        counter += 3
+    end
+    plt.show()
+end
+
+data, writefile, t, dt, plott= parse()    #creates variables for arguments
+items, vel0, pos0 = dataSorter(data)   #sorts the data
 poss, vels = forward_euler(365.2422*vel0, pos0, t, dt, aFunk, []) #integrates
+println(size(poss))
+if plott
+    plottify(items)
+end
 filewriter(poss, writefile) #writes to file
