@@ -77,9 +77,11 @@ function dataSorter(data) #does black magic. Endrer fra default formatet til "np
 end
 
 function plottify(items)
+    counter = 1
     for i = 1:items
-        println(poss[i], poss[2i], poss[3i])
-        plt.plot3D(poss[i], poss[2i], poss[3i])
+        println(poss[counter], poss[counter+1], poss[counter+2])
+        plt.plot3D(poss[counter], poss[counter+1], poss[counter+2])
+        counter += 3
     end
     plt.show()
 end
@@ -87,6 +89,7 @@ end
 data, writefile, t, dt, plott= parse()    #creates variables for arguments
 items, vel0, pos0 = dataSorter(data)   #sorts the data
 poss, vels = velocity_verlet(365.2422*vel0, pos0, t, dt, aFunk, []) #integrates
+println(size(poss))
 if plott
     plottify(items)
 end

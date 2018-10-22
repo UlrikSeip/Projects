@@ -109,7 +109,7 @@ if __name__ == '__main__' :
     solarsystem = solsys()
     #solarsystem.addAllPlanets()
     solarsystem.addEarth()
-    #solarsystem.addVenus()
+    solarsystem.addVenus()
     solarsystem.exportValues("testValues.npy")
     solarsystem.simulate("testValues.npy", "orbitsTest.txt", time = 2)
     #solarsystem.importValues("orbitsTest.txt")
