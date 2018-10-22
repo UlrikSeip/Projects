@@ -11,15 +11,6 @@ using NPZ
 """
 Simply run the file with the required command line arguments to integrate the supplied values.
 The values should be stored in a file with the format:
-
-####
-9.413801075750535E-01 3.379019986046322E-01 -9.334104672733438E-05      #initial positions of object 1 x, y z
--5.994522787486753E-03 1.617377250092178E-02 -1.732657683299539E-07     #initial velocity of object 1 x, y z
-1.375357774690336E+00 -1.627517936385902E-01 -3.738675132962930E-02     #initial positions of object 2 x, y z
-2.243217631343320E-03 1.508628660091320E-02 2.610262676274213E-04       #initial velocity of object 2 x, y z
-####
-
-I am still not sure how one should go about supplying a custom force function
 """
 
 
@@ -51,15 +42,13 @@ function parse_commandline() #equivalent to argparse in python
         "masses"
             help = "array with masses of planets in the order they appear in readfile"
             required = false
-            default = [3.302e23, 48.685e23, 5.97219e24, 6.4171e23,
-                        5.6834e26, 86.813e24, 102.413e24, 1.307e22]
+            default = [3.302e23, 48.685e23, 5.97219e24, 6.4171e23, 1.89813e27, 5.6834e26, 86.813e24, 102.413e24, 1.307e22]
             arg_type = array
             #det mangler én masse. Dunno hvilket
         "names"
             help = "array with names of planets in the order they appear in readfile"
             required = false
-            default = ["Mercury", "Venus", "Earth", "Mars",
-                        "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
+            default = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
             arg_type = String
     end
     return parse_args(args)

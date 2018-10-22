@@ -1,0 +1,116 @@
+\documentclass[a4paper]{article}
+% Import some useful packages
+\usepackage[margin=0.5in]{geometry} % narrow margins
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{amsmath,graphicx,varioref,verbatim,amsfonts,geometry,amssymb,dsfont,blindtext}
+%\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true}
+\definecolor{LightGray}{gray}{0.95}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{mygray}{rgb}{0.9,0.9,0.9}
+\definecolor{LightGray}{gray}{0.95}
+\lstset{frame=tb,
+	language=Python,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	backgroundcolor=\color{mygray}
+	%breaklines=true,
+	%breakatwhitespace=true,
+	%tabsize=3
+}
+\title{Project 2 in FYS3150}
+\author{Bendik Steinsvåg Dalen, Ulrik Seip}
+%\renewcommand\thesection.\alph{section}
+%\renewcommand\thesection{\Alph{section}}
+\renewcommand\thesubsection{\thesection.\alph{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.\roman{subsubsection}}
+\begin{document}
+\maketitle
+
+https://github.com/UlrikSeip/Projects/tree/master/prosjekt3
+
+\section{ABSTRACT}
+
+
+\section{INTRODUCTION}
+When simulating orbits for several celestial bodies with high accuracy, the computation can be expensive, and so it is paramount to strike a balance between efficiency and accuracy. To explore this balance, we run simulations using the Velocity-Verlet integration method, and comparing with the Forward-Euler method. Having found the optimal way to simulate the orbits, we move on to
+
+
+\section{METHOD}
+\subsection{a}
+As the moition of the Earth around the sun is nearly circualr, the gravitational force on Earth from the Sun can be writen
+\begin{align}
+F_{G} = \frac{M_{\text{Earth}}v^{2}}{r} = \frac{GM_{\odot} M_{\text{Earth}}}{r^{2}} = \frac{M_{\text{Earth}} 4\pi ^{2}}{r^{2}}  \mathrm{AU}^{3}/ \mathrm{yr}^{2},
+\end{align}
+wich gives the acceleration
+\begin{align*}
+f^{(2)}(r) = \frac{M_{\text{Earth}} 4\pi ^{2} }{r^{2}} \mathrm{AU}^{3}/ \mathrm{yr}^{2}.
+\end{align*}
+
+
+
+\section{RESULTS}
+
+
+\section{CONCLUSIONS}
+
+
+\section{APENDICES}
+
+
+
+\section{REFERENCES}
+\begin{thebibliography}{9}
+	\bibitem{lecture notes}
+	Computational Physics, Lecture Notes Fall 2015, Morten Hjort-Jensen p.215-220
+\end{thebibliography}
+
+
+
+
+%\begin{figure}[h!]
+%	\centering 
+%	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+%	\includegraphics[scale=0.7]{opp2_7.pdf}
+%	\caption{A plot of the entropy}
+%	%Label gjør det enkelt å referere til ulike bilder.
+%	\label{2.7}
+%\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
