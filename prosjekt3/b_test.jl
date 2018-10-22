@@ -6,6 +6,8 @@ using LinearAlgebra
 @pyimport matplotlib.pyplot as plotter
 @pyimport numpy as np
 import LinearAlgebra: norm
+import PyPlot
+const plt = PyPlot
 
 #planetinfo
 sunM = 1
@@ -61,14 +63,30 @@ function acc_sirc(pos, par)
     return a
 end
 
+function plottify(items)
+    counter = 1
+    labels = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
+    for i = 1:Int64(items/3)
+        println(poss[counter, 1], " ", poss[counter+1, 1]," ", poss[counter+2, 1])
+        println(vels[counter, 1], " ", vels[counter+1, 1]," ", vels[counter+2, 1])
+        println(poss[counter, 2], " ", poss[counter+1, 2]," ", poss[counter+2, 2])
+        println(vels[counter, 2], " ", vels[counter+1, 2]," ", vels[counter+2, 2])
+        println()
+        plt.plot3D(poss[counter, :], poss[counter+1, :], poss[counter+2, :], label = labels[i])
+        counter += 3
+    end
+    plt.legend()
+    plt.show()
+end
+
 
 x0 = [9.41e-01, 3.38e-01, -9.33e-05]    #earth
 v0 = 365.2422*[-5.99e-03, 1.62e-02, -1.73e-07]    #earth
 stopTime = 3    #nr of years or days for the simulation 
 #3.154e+7
-pos, vel = velocity_verlet(365.2422*earthVel0, earthPos0, stopTime, stopTime/1e5, aFunk, [])
+#poss, vels = velocity_verlet(earthVel0, earthPos0, stopTime, stopTime/1e3, aFunk, [])
+#plottify(3)
 #pos, vel = velocity_verlet([2,0,0], [1,0,0], stopTime, stopTime/1e5, aFunk)
-filewriter(pos)
 #read info from file
 
 #println(size(pos))

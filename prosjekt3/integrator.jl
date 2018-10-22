@@ -47,6 +47,7 @@ otherwise return entire pos and vel array
     #rip = norm(pos[:, 1])
     #println(size(pos))
     ai = func(pos[:, 1], par) 
+    println(ai)
 
     #integration loop
     for i = 2:len

@@ -1,12 +1,11 @@
 include("integrator.jl")
 include("b_test.jl")
-include("f_test.jl")
 import PyPlot
 const plt = PyPlot
 using ArgParse
 using DelimitedFiles
 using NPZ
-using PyPlot
+#using PyPlot
 
 
 """
@@ -49,6 +48,19 @@ function parse_commandline() #equivalent to argparse in python
             required = false
             default = false
             arg_type = Bool
+        "masses"
+            help = "array with masses of planets in the order they appear in readfile"
+            required = false
+            default = [3.302e23, 48.685e23, 5.97219e24, 6.4171e23,
+                        5.6834e26, 86.813e24, 102.413e24, 1.307e22]
+            arg_type = array
+            #det mangler én masse. Dunno hvilket
+        "names"
+            help = "array with names of planets in the order they appear in readfile"
+            required = false
+            default = ["Mercury", "Venus", "Earth", "Mars",
+                        "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
+            arg_type = String
     end
     return parse_args(args)
 end
@@ -60,7 +72,9 @@ function parse() #reads and returns initial info from file
     t = parsed_args["t"]
     dt = parsed_args["dt"]
     plott = parsed_args["plot"]
-    return data, writefile, t, dt, plott
+    masses = parsed_args["masses"]
+    names = parsed_args["names"]
+    return data, writefile, t, dt, plott, masses, names
 end
 
 function dataSorter(data) #does black magic. Endrer fra defaultformatet i "npz", til det vi bruker i integrator
@@ -81,16 +95,22 @@ function plottify(items)
     for i = 1:Int64(items/3)
         println(poss[counter, 1], " ", poss[counter+1, 1]," ", poss[counter+2, 1])
         println(vels[counter, 1], " ", vels[counter+1, 1]," ", vels[counter+2, 1])
+        println(poss[counter, 2], " ", poss[counter+1, 2]," ", poss[counter+2, 2])
+        println(vels[counter, 2], " ", vels[counter+1, 2]," ", vels[counter+2, 2])
         println()
         plt.plot3D(poss[counter, :], poss[counter+1, :], poss[counter+2, :], label = labels[i])
         counter += 3
     end
+    plt.xlabel("pos x [AU]")
+    plt.ylabel("pos y [AU]")
+    plt.zlabel("pos z [AU]")
+    plt.axis("square")
     plt.legend()
     plt.show()
 end
 
 data, writefile, t, dt, plott= parse()    #creates variables for arguments
-items, vel0, pos0, dims = dataSorter(data)   #sorts the data
-poss, vels = velocity_verlet(vel0, pos0, t, dt, aFunk, []) #integrates
+items, vel0, pos0, dims, masses, names = dataSorter(data)   #sorts the data
+poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, aFunk, []) #integrates
 plottify(items)
 #filewriter(poss, writefile) #writes to file
