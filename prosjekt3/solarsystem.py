@@ -91,11 +91,16 @@ class solsys():
 
     def exportValues(self, filename): #.npy
         nroPlanets = len(self.planets)
-        vels = np.zeros((nroPlanets, 3))
-        poss = np.zeros((nroPlanets, 3))
-        for i in range(nroPlanets):
-            vels[i] = self.planets[i].vel
-            poss[i] = self.planets[i].pos
+        vels = np.zeros(nroPlanets * 3)
+        poss = np.zeros(nroPlanets * 3)
+        for i in range(0, nroPlanets*3, 3):
+            vels[i] = self.planets[int(i/3)].vel[0]
+            vels[i+1] = self.planets[int(i/3)].vel[1]
+            vels[i+2] = self.planets[int(i/3)].vel[2]
+            poss[i] = self.planets[int(i/3)].pos[0]
+            poss[i+1] = self.planets[int(i/3)].pos[1]
+            poss[i+2] = self.planets[int(i/3)].pos[2]
+            #poss[i] = self.planets[i].pos
         """    
         with open(filename, 'w') as the_file:
             for i in range(nroPlanets):
