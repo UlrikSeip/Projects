@@ -4,7 +4,6 @@ import numpy as np
 ss = solsys()
 g = 4*np.pi**2
 v = np.sqrt(g)
-print(v)
 pos = [1, 0, 0]
 vel = [0, v/365.2242, 0]
 time = 10
