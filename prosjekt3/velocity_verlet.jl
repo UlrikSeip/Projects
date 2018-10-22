@@ -1,5 +1,6 @@
 include("integrator.jl")
 include("b_test.jl")
+include("f_test.jl")
 import PyPlot
 const plt = PyPlot
 using ArgParse
@@ -76,18 +77,20 @@ end
 
 function plottify(items)
     counter = 1
+    labels = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
     for i = 1:Int64(items/3)
         println(poss[counter, 1], " ", poss[counter+1, 1]," ", poss[counter+2, 1])
         println(vels[counter, 1], " ", vels[counter+1, 1]," ", vels[counter+2, 1])
         println()
-        plt.plot3D(poss[counter, :], poss[counter+1, :], poss[counter+2, :])
+        plt.plot3D(poss[counter, :], poss[counter+1, :], poss[counter+2, :], label = labels[i])
         counter += 3
     end
+    plt.legend()
     plt.show()
 end
 
 data, writefile, t, dt, plott= parse()    #creates variables for arguments
 items, vel0, pos0, dims = dataSorter(data)   #sorts the data
-poss, vels = velocity_verlet(365.2422*vel0, pos0, t, dt, aFunk, []) #integrates
+poss, vels = velocity_verlet(vel0, pos0, t, dt, aFunk, []) #integrates
 plottify(items)
 #filewriter(poss, writefile) #writes to file
