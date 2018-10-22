@@ -405,5 +405,6 @@ pip-selfcheck.json
 *.wpd
 *.wps
 
+*.npy
 
 # End of https://www.gitignore.io/api/text,latex,julia,python
