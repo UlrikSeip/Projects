@@ -85,7 +85,9 @@ function acc_nfs(pos, par)
     return a
 end
 
+
 """
+
 earthM = 5.97219e24
 earthPos0 = [9.413801075750535E-01, 3.379019986046322E-01, -9.334104672733438E-05]
 earthVel0 = [-5.994522787486753E-03, 1.617377250092178E-02, -1.732657683299539E-07]
@@ -106,12 +108,18 @@ vel0[1:3] = earthVel0
 vel0[4:6] = saturnVel0
 
 """
+
 """
+
 a = acc_fs(pos, [sunM, [earthM, saturnM]])
 println(a)
+
 """
+
 """
+
 stopTime = 2
 pos, vel = velocity_verlet(pos0, vel0, stopTime, stopTime/1e5, acc_fs, [sunM, [earthM, saturnM]])
 println(size(pos))
+
 """
