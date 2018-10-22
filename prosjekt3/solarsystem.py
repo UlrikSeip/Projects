@@ -2,6 +2,7 @@ import seaborn
 import numpy as np
 import os
 import subprocess
+import sys
 from celestialBodies import celestialBodies
 
 class solsys():
@@ -31,6 +32,7 @@ class solsys():
         self.planets.append(celestialBodies(name, vel0, pos0, mass))
     
     #not sure if this should be in the constructor or not
+    #should be called after all the planets
     def addSun(self, name, mass):
         pos0 = [0,0,0]
         vel0 = [0,0,0]
@@ -82,6 +84,34 @@ class solsys():
         .
         .
         """
+        
+    def addBodyFromFile(self, name):
+        """
+        Finds the planet 'name' in lesSolarsysteminfo.txt, and sets vel0, pos0 and mass to the subsequent lines in the file.
+        'name' needs to be capitalised
+        """
+        with open("lesSolarsysteminfo.txt", "r") as infile:
+            data = infile.readlines()
+        k = 0
+        for i in data:
+            i = i.strip()
+            if i == name:
+                k = 1
+            elif k == 1:
+                mass = float(i)/2e30
+                k = 2
+            elif k == 2:
+                pos0 = i.split(',')
+                k = 3
+            elif k == 3:
+                vel0 = i.split(',')
+                break
+            
+        if k == 0:
+            print("Couldn't find " + name + " in the file. Make sure you wrote the name correctly and that it's capitalised")
+            sys.exit()
+        else:
+            self.planets.append(celestialBodies(name, vel0, pos0, mass))
 
     def addAllPlanets(self):
         self.addMercury()
@@ -107,6 +137,7 @@ class solsys():
                 the_file.write(str(self.planets[i].pos)+'\n')
                 the_file.write(str(self.planets[i].vel)+'\n')
         """
+        print(poss)
         np.save(filename, [poss, vels])
 
             
@@ -115,6 +146,7 @@ if __name__ == '__main__' :
     #solarsystem.addAllPlanets()
     solarsystem.addEarth()
     solarsystem.addVenus()
+    solarsystem.addBodyFromFile("MERCURY")
     solarsystem.exportValues("testValues.npy")
     solarsystem.simulate("testValues.npy", "orbitsTest.txt", time = 2)
     #solarsystem.importValues("orbitsTest.txt")
