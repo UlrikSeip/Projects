@@ -114,10 +114,15 @@ class solsys():
             self.planets.append(celestialBodies(name, vel0, pos0, mass))
 
     def addAllPlanets(self):
-        self.addMercury()
-        self.addVenus()
-        self.addEarth()
-        self.addMars()
+        solarsystem.addBodyFromFile("MERCURY")
+        solarsystem.addBodyFromFile("VENUS")
+        solarsystem.addBodyFromFile("EARTH")
+        solarsystem.addBodyFromFile("MARS")
+        solarsystem.addBodyFromFile("JUPITER")
+        solarsystem.addBodyFromFile("SATURN")
+        solarsystem.addBodyFromFile("URANUS")
+        solarsystem.addBodyFromFile("NEPTUNE")
+        solarsystem.addBodyFromFile("PLUTO")
 
     def exportValues(self, filename): #.npy
         nroPlanets = len(self.planets)
@@ -137,16 +142,18 @@ class solsys():
                 the_file.write(str(self.planets[i].pos)+'\n')
                 the_file.write(str(self.planets[i].vel)+'\n')
         """
-        print(poss)
+        #print(poss)
         np.save(filename, [poss, vels])
 
             
 if __name__ == '__main__' :    
     solarsystem = solsys()
-    #solarsystem.addAllPlanets()
-    solarsystem.addEarth()
-    solarsystem.addVenus()
-    solarsystem.addBodyFromFile("MERCURY")
+    solarsystem.addAllPlanets()
+    #solarsystem.addEarth()
+    #solarsystem.addVenus()
+#    solarsystem.addBodyFromFile("MERCURY")
+#    solarsystem.addBodyFromFile("VENUS")
+#    solarsystem.addBodyFromFile("EARTH")
     solarsystem.exportValues("testValues.npy")
     solarsystem.simulate("testValues.npy", "orbitsTest.txt", time = 2)
     #solarsystem.importValues("orbitsTest.txt")
