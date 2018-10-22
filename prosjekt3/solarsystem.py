@@ -1,6 +1,5 @@
 import seaborn
 import numpy as np
-import matplotlib.pyplot as plt
 import os
 import subprocess
 from celestialBodies import celestialBodies
@@ -15,6 +14,7 @@ class solsys():
         with open(filename, "r") as infile:
             data = infile.readlines()
         counter = 0
+        nroPlanets = len(self.planets)
         self.planPos = np.zeros((3, int(len(data)/3)))
         for i in range(len(data)):
             if counter == 3:
@@ -40,18 +40,23 @@ class solsys():
         self.planets.append(celestialBodies(name, vel0, pos0, mass))
 
     def plottXYOrbit(self):
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D as plt3
         plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[0])
         plt.show()
         plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[1])
         plt.show()
         #plt.plot(np.linspace(0, 1, len(self.planPos[1])),self.planPos[2])
         #plt.show()
-        plt.plot(self.planPos[0], self.planPos[1])
+        fig = plt.figure()
+        ax = fig.gca(projection='3d')
+        for i in range(len(self.planets)):
+            ax.plot(self.planPos[0], self.planPos[1], self.planPos[2])
         plt.show()
         #print(len(self.planPos[1]))
 
-    def simulate(self, inFile, outFile, time = 10, dt = 1e-5):
-        simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt)])
+    def simulate(self, inFile, outFile, time = 10, dt = 1e-5, plott = "true"):
+        simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt), plott])
         simulation.wait() #waits for simulation to finish before doing anything else
 
 
@@ -102,13 +107,13 @@ class solsys():
             
 if __name__ == '__main__' :    
     solarsystem = solsys()
-    solarsystem.addAllPlanets()
-    #solarsystem.addEarth()
+    #solarsystem.addAllPlanets()
+    solarsystem.addEarth()
     #solarsystem.addVenus()
     solarsystem.exportValues("testValues.npy")
     solarsystem.simulate("testValues.npy", "orbitsTest.txt", time = 2)
-    solarsystem.importValues("orbitsTest.txt")
-    solarsystem.plottXYOrbit()
+    #solarsystem.importValues("orbitsTest.txt")
+    #solarsystem.plottXYOrbit()
     #print(solarsystem.planPos[0, -2])
 
     

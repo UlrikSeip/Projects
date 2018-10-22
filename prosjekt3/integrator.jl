@@ -62,6 +62,8 @@ otherwise return entire pos and vel array
     return pos, vel
 end
 
+#6191060/160
+
 function filewriter(dataArray, filename = "../prosjekt3/orbits.txt")
     #dataArray should be a 3d array, and is written to filename as a[:, 1]\n, a[:, 2]\n...
     f = open(filename,"w")

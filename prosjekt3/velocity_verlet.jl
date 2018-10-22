@@ -1,8 +1,12 @@
 include("integrator.jl")
 include("b_test.jl")
+import PyPlot
+const plt = PyPlot
 using ArgParse
 using DelimitedFiles
 using NPZ
+using PyPlot
+
 
 """
 Simply run the file with the required command line arguments to integrate the supplied values.
@@ -39,6 +43,11 @@ function parse_commandline() #equivalent to argparse in python
             help = "dt"
             required = true
             arg_type = Float64
+        "plot"
+            help = "plot function"
+            required = false
+            default = false
+            arg_type = Bool
     end
     return parse_args(args)
 end
@@ -49,7 +58,8 @@ function parse() #reads and returns initial info from file
     writefile = parsed_args["writefile"]
     t = parsed_args["t"]
     dt = parsed_args["dt"]
-    return data, writefile, t, dt
+    plott = parsed_args["plot"]
+    return data, writefile, t, dt, plott
 end
 
 function dataSorter(data) #does black magic. Endrer fra default formatet til "npz", til det vi bruker i integrator
@@ -63,10 +73,21 @@ function dataSorter(data) #does black magic. Endrer fra default formatet til "np
             vel0[i, j] = data[2, i, j]
         end
     end
-    return vel0, pos0
+    return items, vel0, pos0
 end
 
-data, writefile, t, dt = parse()    #creates variables for arguments
-vel0, pos0 = dataSorter(data)   #sorts the data
+function plottify(items)
+    for i = 1:items
+        println(poss[i], poss[2i], poss[3i])
+        plt.plot3D(poss[i], poss[2i], poss[3i])
+    end
+    plt.show()
+end
+
+data, writefile, t, dt, plott= parse()    #creates variables for arguments
+items, vel0, pos0 = dataSorter(data)   #sorts the data
 poss, vels = velocity_verlet(365.2422*vel0, pos0, t, dt, aFunk, []) #integrates
+if plott
+    plottify(items)
+end
 filewriter(poss, writefile) #writes to file
