@@ -69,17 +69,17 @@ function acc_nfs(pos, par)
     a = zeros(length(pos)) #an array to hold all the accelerations in the same style as pos
     #goes through all the objects
     for i = 1:nr_pl
-        k = Int64(3*i)  #dimensions?
+        k = Int64(3*i)  #dimensions? ------------------------
 
         #finds the acceleration from the other objects
         for j = 1:nr_pl
             if i != j
                 dis = pl[i,:] - pl[j,:]
-                r = norm(dis) #-sjekk om denne er riktig
+                r = norm(dis) #-sjekk om denne er riktig -----------------------------
                 th = dis/r
-                a[k-2:k] += G*masses[j]*th/((r)^2) #y not a[1:k]?
+                a[k-2:k] += G*masses[j]*th/((r)^2) #y not a[1:k]? --------------------------
             end
-            #print a and check if reasonable
+            #print a and check if reasonable ------------------------
         end
     end
     return a
