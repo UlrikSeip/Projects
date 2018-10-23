@@ -1,4 +1,4 @@
-import seaborn
+#import seaborn
 import numpy as np
 import os
 import subprocess
@@ -57,11 +57,11 @@ class solsys():
         plt.show()
         #print(len(self.planPos[1]))
 
-    def simulate(self, inFile, outFile, time = 10, dt = 1e-4, plott = "true", intgrat = 1):
+    def simulate(self, inFile, outFile, time = 10, dt = 1e-4, plott = "true", intgrat = 1, masses = [], names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]):
         if intgrat == 1:
-            simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt), plott])
+            simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names)])
         elif intgrat == 2:
-            simulation = subprocess.Popen(["julia", "forward_euler.jl", inFile, outFile, str(time), str(dt), plott])
+            simulation = subprocess.Popen(["julia", "forward_euler.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names)])
         simulation.wait() #waits for simulation to finish before doing anything else
         
     def addBodyFromFile(self, name):
