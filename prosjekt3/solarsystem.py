@@ -57,14 +57,14 @@ class solsys():
         plt.show()
         #print(len(self.planPos[1]))
 
-    def simulate(self, inFile, outFile, time = 10, dt = 1e-5, plott = "true", intgrat = 1, masses = []): #, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]):
+    def simulate(self, inFile, outFile, time = 10, dt = 1e-5, plott = "true", intgrat = 1, masses = [], acc_func=1): #, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]):
         names = []
         for i in range(len(self.planets)):
             names.append(self.planets[i].name)
         if intgrat == 1:
-            simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names)])
+            simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names), str(acc_func)])
         elif intgrat == 2:
-            simulation = subprocess.Popen(["julia", "forward_euler.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names)])
+            simulation = subprocess.Popen(["julia", "forward_euler.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names), str(acc_func)])
         simulation.wait() #waits for simulation to finish before doing anything else
         
     def addBodyFromFile(self, name):

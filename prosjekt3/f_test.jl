@@ -7,7 +7,6 @@ using LinearAlgebra
 @pyimport numpy as np
 import LinearAlgebra: norm
 
-
 function acc_fs(pos, par)
     """
     Finds the acceleration for mulitple planets when the sun is fixed in the centre
@@ -26,8 +25,8 @@ function acc_fs(pos, par)
         pl[Int64(i/3),:] = temp
         i+=3
     end
-
     a = zeros(length(pos)) #an array to hold all the accelerations in the same style as pos
+    ting = true
     #goes through all the planets
     for i = 1:nr_pl
         k = Int64(3*i)
