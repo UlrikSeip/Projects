@@ -1,5 +1,8 @@
 include("integrator.jl")
+<<<<<<< HEAD
 #include("f_test.jl")
+=======
+>>>>>>> 8a60017deca9ca0c29d31a7062641b4e3a911ad2
 using PyCall
 using PyPlot
 using LinearAlgebra
@@ -7,7 +10,6 @@ using LinearAlgebra
 @pyimport matplotlib.pyplot as plotter
 @pyimport numpy as np
 import LinearAlgebra: norm
-
 
 function acc_fs(pos, par)
     """
@@ -27,8 +29,8 @@ function acc_fs(pos, par)
         pl[Int64(i/3),:] = temp
         i+=3
     end
-
     a = zeros(length(pos)) #an array to hold all the accelerations in the same style as pos
+    ting = true
     #goes through all the planets
     for i = 1:nr_pl
         k = Int64(3*i)
@@ -43,7 +45,7 @@ function acc_fs(pos, par)
                 dis = pl[i,:] - pl[j,:]
                 r = norm(dis)
                 th = dis/r
-                a[k-2:k] += G*masses[j]*th/((r)^2)
+                a[k-2:k] += G*float(masses[j])*th/((r)^2)
             end
         end
     end
@@ -108,16 +110,10 @@ vel0 = zeros(6)
 vel0[1:3] = earthVel0
 vel0[4:6] = saturnVel0
 
-"""
-
-"""
 
 a = acc_fs(pos, [sunM, [earthM, saturnM]])
 println(a)
 
-"""
-
-"""
 
 stopTime = 2
 pos, vel = velocity_verlet(pos0, vel0, stopTime, stopTime/1e5, acc_fs, [sunM, [earthM, saturnM]])

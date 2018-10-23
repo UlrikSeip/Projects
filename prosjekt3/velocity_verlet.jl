@@ -51,11 +51,16 @@ function parse_commandline() #equivalent to argparse in python
             required = false
             default = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
             #arg_type = Array
+        "acc_func"
+            help = "a number representing which acceleration function you want to use; 1=aFunk, 2=acc_fs, 3=acc_nfs"
+            required = false
+            default = 1
+            arg_type = Int64
     end
     return parse_args(args)
 end
 
-function parse() #reads and returns initial info from file 
+function Parse() #reads and returns initial info from file 
     parsed_args = parse_commandline()
     data = npzread(parsed_args["readfile"])
     writefile = parsed_args["writefile"]
@@ -64,7 +69,8 @@ function parse() #reads and returns initial info from file
     plott = parsed_args["plot"]
     masses = parsed_args["masses"]
     names = parsed_args["names"]
-    return data, writefile, t, dt, plott, masses, names
+    acc_func = parsed_args["acc_func"]
+    return data, writefile, t, dt, plott, masses, names, acc_func
 end
 
 function dataSorter(data) #does black magic. Endrer fra defaultformatet i "npz", til det vi bruker i integrator
@@ -79,30 +85,31 @@ function dataSorter(data) #does black magic. Endrer fra defaultformatet i "npz",
     return items, vel0, pos0, dims
 end
 
-function plottify(items)
+function plottify(items, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"])
     counter = 1
-    labels = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
+    labels = split(names, r"'|[|]|,| ")
+    filter!(e->e≠"",labels)
+    filter!(e->e≠"[",labels)
+    filter!(e->e≠"]",labels)
+    println(labels)
     for i = 1:Int64(items/3)
-        """
-        println(poss[counter, 1], " ", poss[counter+1, 1]," ", poss[counter+2, 1])
-        println(vels[counter, 1], " ", vels[counter+1, 1]," ", vels[counter+2, 1])
-        println(poss[counter, 2], " ", poss[counter+1, 2]," ", poss[counter+2, 2])
-        println(vels[counter, 2], " ", vels[counter+1, 2]," ", vels[counter+2, 2])
-        println()
-        """
-        plt.plot3D(poss[counter, :], poss[counter+1, :], poss[counter+2, :], label = labels[i])
+        #plt.plot3D(poss[counter, :], poss[counter+1, :], poss[counter+2, :], label = labels[i])
+        plt.plot(poss[counter, :], poss[counter+1, :], label = labels[i])
         counter += 3
     end
     plt.xlabel("pos x [AU]")
     plt.ylabel("pos y [AU]")
-    plt.zlabel("pos z [AU]")
-    plt.axis("square")
+    #plt.zlabel("pos z [AU]")
+    plt.axis("equal")
     plt.legend()
     plt.show()
 end
 
-data, writefile, t, dt, plott, masses, names = parse()    #creates variables for arguments
+acc_funcs = [aFunk, acc_fs, acc_nfs]
+
+data, writefile, t, dt, plott, masses, names, acc_func = Parse()    #creates variables for arguments
 items, vel0, pos0, dims= dataSorter(data)   #sorts the data
-poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, aFunk, []) #integrates
-plottify(items)
+println(masses)
+poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, acc_funcs[Int64(acc_func)], masses) #integrates
+plottify(items, names)
 #filewriter(poss, writefile) #writes to file
