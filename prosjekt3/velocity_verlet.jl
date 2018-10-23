@@ -44,13 +44,13 @@ function parse_commandline() #equivalent to argparse in python
             help = "array with masses of planets in the order they appear in readfile"
             required = false
             default = [3.302e23, 48.685e23, 5.97219e24, 6.4171e23, 1.89813e27, 5.6834e26, 86.813e24, 102.413e24, 1.307e22]
-            arg_type = Array
+            #arg_type = Array
             #det mangler én masse. Dunno hvilket
         "names"
             help = "array with names of planets in the order they appear in readfile"
             required = false
             default = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
-            arg_type = Array
+            #arg_type = Array
     end
     return parse_args(args)
 end
@@ -83,11 +83,13 @@ function plottify(items)
     counter = 1
     labels = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
     for i = 1:Int64(items/3)
+        """
         println(poss[counter, 1], " ", poss[counter+1, 1]," ", poss[counter+2, 1])
         println(vels[counter, 1], " ", vels[counter+1, 1]," ", vels[counter+2, 1])
         println(poss[counter, 2], " ", poss[counter+1, 2]," ", poss[counter+2, 2])
         println(vels[counter, 2], " ", vels[counter+1, 2]," ", vels[counter+2, 2])
         println()
+        """
         plt.plot3D(poss[counter, :], poss[counter+1, :], poss[counter+2, :], label = labels[i])
         counter += 3
     end
@@ -99,14 +101,8 @@ function plottify(items)
     plt.show()
 end
 
-<<<<<<< HEAD
-data, writefile, t, dt, plott= parse()    #creates variables for arguments
-items, vel0, pos0, dims, masses, names = dataSorter(data)   #sorts the data
-poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, aFunk, [[6e30][masses]]) #integrates
-=======
 data, writefile, t, dt, plott, masses, names = parse()    #creates variables for arguments
 items, vel0, pos0, dims= dataSorter(data)   #sorts the data
 poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, aFunk, []) #integrates
->>>>>>> de98c4e284656bbd16af64b4fcd73023a5016963
 plottify(items)
 #filewriter(poss, writefile) #writes to file
