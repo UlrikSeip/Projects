@@ -14,7 +14,8 @@ function acc_fs(pos, par)
     Finds the acceleration for mulitple planets when the sun is fixed in the centre
     """
     #some constants
-    s_mass, masses = par
+    s_mass = 1
+    masses = par
     G = -4*(pi^2)
     nr_pl = Int64(length(pos)/3) #the number of planets
     pl = zeros(Int64(nr_pl), 3) #an arrray to better hold all the positions of the planets
