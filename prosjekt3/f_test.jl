@@ -1,5 +1,5 @@
 include("integrator.jl")
-include("f_test.jl")
+#include("f_test.jl")
 using PyCall
 using PyPlot
 using LinearAlgebra

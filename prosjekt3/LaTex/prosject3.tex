@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{hyperref}
+\usepackage{bm}
 \usepackage{listings}
 \usepackage{amsmath,graphicx,varioref,verbatim,amsfonts,geometry,amssymb,dsfont,blindtext}
 %\usepackage{minted}
@@ -57,20 +58,35 @@ When simulating orbits for several celestial bodies with high accuracy, the comp
 \subsection{Newtons law of gravitation}
 One of the most common representations of newtons law of gravitation is
 \begin{align}
-F_{G} = \frac{M_{\text{Earth}}v^{2}}{r} = \frac{GM_{\odot} M_{\text{Earth}}}{r^{2}}
+F_{G} = \frac{M_{\text{Earth}}v^{2}}{r}\boldsymbol{\hat{r}} = \frac{GM_{\odot} M_{\text{Earth}}}{r^{2}}\boldsymbol{\hat{r}}
 \end{align}
 Where $G=6.67\cdot10^-11\frac{m^3}{kgs^2}$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the bodies exerting a force upon each other, $F_G$ is said force, and $r$ is the distance between the bodies. Using Keplers laws this can be further simplified to
 \begin{align}
-F_G=\frac{{M_{\odot}M_\text{Earth}} 4\pi ^{2} }{r^{2}} \mathrm{AU}^{3}/ \mathrm{yr}^{2}.
+F_G=\frac{{M_{\odot}M_\text{Earth}}4\pi^{2}}{r^{2}}\frac{\mathrm{AU}^{3}}{\mathrm{yr}^{2}}\boldsymbol{\hat{r}}
 \end{align}
-something
+We can then rewrite this for a point mass and acceleration as
 \begin{align}
-\frac{M_{\text{Earth}} 4\pi ^{2}}{r^{2}}  \mathrm{AU}^{3}/ \mathrm{yr}^{2}
+a=\frac{{M_{s}}4\pi^{2}}{r^{2}}\frac{\mathrm{AU}^{3}}{\mathrm{yr}^{2}}\boldsymbol{\hat{r}}
+\end{align} 
+\subsection{The Forward Euler method}
+To use equation () for the Forward Euler method we need an expression for $\Delta \boldsymbol{v}$. We therefore introduce a time step $dt$. We also define $\boldsymbol{\hat{r}}=\cos(\theta)\boldsymbol{\hat{i}}+\sin(\theta)\boldsymbol{\hat{j}}+\cos(\phi)\boldsymbol{\hat{k}}$. This gives us
+\begin{align*}
+\frac{d\boldsymbol{v}}{dt}=\frac{v_{i+1}-v_i}{dt}=-4\pi^2\frac{M_s}{r^2}\boldsymbol{\hat{r}}
+\end{align*}
+\begin{align}
+\boldsymbol{v_{i+1}}=-4\pi^2\frac{M_s}{r^2}dt\boldsymbol{\hat{r}}+\boldsymbol{v_i}
 \end{align}
+stuff about $x_{i+1}$
+\subsection{The Velocity Verlet method}
+\subsection{Testing the algorithms}
 
 
 
 \section{RESULTS}
+\subsection{The Forward Euler method}
+\subsection{The Velocity Verlet method}
+\subsection{Testing the algorithms}
+
 
 
 \section{CONCLUSIONS}
