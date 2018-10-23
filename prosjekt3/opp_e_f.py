@@ -13,7 +13,6 @@ sSystem0 = solarsystem.solsys()
 sSystem0.addBodyFromFile("EARTH")
 sSystem0.addBodyFromFile("JUPITER")
 sSystem0.exportValues("kojr_e0.npy")
-<<<<<<< HEAD
 sSystem0.simulate("kojr_e0.npy", "ut_e0.txt", time = 2, masses = np.array([sSystem0.planets[0].mass, sSystem0.planets[1].mass]))
 =======
 sSystem0.simulate("kojr_e0.npy", "ut_e0.txt", time = 10, dt = 1e-5, masses = np.array([sSystem0.planets[0].mass, sSystem0.planets[1].mass]), acc_func=2)
