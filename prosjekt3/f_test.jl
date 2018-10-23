@@ -1,5 +1,4 @@
 include("integrator.jl")
-include("f_test.jl")
 using PyCall
 using PyPlot
 using LinearAlgebra
@@ -43,7 +42,7 @@ function acc_fs(pos, par)
                 dis = pl[i,:] - pl[j,:]
                 r = norm(dis)
                 th = dis/r
-                a[k-2:k] += G*masses[j]*th/((r)^2)
+                a[k-2:k] += G*float(masses[j])*th/((r)^2)
             end
         end
     end
@@ -108,16 +107,10 @@ vel0 = zeros(6)
 vel0[1:3] = earthVel0
 vel0[4:6] = saturnVel0
 
-"""
-
-"""
 
 a = acc_fs(pos, [sunM, [earthM, saturnM]])
 println(a)
 
-"""
-
-"""
 
 stopTime = 2
 pos, vel = velocity_verlet(pos0, vel0, stopTime, stopTime/1e5, acc_fs, [sunM, [earthM, saturnM]])
