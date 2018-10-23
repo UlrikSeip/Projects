@@ -135,10 +135,10 @@ class solsys():
             
 if __name__ == '__main__' :    
     solarsystem = solsys()
-    #solarsystem.addAllPlanets()
+    solarsystem.addAllPlanets()
     #solarsystem.addBodyFromFile("MERCURY")
     #solarsystem.addBodyFromFile("VENUS")
-    solarsystem.addBodyFromFile("EARTH")
+    #solarsystem.addBodyFromFile("EARTH")
     solarsystem.exportValues("testValues.npy")
     solarsystem.simulate("testValues.npy", "orbitsTest.txt", time = 100) #time in days, can allso take dt, masses and names
     #solarsystem.importValues("orbitsTest.txt")

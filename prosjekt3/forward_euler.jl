@@ -88,7 +88,7 @@ end
 
 data, writefile, t, dt, plott= parse()    #creates variables for arguments
 items, vel0, pos0 = dataSorter(data)   #sorts the data
-poss, vels = forward_euler(365.2422*vel0, pos0, t, dt, aFunk, []) #integrates
+poss, vels = forward_euler(365.2422*vel0, pos0, t, dt, acc_nfs, []) #integrates
 println(size(poss))
 if plott
     plottify(items)

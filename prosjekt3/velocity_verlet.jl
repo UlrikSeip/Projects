@@ -1,5 +1,6 @@
 include("integrator.jl")
 include("b_test.jl")
+include("f_test.jl")
 import PyPlot
 const plt = PyPlot
 using ArgParse
@@ -100,6 +101,6 @@ end
 
 data, writefile, t, dt, plott= parse()    #creates variables for arguments
 items, vel0, pos0, dims, masses, names = dataSorter(data)   #sorts the data
-poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, aFunk, []) #integrates
+poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, aFunk, [[6e30][masses]]) #integrates
 plottify(items)
 #filewriter(poss, writefile) #writes to file
