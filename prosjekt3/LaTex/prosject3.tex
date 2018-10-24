@@ -108,8 +108,12 @@ and
 x_i^{(1)} = x_{i-1}^{(1)} + \frac{h}{2} \left( x_i^{(2)} + x_{x-i}^{(2)} \right) \label{VvelVerlet},
 \end{align}
 see section \ref{vVerlet_math} for more details.
+
+
 \subsection{The code for the implementations}
 Both the Velocity Verlet and the Forward Euler algorithms were implemented using a combination of python and Julia. Python happens to be a convenient language for making an object oriented implementation of a solar system simulation, while Julia is in most cases more than 10 times faster than Python, and even rivals c++, when it comes to computation speeds.
+
+
 \subsection{Testing the algorithms}
 To test our algorithm we can check if the escape velocity of our planets is correct. We find it analytically by using conservation of energy, and the fact that the kinetic energy, and the potential energy of our planets are defined with opposite signs. We therefore start with the equation:
 \begin{align*}
@@ -122,6 +126,8 @@ V_{esc} = \sqrt{\dfrac{2GM_{\odot}}{r}}
 To test our implementation against the analytical solution we simply run a simulation for an imaginary planet with the initial analytical velocity, and see if it has returned after several thousand years. We can also try simulating with a slightly lower initial velocity, and se if the planet does indeed stay in orbit with anything less than the analytical initial velocity.
 
 Furthermore the algorithms can be tested against each other for both accuracy and consistency.
+
+
 \subsection{The three-body problem}
 We now have a good basis to extend our algorithm to study the three-body problem, by adding Jupiter to the equation. The force between Earth and Jupiter is
 \begin{align}
@@ -131,8 +137,9 @@ For simplicity's sake we will keep the Sun fixed in the centre of mass, or origo
 
 To test the stability of our Verlet solver we also studied what effect increasing the magnitude of Jupiter by 10 and 1000 would have on the system.
 
+
 \subsection{Final model for all planets of the solar system}
-We now almost have a working model of the solarsystem. Firstly we calculated the three-body problem of the Earth, Sun and Jupiter again, but now treating the Sun as an object, instead of fixing it in the centre of mass. We then get the path of the objects around the centre of mass. The initial values of the Sun was found by setting the posisiton in origo, and making sure the momentum of the Sun was the negative of the total momentum of the other planets. 
+We now almost have a working model of the solar system. Firstly we calculated the three-body problem of the Earth, Sun and Jupiter again, but now treating the Sun as an object, instead of fixing it in the centre of mass. We then get the path of the objects around the centre of mass. The initial values of the Sun was found by setting the posisiton in origo, and making sure the momentum of the Sun was the negative of the total momentum of the other planets. 
 
 Finaly we simply added the remaining planets, and Pluto, to the calculation as extra bodies. The acceleration on each body was found as above, by calculating the force on each object from the other objects. 
 
@@ -197,6 +204,10 @@ Finaly we simply added the remaining planets, and Pluto, to the calculation as e
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{vv3d}
 \end{figure}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f8db4e8593d44fb2a4df3d79adf714fdc580ec5
 
 \subsection{The three-body problem}
 The plot of the path of Jupiter and Earth can be seen in figure \ref{e_1}, with an elapsed time of $t=30\text{yr}$ and a timestep of $10^{-5} \text{yr}$. The path when Jupiter has 10 and 1000 times more mass, with the same time interval, can be seen in figure \ref{e_10} and \ref{e_1000} respectively. 
@@ -260,7 +271,10 @@ The plot of the path of Jupiter, Earth and the Sun can be seen in figure \ref{f_
 	\label{f_1_1}
 \end{figure}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f8db4e8593d44fb2a4df3d79adf714fdc580ec5
 
 
 \section{CONCLUSIONS}
