@@ -13,7 +13,7 @@ function acc_fs(pos, par)
     """
     #some constants
     s_mass = 1
-    masses = par
+    masses = par[2]
     G = -4*(pi^2)
     nr_pl = Int64(length(pos)/3) #the number of planets
     pl = zeros(Int64(nr_pl), 3) #an arrray to better hold all the positions of the planets
@@ -53,7 +53,7 @@ function acc_nfs(pos, par)
     Finds the acceleration for mulitple planets when the sun is not fixed in the centre, but treated as an object
     """
     #some constants
-    masses = par
+    masses = par[2]
     G = -4*(pi^2)
     nr_pl = Int64(length(pos)/3) #the number of objects
     pl = zeros(Int64(nr_pl), 3) #an arrray to better hold all the positions of the objects
@@ -79,6 +79,40 @@ function acc_nfs(pos, par)
                 a[k-2:k] += G*parse(Float64,masses[j])*th/((r)^2) 
             end
         end
+    end
+    return a
+end
+
+function acc_per(pos, vel, par)
+    """
+    Finds the acceleration for mulitple planets when the sun is fixed in the centre
+    """
+    #some constants
+    s_mass = 1
+    masses = par
+    G = -4*(pi^2)
+    c = 63239.7263
+    nr_pl = Int64(length(pos)/3) #the number of planets
+    pl = zeros(Int64(nr_pl), 3) #an arrray to better hold all the positions of the planets
+
+    #inserts the positions of the planets in pl
+    i = 3
+    while i < length(pos)+1
+        temp = pos[i-2:i]
+        pl[Int64(i/3),:] = temp
+        i+=3
+    end
+    a = zeros(length(pos)) #an array to hold all the accelerations in the same style as pos
+    ting = true
+    #goes through all the planets
+    l = norm(cross(pos, [vel[1], vel[2], vel[3]]))
+    for i = 1:nr_pl
+        k = Int64(3*i)
+        #finds the acceleration from the sun
+        r = norm(pl[i,:])
+        th = pl[i,:]/r
+        a[k-2:k] = G*s_mass*th/((r)^2) * (1 + 3*l^2/(r^2 * c^2))
+
     end
     return a
 end

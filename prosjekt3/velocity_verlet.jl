@@ -6,6 +6,7 @@ const plt = PyPlot
 using ArgParse
 using DelimitedFiles
 using NPZ
+import LinearAlgebra: norm
 #using PyPlot
 
 
@@ -89,7 +90,7 @@ end
 
 function plottify(items, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"])
     counter = 1
-    labels = split(names, r"'|[|]|,| ")
+    labels = split(names, r"'|\[|\]|,| ")
     filter!(e->e≠"",labels)
     filter!(e->e≠"[",labels)
     filter!(e->e≠"]",labels)
@@ -99,6 +100,7 @@ function plottify(items, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter"
         plt.plot(poss[counter, :], poss[counter+1, :], label = labels[i])
         counter += 3
     end
+    plt.plot([0,0], [0,0], "o", label="C.M.")
     plt.xlabel("pos x [AU]")
     plt.ylabel("pos y [AU]")
     #plt.zlabel("pos z [AU]")
@@ -107,7 +109,7 @@ function plottify(items, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter"
     plt.show()
 end
 
-acc_funcs = [aFunk, acc_fs, acc_nfs, moreBodyFunc]
+acc_funcs = [aFunk, acc_fs, acc_nfs, moreBodyFunc, acc_per]
 
 data, writefile, t, dt, plott, masses, names, acc_func = Parse()    #creates variables for arguments
 items, vel0, pos0, dims= dataSorter(data)   #sorts the data
@@ -117,6 +119,32 @@ filter!(e->e≠"",mas)
 filter!(e->e≠"[",mas)
 filter!(e->e≠"]",mas)
 println(mas)
+theta0 = atan(pos0[2]/pos0[1])
+print("theta0 ")
+println(theta0)
 poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, acc_funcs[Int64(acc_func)], mas) #integrates
+
+j = length(poss[:,1])
+mindis = norm(poss[j,:])
+theta = atan(poss[j,2]/poss[j,1])
+k = j
+j -= 1
+while j > 0
+    if norm(poss[j,:]) < mindis
+        mindis = norm(poss[j,:])
+        theta = atan(poss[j,2]/poss[j,1])
+        k = j
+    end
+    if norm(poss[j,:]) > mindis*1e-2
+        break
+    end
+    j-=1
+end
+
+print("theta ")
+println(theta)
+print("dis" )
+println(mindis, poss[j,:], k)
+
 plottify(items, names)
 #filewriter(poss, writefile) #writes to file

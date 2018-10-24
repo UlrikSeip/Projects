@@ -1,6 +1,5 @@
 import numpy as np
 import solarsystem
-import numpy as np
 
 """
 sSystem0 = solarsystem.solsys()
