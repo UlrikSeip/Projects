@@ -150,64 +150,9 @@ Finaly we simply added the remaining planets, and Pluto, to the calculation as e
 
 \section{RESULTS}
 \subsection{Testing the algorithms}
+As can be seen in figure \ref{escape_vel} the planet did indeed escape with our analytical initial velocity, and figure \ref{nescape_vel} shows that a slight reduction to said initial velocity places the planet back in orbit.
 
-\begin{figure}[h!]
-	\centering 
-	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
-	\includegraphics[scale=0.7]{escapeVelocity2000.pdf}
-	\caption{A plot of the simulated minimal escape velocity over 2000 years}
-	%Label gjør det enkelt å referere til ulike bilder.
-	\label{escape_vel}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering 
-	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
-	\includegraphics[scale=0.7]{allmostEscapeVelocity2000.pdf}
-	\caption{Initial velocity at .99 if escape velocity over 2000 years}
-	%Label gjør det enkelt å referere til ulike bilder.
-	\label{nescape_vel}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering 
-	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
-	\includegraphics[scale=0.7]{fe1e4_2d.png}
-	\caption{A 10000 year simulation with the forward euler method in 2d, $dt = \frac{1}{100}years$}
-	%Label gjør det enkelt å referere til ulike bilder.
-	\label{fe2d}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering 
-	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
-	\includegraphics[scale=0.7]{vv1e4_2d.png}
-	\caption{A 10000 year simulation with the velocity verlet method in 2d, $dt = \frac{1}{100}years$}
-	%Label gjør det enkelt å referere til ulike bilder.
-	\label{vv2d}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering 
-	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
-	\includegraphics[scale=0.7]{fe1e4_3d.png}
-	\caption{A 10000 year simulation with the forward euler method in 3d, $dt = \frac{1}{100}years$}
-	%Label gjør det enkelt å referere til ulike bilder.
-	\label{fe3d}
-\end{figure}
-
-\begin{figure}[h!]
-	\centering 
-	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
-	\includegraphics[scale=0.7]{vv1e4_3d.png}
-	\caption{A 10000 year simulation with the velocity verlet method in 3d, $dt = \frac{1}{100}years$}
-	%Label gjør det enkelt å referere til ulike bilder.
-	\label{vv3d}
-\end{figure}
-<<<<<<< HEAD
-=======
-
->>>>>>> 9f8db4e8593d44fb2a4df3d79adf714fdc580ec5
+When comparing the Velocity Verlet and Forward Euler algorithms we observe an increase in the orbits radius for both cases both in 2 and 3 dimensions. In figure \ref{fe2d}, \ref{vv2d}, \ref{fe3d}, \ref{vv3d} we observe a higher increase for the Forward Euler Method
 
 \subsection{The three-body problem}
 The plot of the path of Jupiter and Earth can be seen in figure \ref{e_1}, with an elapsed time of $t=30\text{yr}$ and a timestep of $10^{-5} \text{yr}$. The path when Jupiter has 10 and 1000 times more mass, with the same time interval, can be seen in figure \ref{e_10} and \ref{e_1000} respectively. 
@@ -270,14 +215,6 @@ The plot of the path of Jupiter, Earth and the Sun can be seen in figure \ref{f_
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{f_1_1}
 \end{figure}
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 9f8db4e8593d44fb2a4df3d79adf714fdc580ec5
-
-
-\section{CONCLUSIONS}
 \subsection{Testing the code}
 As we can see quite clearly from figure \ref{escape_vel} that the planet leaves its orbit, and we can see from figure \ref{nescape_vel} that there is no room for reducing the initial velocity. This means that our code works as it should.
 
@@ -288,13 +225,67 @@ When it comes to computation times the difference between the two methods is min
 We see that the normal path of Earth and Jupiter are stable, suggesting that the Verlet algorithm we have created is a good aproximation. When Jupiters mass is 10 times stronger there is no noticeable difference in the path. When it is 1000 times stronger, Earth spins around the Sun and Jupiter a couple of times, before shooting out into space, while Jupiter has a stable orbit around the sun. This suggest that the Verlet method is good enough to simulate a stable path when Jupiters mass is 10 times stronger, but not when it is 1000 times stronger. This makes sense as when $1000M_{\text{Jupiter}}$ is about the same as $M_{\odot}$, which would make it pull on Earth as strongly as the Sun. If we hadn't fixed the Sun in the centre of mass, then it and Jupiter would either have an unstable orbit, or we would get something close to a Binary star system.
 
 \subsection{Final model for all planets of the solar system}
-We see that our algorithm produces nice, stable orbits for all the planets. The only planet which seem to not be completley stable is the planet closest to the sun, Mercury, but this could just be that its path moves around more due to its closenes to the centre of mass. We can also se that we get a moon like effect between the Earth and Jupiter by increasing Jupiters mass significantly. This suggests that our algorithm should handle both moons and random asteroids as well as planets. All in all it seems like the Verlet method produced a good aproximation of our solar system.
+In conclusion we see that our algorithm produces nice, stable orbits for all the planets. The only planet which seem to not be completley stable is the planet closest to the sun, Mercury, but this could just be that its path moves around more due to its closenes to the centre of mass. We can also se that we get a moon like effect between the Earth and Jupiter by increasing Jupiters mass significantly. This suggests that our algorithm should handle both moons and random asteroids as well as planets. All in all it seems like the Verlet method produced a good aproximation of our solar system.
 
 \section{APENDICES}
 
 \subsection{The Velocity Verlet method math}\label{vVerlet_math}
 
 Firstly function \ref{velVerlet}:
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{escapeVelocity2000.pdf}
+	\caption{A plot of the simulated minimal escape velocity over 2000 years}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{escape_vel}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{allmostEscapeVelocity2000.pdf}
+	\caption{Initial velocity at .99 if escape velocity over 2000 years}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{nescape_vel}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{fe1e4_2d.png}
+	\caption{A 10000 year simulation with the forward euler method in 2d, $dt = \frac{1}{100}years$}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{fe2d}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{vv1e4_2d.png}
+	\caption{A 10000 year simulation with the velocity verlet method in 2d, $dt = \frac{1}{100}years$}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{vv2d}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{fe1e4_3d.png}
+	\caption{A 10000 year simulation with the forward euler method in 3d, $dt = \frac{1}{100}years$}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{fe3d}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{vv1e4_3d.png}
+	\caption{A 10000 year simulation with the velocity verlet method in 3d, $dt = \frac{1}{100}years$}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{vv3d}
+\end{figure}
+
 \begin{align}
 x_i^{(1)} = \frac{x_{i+1} - x_{i-1}}{2h} \Rightarrow 2hx_i^{(1)} &= x_{i+1} - x_{i-1} \\
 x_{i-1} &= x_{i+1} - 2hx_i^{(1)}
