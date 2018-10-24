@@ -60,6 +60,10 @@ function parse_commandline() #equivalent to argparse in python
             required = false
             default = 1
             arg_type = Int64
+        "plot_dim"
+            help = "plot in 2 or 3 dimensions"
+            required = false
+            default = 2
     end
     return parse_args(args)
 end
@@ -75,7 +79,8 @@ function parse() #reads and returns initial info from file
     names = parsed_args["names"]
     acc_func = parsed_args["acc_func"]
     int_func = parsed_args["int_func"]
-    return data, writefile, t, dt, plott, masses, names, acc_func, int_func
+    plot_dim = parsed_args["plot_dim"]
+    return data, writefile, t, dt, plott, masses, names, acc_func, int_func, plot_dim
 end
 
 function dataSorter(data) #does black magic. Endrer fra defaultformatet i "npz", til det vi bruker i integrator
@@ -118,7 +123,7 @@ otherwise return entire pos and vel array
     return pos, vel
 end
 
-function velocity_verlet(vel0, pos0, t, dt, func, par, endvalue)
+function velocity_verlet(vel0, pos0, t, dt, func, mas, endvalue)
 """
 vel0 and pos0 should be [[planets],[x, y, z]] arrays with initial values for vel an pos
 endvalues is a bool, return only resulting value after time t
@@ -133,15 +138,13 @@ otherwise return entire pos and vel array
     vel[:, :, 1] = vel0
     pos = zeros((pl_len, dims, len))
     pos[:, :, 1] = pos0
-    ai = func(pos[:, :, 1], par) 
-
+    ai = func(pos[:, :, 1], mas)
     #integration loop
     for i = 2:len
         aip = ai   #current acceleration
         pos[:, :, i] = pos[:, :, i-1] + dt*vel[:, :, i-1] + ((dt^2)/2)*aip  #new position
-        ai = func(pos[:, :,  i], par) #new acceleration based on new radius
+        ai = func(pos[:, :,  i], mas) #new acceleration based on new radius
         vel[:, :, i] = vel[:, :, i-1] + dt*(ai + aip)/2   #new velocity based on new acceleration
-
     end
     #return related stuff
     if endvalue
@@ -166,12 +169,31 @@ function integrate(vel0, pos0, t, dt, func, masses, int_func, endvalue = false)
     return int_func(vel0, pos0, t, dt, func, masses, endvalue)
 end
 
+function arrayify(thingy)
+    thingy = split(thingy, r"'|[|]|,| ")
+    filter!(e->e≠"",thingy)
+    filter!(e->e≠"[",thingy)
+    filter!(e->e≠"]",thingy)
+    return thingy
+end
 
-data, writefile, t, dt, plott, masses, names, acc_func, int_func = parse()
+function addMasses(namelist)
+    #for some reason it was stupidly hard to read the masses from a file, si they are now hardcoded in
+    maslib = Dict("SUN" => 1.989e30, "MERCURY" => 3.302e23, "VENUS" => 48.685e23, "EARTH" => 5.97219e24, "MARS" => 6.4171e23, "JUPITER" => 1.89813e27, "SATURN" => 5.6834e26, "URANUS" => 86.813e24, "NEPTUNE" => 102.413e24, "PLUTO" => 1.307e22)
+    nem = arrayify(namelist)
+    masses = zeros(Int64(length(nem)))
+    for i=1:Int64(length(nem))
+        masses[i] = maslib[nem[i]]
+    end
+    return masses/1.989e30
+end
+
+data, writefile, t, dt, plott, masses, names, acc_func, int_func, plot_dim= parse()
 items, vel0, pos0, dims = dataSorter(data)
+masses = addMasses(names)
 acc_funcs = [aFunk, moreBodyFunc, moreBodyFunc_c]
 acc_func = acc_funcs[acc_func]
 int_funcs = [velocity_verlet, forward_euler]
 int_func = int_funcs[int_func]
 poss, vels = integrate(365.2242*vel0, pos0, t, dt, acc_func, masses, int_func)
-plottify(poss, 2, names)
+plottify(poss, plot_dim, names)

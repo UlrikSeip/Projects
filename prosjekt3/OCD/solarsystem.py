@@ -57,10 +57,12 @@ class solsys():
         plt.show()
         #print(len(self.planPos[1]))
 
-    def simulate(self, inFile, outFile, time = 10, dt = 1e-4, plott = "true", intgrat = 1, masses = [], acc_func=1, int_func = 1): #, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]):
+    def simulate(self, inFile, outFile, time = 10, dt = 1e-4, plott = "true", intgrat = 1, acc_func=1, int_func = 1): #, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]):
         names = []
+        masses = []
         for i in range(len(self.planets)):
             names.append(self.planets[i].name)
+            masses.append(self.planets[i].mass)
         if intgrat == 1:
             simulation = subprocess.Popen(["julia", "integrator.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names), str(acc_func), str(int_func)])
         simulation.wait() #waits for simulation to finish before doing anything else
@@ -78,7 +80,7 @@ class solsys():
             if i == name:
                 k = 1
             elif k == 1:
-                mass = float(i)/2e30
+                mass = float(i)/1.989e30
                 k = 2
             elif k == 2:
                 pos0 = i.split(',')
@@ -126,20 +128,11 @@ if __name__ == '__main__' :
     solarsystem = solsys()
     #solarsystem.addBodyFromFile("EARTH")
     #solarsystem.addBodyFromFile("JUPITER")
+    #solarsystem.addBodyFromFile("SUN")
     solarsystem.addAllPlanets()
     solarsystem.exportInitialValues("startValues.npy")
-    solarsystem.simulate("startValues.npy", "orbitsTest.txt", time = 100, acc_func=1, int_func=2) 
-                                             #time in days, can allso take dt, masses and names
-    
-
-
-
-
-    #solarsystem.addBodyFromFile("MERCURY")
-    #solarsystem.addBodyFromFile("VENUS")
-    #solarsystem.importValues("orbitsTest.txt")
-    #solarsystem.plottXYOrbit()
-    #print(solarsystem.planPos[0, -2])
+    solarsystem.simulate("startValues.npy", "orbitsTest.txt", time = 20, acc_func=2, int_func=1) 
+                                             #time in years, can allso take dt, masses and names
 
 
 
