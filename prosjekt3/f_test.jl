@@ -15,7 +15,6 @@ function acc_fs(pos, par)
     s_mass = 1
     masses = par
     G = -4*(pi^2)
-    G0 = -6.67e-11
     nr_pl = Int64(length(pos)/3) #the number of planets
     pl = zeros(Int64(nr_pl), 3) #an arrray to better hold all the positions of the planets
 
@@ -70,18 +69,15 @@ function acc_nfs(pos, par)
     a = zeros(length(pos)) #an array to hold all the accelerations in the same style as pos
     #goes through all the objects
     for i = 1:nr_pl
-        k = Int64(3*i)  #dimensions? ------------------------
-
+        k = Int64(3*i)  
         #finds the acceleration from the other objects
         for j = 1:nr_pl
             if i != j
                 dis = pl[i,:] - pl[j,:]
-                r = norm(dis) #-sjekk om denne er riktig -----------------------------
+                r = norm(dis) 
                 th = dis/r
-                a[k-2:k] += G*parse(Float64,masses[j])*th/((r)^2) #y not a[1:k]? --------------------------
-                #println(float(masses[j]))
+                a[k-2:k] += G*parse(Float64,masses[j])*th/((r)^2) 
             end
-            #print a and check if reasonable ------------------------
         end
     end
     return a

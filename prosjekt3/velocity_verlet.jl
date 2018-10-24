@@ -117,7 +117,6 @@ filter!(e->e≠"",mas)
 filter!(e->e≠"[",mas)
 filter!(e->e≠"]",mas)
 println(mas)
-#mas = [5.97219e24/2e30, 1.89813e27/2e30, 1]
 poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, acc_funcs[Int64(acc_func)], mas) #integrates
 plottify(items, names)
 #filewriter(poss, writefile) #writes to file
