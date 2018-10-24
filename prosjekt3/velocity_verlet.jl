@@ -119,32 +119,45 @@ filter!(e->e≠"",mas)
 filter!(e->e≠"[",mas)
 filter!(e->e≠"]",mas)
 println(mas)
+
+poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, acc_funcs[Int64(acc_func)], mas) #integrates
 theta0 = atan(pos0[2]/pos0[1])
 print("theta0 ")
 println(theta0)
-poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, acc_funcs[Int64(acc_func)], mas) #integrates
+println(pos0[2], pos0[1])
+println(pos0[2]/pos0[1])
 
-j = length(poss[:,1])
-mindis = norm(poss[j,:])
-theta = atan(poss[j,2]/poss[j,1])
+
+j = length(poss[1,:])
+println(j)
+println(length(poss[:,1]))
+
+mindis = norm(poss[:,j])
+theta = atan(poss[2,j]/poss[1,j])
 k = j
-j -= 1
+j = j - 1
 while j > 0
-    if norm(poss[j,:]) < mindis
-        mindis = norm(poss[j,:])
-        theta = atan(poss[j,2]/poss[j,1])
+    global j
+    global mindis
+    global k
+    global poss
+    global theta
+    l = norm(poss[:,j])
+    if l < mindis
+        mindis = norm(poss[:,j])
+        theta = atan(poss[2,j]/poss[1,j])
         k = j
     end
-    if norm(poss[j,:]) > mindis*1e-2
+    if norm(poss[:,j])*1e-2 > mindis
         break
     end
-    j-=1
+    j=j-1
 end
 
 print("theta ")
 println(theta)
-print("dis" )
-println(mindis, poss[j,:], k)
+print("dis " )
+println(mindis, poss[:,k], k)
 
 plottify(items, names)
 #filewriter(poss, writefile) #writes to file

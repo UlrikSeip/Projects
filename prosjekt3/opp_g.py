@@ -15,6 +15,6 @@ sSystem3.addBodyFromFile("MERCURY")
 sSystem3.planets[0].pos0 = [0.3075,0,0]
 sSystem3.planets[0].vel0 = [0,-12.44,0]
 sSystem3.exportValues("kojr_g.npy")
-sSystem3.simulate("kojr_g.npy", "ut_e3.txt", time = 100, dt = 1e-3, acc_func=5)
+sSystem3.simulate("kojr_g.npy", "ut_e3.txt", time = 100, dt = 1e-4, acc_func=5)
 
 
