@@ -37,10 +37,11 @@ class solsys():
         pos0 = [0,0,0]
         vel0 = [0,0,0]
         for i in self.planets:
-            pos0 += i.pos0*i.mass
+#            pos0 += i.pos0*i.mass
             vel0 += i.vel0*i.mass
-        pos0 = pos0/mass
-        vel0 = vel0/mass        
+        #pos0 = pos0/mass
+        vel0 = -vel0/mass
+        print(pos0)
         self.planets.append(celestialBodies(name, vel0, pos0, mass))
 
     def plottXYOrbit(self):
@@ -59,10 +60,12 @@ class solsys():
         plt.show()
         #print(len(self.planPos[1]))
 
-    def simulate(self, inFile, outFile, time = 10, dt = 1e-5, plott = "true", intgrat = 1, masses = [], acc_func=1):
+    def simulate(self, inFile, outFile, time = 10, dt = 1e-5, plott = "true", intgrat = 1, acc_func=1):
         names = []
+        masses = []
         for i in range(len(self.planets)):
             names.append(self.planets[i].name)
+            masses.append(self.planets[i].mass)            
         if intgrat == 1:
             simulation = subprocess.Popen(["julia", "velocity_verlet.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names), str(acc_func)])
         elif intgrat == 2:
