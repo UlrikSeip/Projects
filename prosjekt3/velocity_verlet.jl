@@ -78,6 +78,8 @@ function dataSorter(data) #does black magic. Endrer fra defaultformatet i "npz",
     dims = Int64(length(data[1, 1, :]))
     pos0 = zeros((items, dims))
     vel0 = zeros((items, dims))
+    print("items ")
+    println(items)
     for i = 1:items
         pos0[i, :] = data[1, i, :]
         vel0[i, :] = data[2, i, :]
@@ -109,7 +111,13 @@ acc_funcs = [aFunk, acc_fs, acc_nfs, moreBodyFunc]
 
 data, writefile, t, dt, plott, masses, names, acc_func = Parse()    #creates variables for arguments
 items, vel0, pos0, dims= dataSorter(data)   #sorts the data
-println(masses)
-poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, acc_funcs[Int64(acc_func)], masses) #integrates
+mas = split(masses, r"'|\[|\]|,| ")
+println(mas)
+filter!(e->e≠"",mas)
+filter!(e->e≠"[",mas)
+filter!(e->e≠"]",mas)
+println(mas)
+#mas = [5.97219e24/2e30, 1.89813e27/2e30, 1]
+poss, vels = velocity_verlet(365.2242*vel0, pos0, t, dt, acc_funcs[Int64(acc_func)], mas) #integrates
 plottify(items, names)
 #filewriter(poss, writefile) #writes to file

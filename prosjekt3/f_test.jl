@@ -15,6 +15,7 @@ function acc_fs(pos, par)
     s_mass = 1
     masses = par
     G = -4*(pi^2)
+    G0 = -6.67e-11
     nr_pl = Int64(length(pos)/3) #the number of planets
     pl = zeros(Int64(nr_pl), 3) #an arrray to better hold all the positions of the planets
 
@@ -41,7 +42,7 @@ function acc_fs(pos, par)
                 dis = pl[i,:] - pl[j,:]
                 r = norm(dis)
                 th = dis/r
-                a[k-2:k] += G*float(masses[j])*th/((r)^2)
+                a[k-2:k] += G*parse(Float64,masses[j])*th/((r)^2)
             end
         end
     end
@@ -77,7 +78,8 @@ function acc_nfs(pos, par)
                 dis = pl[i,:] - pl[j,:]
                 r = norm(dis) #-sjekk om denne er riktig -----------------------------
                 th = dis/r
-                a[k-2:k] += G*masses[j]*th/((r)^2) #y not a[1:k]? --------------------------
+                a[k-2:k] += G*parse(Float64,masses[j])*th/((r)^2) #y not a[1:k]? --------------------------
+                #println(float(masses[j]))
             end
             #print a and check if reasonable ------------------------
         end
@@ -108,12 +110,13 @@ vel0[1:3] = earthVel0
 vel0[4:6] = saturnVel0
 
 
-a = acc_fs(pos, [sunM, [earthM, saturnM]])
+a = acc_fs(pos0, [earthM, saturnM])
 println(a)
 
 
 stopTime = 2
 pos, vel = velocity_verlet(pos0, vel0, stopTime, stopTime/1e5, acc_fs, [sunM, [earthM, saturnM]])
 println(size(pos))
+
 
 """

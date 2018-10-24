@@ -53,8 +53,8 @@ otherwise return entire pos and vel array
     #integration loop
     for i = 2:len
         aip = ai   #current acceleration
-        println(size(aip))
-        println(size(pos))
+        #println(size(aip))
+        #println(size(pos))
         pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*aip  #new position
         ai = func(pos[:, i], par) #new acceleration based on new radius
         vel[:, i] = vel[:, i-1] + dt*(ai + aip)/2   #new velocity based on new acceleration

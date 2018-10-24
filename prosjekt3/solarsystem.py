@@ -37,8 +37,10 @@ class solsys():
         pos0 = [0,0,0]
         vel0 = [0,0,0]
         for i in self.planets:
+            pos0 += i.pos0*i.mass
             vel0 += i.vel0*i.mass
-        vel0 = vel0/mass
+        pos0 = pos0/mass
+        vel0 = vel0/mass        
         self.planets.append(celestialBodies(name, vel0, pos0, mass))
 
     def plottXYOrbit(self):
@@ -57,7 +59,7 @@ class solsys():
         plt.show()
         #print(len(self.planPos[1]))
 
-    def simulate(self, inFile, outFile, time = 10, dt = 1e-5, plott = "true", intgrat = 1, masses = [], acc_func=1): #, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]):
+    def simulate(self, inFile, outFile, time = 10, dt = 1e-5, plott = "true", intgrat = 1, masses = [], acc_func=1):
         names = []
         for i in range(len(self.planets)):
             names.append(self.planets[i].name)
@@ -116,8 +118,10 @@ class solsys():
 
     def exportValues(self, filename): #.npy
         nroPlanets = len(self.planets)
+        print(self.planets)
         vels = np.zeros(nroPlanets * 3)
         poss = np.zeros(nroPlanets * 3)
+        print(nroPlanets)
         for i in range(0, nroPlanets*3, 3):
             vels[i] = self.planets[int(i/3)].vel[0]
             vels[i+1] = self.planets[int(i/3)].vel[1]

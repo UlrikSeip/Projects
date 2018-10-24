@@ -34,7 +34,7 @@
 	%breakatwhitespace=true,
 	%tabsize=3
 }
-\title{Project 2 in FYS3150}
+\title{Project 3 in FYS3150}
 \author{Bendik Steinsvåg Dalen, Ulrik Seip}
 %\renewcommand\thesection.\alph{section}
 %\renewcommand\thesection{\Alph{section}}
@@ -51,41 +51,95 @@ In this project we simulate the orbits of all the 8 planets in the solar system,
 \section{INTRODUCTION}
 Our solar system is littered with asteroids, planets and moons. This plethora objects floating around in space makes for a perfect exercise in solving multi body differential equations in 3 dimensions.
 
-When simulating orbits for several celestial bodies with high accuracy, the computation can be expensive, and so it is paramount to strike a balance  between efficiency and accuracy. To explore this balance, we will run simulations using the Velocity-Verlet integration method, and comparing with the Forward-Euler method. Having found the optimal way to simulate the orbits, we move on to test the effect of the gravitational pull between planets, and we also look at the (something about the perhelion of Mercury).
+When simulating orbits for several celestial bodies with high accuracy, the computation can be expensive, and so it is paramount to strike a balance  between efficiency and accuracy. To explore this balance, we will run simulations using the Velocity-Verlet integration method, and comparing with the Forward-Euler method. Having found the optimal way to simulate the orbits, we move on to test the effect of the gravitational pull between planets, and complete a full model for all planets of the solar system, and Pluto. Finaly we look at the perhelion precession of Mercury to see the stability of our algorithm.
 
 
 \section{METHOD}
+
 \subsection{Newtons law of gravitation}
-One of the most common representations of newtons law of gravitation is
+One of the most common representations of newtons law of gravitation on Earth is
 \begin{align}
-F_{G} = \frac{M_{\text{Earth}}v^{2}}{r}\boldsymbol{\hat{r}} = \frac{GM_{\odot} M_{\text{Earth}}}{r^{2}}\boldsymbol{\hat{r}}
+\boldsymbol{F}_{G} = \frac{M_{\text{Earth}}v^{2}}{r}\boldsymbol{\hat{r}} = \frac{GM_{\odot} M_{\text{Earth}}}{r^{2}}\boldsymbol{\hat{r}},
 \end{align}
-Where $G=6.67\cdot10^-11\frac{m^3}{kgs^2}$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the bodies exerting a force upon each other, $F_G$ is said force, and $r$ is the distance between the bodies. Using Keplers laws this can be further simplified to
+where $G=6.67\cdot10^-11\frac{m^3}{kgs^2}$ is the gravitational constant, $m_1$ and $m_2$ are the masses of the bodies exerting a force upon each other, $F_G$ is said force, and $r$ is the distance between the bodies. Using Keplers laws this can be further simplified to
 \begin{align}
-F_G=\frac{{M_{\odot}M_\text{Earth}}4\pi^{2}}{r^{2}}\frac{\mathrm{AU}^{3}}{\mathrm{yr}^{2}}\boldsymbol{\hat{r}}
+\boldsymbol{F}_G=\frac{{M_{\odot}M_\text{Earth}}4\pi^{2}}{r^{2}}\frac{\mathrm{AU}^{3}}{\mathrm{yr}^{2}}\boldsymbol{\hat{r}}.
 \end{align}
 We can then rewrite this for a point mass and acceleration as
 \begin{align}
-a=\frac{{M_{s}}4\pi^{2}}{r^{2}}\frac{\mathrm{AU}^{3}}{\mathrm{yr}^{2}}\boldsymbol{\hat{r}}
+\boldsymbol{a}=\frac{{M_{\odot}}4\pi^{2}}{r^{2}}\frac{\mathrm{AU}^{3}}{\mathrm{yr}^{2}}\boldsymbol{\hat{r}}. \label{akselerasjon}
 \end{align} 
+
 \subsection{The Forward Euler method}
-To use equation () for the Forward Euler method we need an expression for $\Delta \boldsymbol{v}$. We therefore introduce a time step $dt$. We also define $\boldsymbol{\hat{r}}=\cos(\theta)\boldsymbol{\hat{i}}+\sin(\theta)\boldsymbol{\hat{j}}+\cos(\phi)\boldsymbol{\hat{k}}$. This gives us
+To use equation \ref{akselerasjon} for the Forward Euler method we need an expression for $\Delta \boldsymbol{v}$. We therefore introduce a time step $dt$. We also define $\boldsymbol{\hat{r}}=\cos(\theta)\boldsymbol{\hat{i}}+\sin(\theta)\boldsymbol{\hat{j}}+\cos(\phi)\boldsymbol{\hat{k}}$. This gives us
 \begin{align*}
-\frac{d\boldsymbol{v}}{dt}=\frac{v_{i+1}-v_i}{dt}=-4\pi^2\frac{M_s}{r^2}\boldsymbol{\hat{r}}
+\frac{d\boldsymbol{v}}{dt}=\frac{v_{i+1}-v_i}{dt}=-4\pi^2\frac{M_{\odot}}{r^2}\boldsymbol{\hat{r}}
 \end{align*}
 \begin{align}
-\boldsymbol{v_{i+1}}=-4\pi^2\frac{M_s}{r^2}dt\boldsymbol{\hat{r}}+\boldsymbol{v_i}
+\boldsymbol{v}_{i+1}=-4\pi^2\frac{M_\odot}{r^2}dt\boldsymbol{\hat{r}} + \boldsymbol{v}_i 
+= -\boldsymbol{a}_i dt  + \boldsymbol{v}_i.
 \end{align}
-stuff about $x_{i+1}$
+We can do something similar to find $\Delta \boldsymbol{x}$:
+\begin{align*}
+\frac{d\boldsymbol{x}}{dt}=\frac{x_{i+1}-x_i}{dt} = v_{i+1}\boldsymbol{\hat{r}} = \boldsymbol{v}_{i+1}
+\end{align*}
+\begin{align}
+\boldsymbol{x}_{i+1}= \boldsymbol{v}_{i+1}dt + \boldsymbol{x}_i 
+= \boldsymbol{v}_{i+1} dt  + \boldsymbol{x}_i.
+\end{align}
+
+
+
 \subsection{The Velocity Verlet method}
+From \cite{lecture notes} we know that the Verlet formula for a specific $x_i$ is
+\begin{align}
+x_{i+1} = 2x_i - x_{i-1} + h^2 x_i^{(2)} + O(h^4) \label{verlet},
+\end{align}
+where $h$ is the timestep, $x^{(2)}$ is function \ref{akselerasjon}, and $O$ is the truncation error. We also know that the velocity is
+\begin{align}
+x_i^{(1)} = \frac{x_{i+1} - x_{i-1}}{2h} + O(h^2). \label{vVerlet}
+\end{align}
+Unfortunaley function \ref{verlet} is a bit difficult to use as we only know the initial position, and thus can't find $x_1$ or $x_2$, and so forth. To help with this we can rewrite them into
+\begin{align}
+x_{i+1} = x_i + hx_i^{(1)} + \frac{h^2}{2}x_i^{(2)} \label{velVerlet}
+\end{align}
+and
+\begin{align}
+x_i^{(1)} = x_{i-1}^{(1)} + \frac{h}{2} \left( x_i^{(2)} + x_{x-i}^{(2)} \right) \label{VvelVerlet},
+\end{align}
+see section \ref{vVerlet_math} for more details.
+
 \subsection{Testing the algorithms}
+
+\subsection{Escape velocity}
+
+\subsection{The three-body problem}
+We now have a good basis to extend our algorithm to study the three-body problem, by adding Jupiter to the equation. The force between Earth and Jupiter is
+\begin{align}
+\boldsymbol{F}_{\text{Earth-Jupiter}} = \frac{G M_\text{Jupiter} M_{\text{Earth}}} {r_{\text{Earth-Jupiter}}^{2}} \boldsymbol{\hat{r}}.
+\end{align}
+For simplicity's sake we will keep the Sun fixed in the centre of mass, or origo, for now. For each timestep we then calculate the force on Earth and Jupiter from the Sun, and the the force between Earth and Jupiter, and add them up. We then get an position array for both Earth and Jupiter.
+
+To test the stability of our Verlet solver we also studied what effect increasing the magnitude of Jupiter by 10 and 1000 would have on the system.
+
+\subsection{Final model for all planets of the solar system}
+We now almost have a working model of the solarsystem. Firstly we calculated the three-body problem of the Earth, Sun and Jupiter again, but now treating the Sun as an object, instead of fixing it in the centre of mass. We then get the path of the objects around the centre of mass. The initial values of the Sun was found by setting the posisiton in origo, and making sure the momentum of the Sun was the negative of the total momentum of the other planets. 
+
+Finaly we simply added the remaining planets, and Pluto, to the calculation as extra bodies. The acceleration on each body was found as above, by calculating the force on each object from the other objects. 
+
+
+\subsection{The perihelion precession of Mercury}
 
 
 
 \section{RESULTS}
+
 \subsection{The Forward Euler method}
+
 \subsection{The Velocity Verlet method}
+
 \subsection{Testing the algorithms}
+
 
 
 
@@ -94,6 +148,26 @@ stuff about $x_{i+1}$
 
 \section{APENDICES}
 
+\subsection{The Velocity Verlet method math}\label{vVerlet_math}
+
+Firstly function \ref{velVerlet}:
+\begin{align}
+x_i^{(1)} = \frac{x_{i+1} - x_{i-1}}{2h} \Rightarrow 2hx_i^{(1)} &= x_{i+1} - x_{i-1} \\
+x_{i-1} &= x_{i+1} - 2hx_i^{(1)}
+\end{align}
+\begin{align}
+x_{i+1} &= 2x_i - x_{i-1} + h^2 x_i^{(2)} = 2x_i - \left( x_{i+1} - 2hx_i^{(1)} \right)  + h^2 x_i^{(2)} \\
+2 x_{i+1} &= 2x_i + 2hx_i^{(1)} + h^2 x_i^{(2)} \\
+x_{i+1} &= x_i + hx_i^{(1)} + \frac{h^2}{2} x_i^{(2)} 
+\end{align}
+
+Then function \ref{VvelVerlet}:
+\begin{align}
+x_{i+1} &= x_i + hx_i^{(1)} + \frac{h^2}{2} x_i^{(2)} \Rightarrow x_{i} = x_{i-1} + hx_{i-1}^{(1)} + \frac{h^2}{2} x_{i-1}^{(2)} \\
+x_{i+1} &= x_{i-1} + hx_{i-1}^{(1)} + \frac{h^2}{2} x_{i-1}^{(2)} + hx_i^{(1)} + \frac{h^2}{2} x_i^{(2)} \\
+x_i^{(1)} &= \frac{x_{i-1}^{(1)}}{2} + \frac{h}{4} x_{i-1}^{(2)} + \frac{x_i^{(1)}}{2} + \frac{h}{4} x_i^{(2)}
+= x_{i-1}^{(1)} + \frac{h}{2} \left( x_i^{(2)} + x_{i-1}^{(2)} \right) 
+\end{align}
 
 
 \section{REFERENCES}
