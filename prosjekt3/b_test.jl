@@ -8,6 +8,7 @@ using LinearAlgebra
 import LinearAlgebra: norm
 import PyPlot
 const plt = PyPlot
+include("afunks.jl")
 
 #planetinfo
 sunM = 1
@@ -39,29 +40,6 @@ neptuneVel0 = [7.889374352298129E-04, 3.051510114439145E-03, -8.066487877030014E
 plutoM = 1.307e22
 plutoPos0 = [1.164087973998699E+01, -3.157554534292389E+01, 1.155639944820950E-02]
 plutoVel0 = [3.024320808138397E-03, 4.313236772252202E-04, -9.237227795187408E-04]
-
-
-function aFunk(pos, par)
-    mass = sunM
-    #G = 6.67408e-11
-    G = -4*(pi^2)
-    #auToM = 149.60*10^9
-    r = norm(pos)
-    th = pos/r
-    a = G*mass*th/((r)^2)
-    return a
-end
-
-function acc_sirc(pos, par)
-    """
-    Finds the acceleration for an object in a constant circular motion, in a spesific position.
-    Takes the position of the object.
-    """    
-    r = norm(pos)
-    th = pos/r
-    a = -4*pi^2/(r^2)*th
-    return a
-end
 
 function plottify(items)
     counter = 1

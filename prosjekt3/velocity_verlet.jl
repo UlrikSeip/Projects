@@ -1,5 +1,5 @@
 include("integrator.jl")
-include("b_test.jl")
+include("afunks.jl")
 include("f_test.jl")
 import PyPlot
 const plt = PyPlot
@@ -52,7 +52,7 @@ function parse_commandline() #equivalent to argparse in python
             default = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]
             #arg_type = Array
         "acc_func"
-            help = "a number representing which acceleration function you want to use; 1=aFunk, 2=acc_fs, 3=acc_nfs"
+            help = "a number representing which acceleration function you want to use; 1=aFunk, 2=acc_fs, 3=acc_nfs, 4=moreBodyFunc"
             required = false
             default = 1
             arg_type = Int64
@@ -105,7 +105,7 @@ function plottify(items, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter"
     plt.show()
 end
 
-acc_funcs = [aFunk, acc_fs, acc_nfs]
+acc_funcs = [aFunk, acc_fs, acc_nfs, moreBodyFunc]
 
 data, writefile, t, dt, plott, masses, names, acc_func = Parse()    #creates variables for arguments
 items, vel0, pos0, dims= dataSorter(data)   #sorts the data

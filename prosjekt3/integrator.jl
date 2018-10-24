@@ -1,5 +1,5 @@
 using DelimitedFiles
-
+include("afunks.jl")
 #by starting a julia shell, and typing "]" you cna then "add PyCall"
 #and "add PyPlot" to install packages
 
@@ -44,6 +44,7 @@ otherwise return entire pos and vel array
     vel[:, 1] = vel0
     pos = ones(pl_len, len)
     pos[:, 1] = pos0
+    println(pos0)
     #rip = norm(pos[:, 1])
     #println(size(pos))
     ai = func(pos[:, 1], par) 
@@ -52,6 +53,8 @@ otherwise return entire pos and vel array
     #integration loop
     for i = 2:len
         aip = ai   #current acceleration
+        println(size(aip))
+        println(size(pos))
         pos[:, i] = pos[:, i-1] + dt*vel[:, i-1] + ((dt^2)/2)*aip  #new position
         ai = func(pos[:, i], par) #new acceleration based on new radius
         vel[:, i] = vel[:, i-1] + dt*(ai + aip)/2   #new velocity based on new acceleration
