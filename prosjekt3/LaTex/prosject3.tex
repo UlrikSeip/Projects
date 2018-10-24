@@ -108,11 +108,20 @@ and
 x_i^{(1)} = x_{i-1}^{(1)} + \frac{h}{2} \left( x_i^{(2)} + x_{x-i}^{(2)} \right) \label{VvelVerlet},
 \end{align}
 see section \ref{vVerlet_math} for more details.
-
+\subsection{The code for the implementations}
+Both the Velocity Verlet and the Forward Euler algorithms were implemented using a combination of python and Julia. Python happens to be a convenient language for making an object oriented implementation of a solar system simulation, while Julia is in most cases more than 10 times faster than Python, and even rivals c++, when it comes to computation speeds.
 \subsection{Testing the algorithms}
+To test our algorithm we can check if the escape velocity of our planets is correct. We find it analytically by using conservation of energy, and the fact that the kinetic energy, and the potential energy of our planets are defined with opposite signs. We therefore start with the equation:
+\begin{align*}
+E_k + E_p = \tfrac{1}{2}M_{E}v_{esc}^{2} - G\dfrac{M_{\odot}M_{E}}{r} = 0
+\end{align*}
+If we then isolate $v_{esc}$ on the left side of the equation, we end up with the following equation: 
+\begin{align}
+V_{esc} = \sqrt{\dfrac{2GM_{\odot}}{r}}
+\end{align}
+To test our implementation against the analytical solution we simply run a simulation for an imaginary planet with the initial analytical velocity, and see if it has returned after several thousand years. We can also try simulating with a slightly lower initial velocity, and se if the planet does indeed stay in orbit with anything less than the analytical initial velocity.
 
-\subsection{Escape velocity}
-
+Furthermore the algorithms can be tested against each other for both accuracy and consistency.
 \subsection{The three-body problem}
 We now have a good basis to extend our algorithm to study the three-body problem, by adding Jupiter to the equation. The force between Earth and Jupiter is
 \begin{align}
@@ -139,8 +148,30 @@ Finaly we simply added the remaining planets, and Pluto, to the calculation as e
 \subsection{The Velocity Verlet method}
 
 \subsection{Testing the algorithms}
-
-
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{escapeVelocity2000.pdf}
+	\caption{A plot of the simulated minimal escape velocity over 2000 years}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{escape_vel}
+\end{figure}
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{fe1e4_2d.pdf}
+	\caption{A plot of the simulated minimal escape velocity over 2000 years}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{forw_eul2d}
+\end{figure}
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{vv1e4_2d.pdf}
+	\caption{A plot of the simulated minimal escape velocity over 2000 years}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{computation time plot}
+\end{figure}
 
 
 \section{CONCLUSIONS}

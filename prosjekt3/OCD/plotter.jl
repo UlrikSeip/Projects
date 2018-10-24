@@ -6,6 +6,7 @@ function plottify(poss, dims = 3, labels = ["Mercury", "Venus", "Earth", "Mars",
     filter!(e->e≠"",labels)
     filter!(e->e≠"[",labels)
     filter!(e->e≠"]",labels)
+    dims = 3
     for i = 1:Int64(length(labels))
         if dims == 3
             plt.plot3D(poss[i, 1, :], poss[i, 2, :], poss[i, 3, :], label = labels[i])

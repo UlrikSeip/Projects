@@ -57,14 +57,14 @@ class solsys():
         plt.show()
         #print(len(self.planPos[1]))
 
-    def simulate(self, inFile, outFile, time = 10, dt = 1e-4, plott = "true", intgrat = 1, acc_func=1, int_func = 1): #, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]):
+    def simulate(self, inFile, outFile, time = 10, dt = 1e-4, plott = "true", intgrat = 1, acc_func=2, int_func = 1, plot_dim = 2): #, names = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptun", "Pluto"]):
         names = []
         masses = []
         for i in range(len(self.planets)):
             names.append(self.planets[i].name)
             masses.append(self.planets[i].mass)
         if intgrat == 1:
-            simulation = subprocess.Popen(["julia", "integrator.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names), str(acc_func), str(int_func)])
+            simulation = subprocess.Popen(["julia", "integrator.jl", inFile, outFile, str(time), str(dt), plott, str(masses), str(names), str(acc_func), str(int_func), str(plot_dim)])
         simulation.wait() #waits for simulation to finish before doing anything else
         
     def addBodyFromFile(self, name):
@@ -126,13 +126,14 @@ class solsys():
 
 if __name__ == '__main__' :    
     solarsystem = solsys()
-    #solarsystem.addBodyFromFile("EARTH")
+    solarsystem.addBodyFromFile("EARTH")
     #solarsystem.addBodyFromFile("JUPITER")
     #solarsystem.addBodyFromFile("SUN")
-    solarsystem.addAllPlanets()
+    #solarsystem.addAllPlanets()
     solarsystem.exportInitialValues("startValues.npy")
-    solarsystem.simulate("startValues.npy", "orbitsTest.txt", time = 20, acc_func=2, int_func=1) 
-                                             #time in years, can allso take dt, masses and names
+    #solarsystem.simulate("startValues.npy", "orbitsTest.txt", time = 20, acc_func=2, int_func=1)
+    solarsystem.simulate("startValues.npy", "orbitsTest.txt", time = 2000, acc_func=1, int_func=2, dt = 1e-2)                                             
+    #time in years, can allso take dt, masses and names
 
 
 
