@@ -148,6 +148,7 @@ Finaly we simply added the remaining planets, and Pluto, to the calculation as e
 \subsection{The Velocity Verlet method}
 
 \subsection{Testing the algorithms}
+<<<<<<< HEAD
 \begin{figure}[h!]
 	\centering 
 	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
@@ -159,23 +160,104 @@ Finaly we simply added the remaining planets, and Pluto, to the calculation as e
 \begin{figure}[h!]
 	\centering 
 	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
-	\includegraphics[scale=0.7]{fe1e4_2d.pdf}
-	\caption{A plot of the simulated minimal escape velocity over 2000 years}
+	\includegraphics[scale=0.7]{fe1e4_2d.png}
+	\caption{A 10000 year simulation with the forward euler method in 2d, $dt = \frac{1}{100}years$}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{escape_vel}
+\end{figure}
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{vv1e4_2d.png}
+	\caption{A 10000 year simulation with the velocity verlet method in 2d, $dt = \frac{1}{100}years$}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{computation time plot}
+\end{figure}
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{fe1e4_3d.png}
+	\caption{A 10000 year simulation with the forward euler method in 3d, $dt = \frac{1}{100}years$}
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{forw_eul2d}
 \end{figure}
 \begin{figure}[h!]
 	\centering 
 	%Scale angir størrelsen på bildet. Bildefilen må ligge i %samme mappe som tex-filen. 
-	\includegraphics[scale=0.7]{vv1e4_2d.pdf}
-	\caption{A plot of the simulated minimal escape velocity over 2000 years}
+	\includegraphics[scale=0.7]{vv1e4_3d.png}
+	\caption{A 10000 year simulation with the velocity verlet method in 2d, $dt = \frac{1}{100}years$}
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{computation time plot}
 \end{figure}
+=======
+
+\subsection{The three-body problem}
+The plot of the path of Jupiter and Earth can be seen in figure \ref{e_1}, with an elapsed time of $t=30\text{yr}$ and a timestep of $10^{-5} \text{yr}$. The path when Jupiter has 10 and 1000 times more mass, with the same time interval, can be seen in figure \ref{e_10} and \ref{e_1000} respectively. 
+
+\begin{figure}[h!]
+		\centering 
+		%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+		\includegraphics[scale=0.7]{../opp_e1.pdf}
+		\caption{A plot of Jupiter and Earths path around the sun}
+		%Label gjør det enkelt å referere til ulike bilder.
+		\label{e_1}
+\end{figure}
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{../opp_e10.pdf}
+	\caption{A plot of Jupiter and Earths path around the sun, when Jupiter has 10 times the mass}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{e_10}
+\end{figure}
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+	\includegraphics[scale=0.56]{../opp_e1000.pdf}
+	\includegraphics[scale=0.56]{../opp_e1000-0.pdf}
+	\caption{A plot of Jupiter and Earths path around the sun, when Jupiter has 10000 times the mass}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{e_1000}
+\end{figure}
+
+\subsection{Final model for all planets of the solar system}
+The plot of the path of Jupiter, Earth and the Sun can be seen in figure \ref{f_0}, with an elapsed time of $t=20\text{yr}$ and a timestep of $10^{-5} \text{yr}$. The plot of the path of all the planets can be seen in \ref{f_1_0}, with an elapsed time of $t=300\text{yr}$ and a timestep of $10^{-3} \text{yr}$. The path of the planets closer to the centre can be seen in \ref{f_1_1}.
+
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{../opp_f0.pdf}
+	\caption{A plot of Jupiter, Earth and the Suns path around the centre of mass. You can't see it here, but the Sun moves in a small circle in the centre}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{f_0}
+\end{figure}
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+	\includegraphics[scale=0.7]{../opp_f1.pdf}
+	\caption{A plot of the Sun, all the planets and Plutos path around the centre of mass}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{f_1_0}
+\end{figure}
+\begin{figure}[h!]
+	\centering 
+	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
+	\includegraphics[scale=0.56]{../opp_f2.pdf}
+	\includegraphics[scale=0.56]{../opp_f3.pdf}
+	\caption{A plot of the Sun and the planets path around the centre of mass when we zoom in on the planets closer to the Sun}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{f_1_1}
+\end{figure}
+
+>>>>>>> 338ce69b98a4f4c6651676cb70cc06f54e20b300
 
 
 \section{CONCLUSIONS}
+\subsection{The three-body problem}
+We see that the normal path of Earth and Jupiter are stable, suggesting that the Verlet algorithm we have created is a good aproximation. When Jupiters mass is 10 times stronger there is no noticeable difference in the path. When it is 1000 times stronger, Earth spins around the Sun and Jupiter a couple of times, before shooting out into space, while Jupiter has a stable orbit around the sun. This suggest that the Verlet method is good enough to simulate a stable path when Jupiters mass is 10 times stronger, but not when it is 1000 times stronger. This makes sense as when $1000M_{\text{Jupiter}}$ is about the same as $M_{\odot}$, which would make it pull on Earth as strongly as the Sun. If we hadn't fixed the Sun in the centre of mass, then it and Jupiter would either have an unstable orbit, or we would get something close to a Binary star system.
 
+\subsection{Final model for all planets of the solar system}
+We see that our algorithm produces nice, stable orbits for all the planets. The only planet which seem to not be completley stable is the planet closest to the sun, Mercury, but this could just be that its path moves around more dude to its closenes to the centre of mass. All in all it seems like the Verlet method produced a good aproximation of our solar system.
 
 \section{APENDICES}
 
@@ -205,6 +287,8 @@ x_i^{(1)} &= \frac{x_{i-1}^{(1)}}{2} + \frac{h}{4} x_{i-1}^{(2)} + \frac{x_i^{(1
 \begin{thebibliography}{9}
 	\bibitem{lecture notes}
 	Computational Physics, Lecture Notes Fall 2015, Morten Hjort-Jensen p.215-220
+	\bibitem{nasa}
+	\url{https://ssd.jpl.nasa.gov/?horizons#top}
 \end{thebibliography}
 
 
