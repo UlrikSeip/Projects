@@ -3,7 +3,7 @@ include("SIR.jl")
 import PyPlot
 const plt = PyPlot
 
-function main(a,b,c,S0,I0,R0,T,dt,filename)
+function ODE_sol(a,b,c,d,di,e,S0,I0,R0,T,dt,filename)
     """
     A function that runs a complete SIRS model using RK4.
     Takes the inputs rate of transmission a, rate of recovery b, rate of
@@ -28,9 +28,9 @@ function main(a,b,c,S0,I0,R0,T,dt,filename)
         end
          =#
         #finds the new values for S,I and R
-        s = RungeKutta4(dt, dS, S[j], t[j], [c,R[j],a,I[j],N])
-        i = RungeKutta4(dt, dI, I[j], t[j], [a,S[j],N,b])
-        r = RungeKutta4(dt, dR, R[j], t[j], [c,I[j],b])
+        s = RungeKutta4(dt, dSvd, S[j], t[j], [c,R[j],a,I[j],N,d,e])
+        i = RungeKutta4(dt, dIvd, I[j], t[j], [a,S[j],N,b,d,di])
+        r = RungeKutta4(dt, dRvd, R[j], t[j], [c,I[j],b,d])
         push!(S,s)
         push!(I,i)
         push!(R,r)
@@ -57,11 +57,15 @@ function main(a,b,c,S0,I0,R0,T,dt,filename)
     plt.show()
 end
 
-S0 = 300
-I0 = 100
-R0 = 0
+d =  0.00002242299
+#di = 0.01
+di = 0
+e =  0.00002948891
 
-main(4,1,0.5, 300,100,0, 13,.01, "opp_a_A.pdf")
-#main(4,2,0.5, 300,100,0, 21,.01, "opp_a_B.pdf")
-#main(4,3,0.5, 300,100,0, 27,.01, "opp_a_C.pdf")
-#main(4,4,0.5, 300,100,0, 27,.01, "opp_a_D.pdf")
+ODE_sol(4,1,0.5,d,di,e, 300,100,0, 25,.01, "opp_c_A.pdf")
+#ODE_sol(4,1,0.5,d,0.1,e, 300,100,0, 230,.01, "opp_c_A.pdf")
+#ODE_sol(4,2,0.5,d,di,e, 300,100,0, 41,.01, "opp_c_B.pdf")
+#ODE_sol(4,2,0.5,d,0.1,e, 300,100,0, 41,.01, "opp_c_B.pdf")
+#ODE_sol(4,3,0.5,d,di,e, 300,100,0, 27,.01, "opp_c_C.pdf")
+#ODE_sol(4,4,0.5,d,di,e, 300,100,0, 27,.01, "opp_c_D.pdf")
+
