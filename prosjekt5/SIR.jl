@@ -57,3 +57,34 @@ function dRvd(t,R,var)
     r = b*I - c*R - d*R
     return r
 end
+
+function dSf(t,S,var)
+    """
+    A function that finds the change in susceptible individuals in the SIRS
+    model.
+    """
+    c,R,a,I,N,f = var
+    s = c*R - a*S*I/N - f*S
+    return s
+end
+
+function dIf(t,I,var)
+    """
+    A function that finds the change in infected individuals in the SIRS
+    model.
+    """
+    a,S,N,b = var
+    i = - b*I + a*S*I/N
+    return i
+end
+
+function dRf(t,R,var)
+    """
+    A function that finds the change in recovered individuals in the SIRS
+    model.
+    """
+    c,I,b,S,f = var
+    r = b*I - c*R + f*S
+    return r
+end
+

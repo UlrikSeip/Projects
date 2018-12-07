@@ -67,8 +67,8 @@ end
 
 function a_os(A,a0,om,t)
     #we assume we start with average transmission rate
-    #return A*sin.(t*om) + a0
-    return A*cos.(t*om) + a0
+    return A*sin.(t*om) + a0
+    #return A*cos.(t*om) + a0
 end
 
 T = 365.25*2
@@ -84,7 +84,7 @@ end
 #ODE_sol(1,4,2*pi/365.25, 1,0.5, 100,100,200, T,dt, "opp_d_A.pdf")
 #ODE_sol(1,4,2*pi/365.25, 4,0.5, 100,100,200, T,dt, "opp_d_B.pdf")
 #ODE_sol(2,4,2*pi/365.25, 2,0.5, 100,100,200, T,dt, "opp_d_C.pdf")
-ODE_sol(2,2,2*pi/365.25, 1,0.5, 100,100,200, T,dt, "opp_d_C.pdf")
+ODE_sol(2,6,2*pi/365.25, 2,0.5, 100,100,200, T,dt, "opp_d_C.pdf")
 
 #ODE_sol(4,2,0.5, 300,100,0, 41,.01, "opp_d_B.pdf")
 #ODE_sol(4,3,0.5, 300,100,0, 27,.01, "opp_d_C.pdf")
