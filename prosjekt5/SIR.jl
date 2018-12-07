@@ -44,7 +44,7 @@ function dIvd(t,I,var)
     model, when acounting for vital dynamics.
     """
     a,S,N,b,d,di = var
-    i = - b*I + a*S*I/N - d*I - di*I
+    i =  a*S*I/N - b*I - d*I - di*I
     return i
 end
 
