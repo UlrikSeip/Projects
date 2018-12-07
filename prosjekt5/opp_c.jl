@@ -62,7 +62,7 @@ function ODE_sol(a,b,c,d,di,e,S0,I0,R0,T,dt,filename)
     plt.plot(t,I)
     plt.plot(t,R)
     #plt.plot(t,D)
-    plt.plot(t,N)
+    #plt.plot(t,N)
     plt.grid()
     plt.legend(["Susceptible", "Infected", "Recovered", "Total"]) #"Dead",
     plt.xlabel("Days")
@@ -85,6 +85,6 @@ e =  0.00002948891
 #ODE_sol(4,4,0.5,d,di,e, 300,100,0, 27,.01, "opp_c_D.pdf")
 
 #ODE_sol(4,1,0.5, 0,.1,0, 300,100,0, 350,.01, "opp_c_A.pdf")
-ODE_sol(4,4,0.5, d*100,1.,e*100, 300,100,0, 35,.01, "opp_c_A.pdf")
+ODE_sol(4,2,0.5, d*1,.05,e*1, 300,100,0, 35,.01, "opp_c_A.pdf")
 
 
