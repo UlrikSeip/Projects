@@ -1,6 +1,6 @@
 function RungeKutta4(dt, f, y, t, var=[])
     """
-    A function that implements on step of the Runge Kutta 4th order method.
+    A function that implements one step of the Runge Kutta 4th order method.
     Takes the inputs for timestep dt, function f, current step y, current
     time t and a list var of other variables.
     Returns the next step yn.
