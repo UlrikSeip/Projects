@@ -118,3 +118,17 @@ function df(t,fvar)
     f0,Df = fvar
     return f0 + t*Df
 end
+
+function f_campaign(t,fvar)
+    """
+    A function that modeles f as if there had been a vaccination campaign.
+    """
+    t0,t1,f0,f1 = fvar
+    #if t is between t0 and t1 we use f1, else we use f0
+    #idealy we have f1>f0
+    if t >= t0 || t <= t1
+        return f1
+    else
+        return f0
+    end
+end
