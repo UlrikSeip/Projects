@@ -5,14 +5,14 @@ function matrixmakinator(dim1, dim2, M, flip = false)
     if flip
         newMatrix = zeros(dim2, dim1)
         for i = 1:dim1
-            for j = 1:dim2
+            @inbounds for j = 1:dim2
                 newMatrix[j, i] = M[i][j]
             end
         end
     else
         newMatrix = zeros(dim1, dim2)
         for i = 1:dim1
-            for j = 1:dim2
+            @inbounds for j = 1:dim2
                 newMatrix[i, j] = M[i][j]
             end
         end
