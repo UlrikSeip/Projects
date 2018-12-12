@@ -133,7 +133,7 @@ We tried to base the values for $d$ and $e$ on the death and birth rate in Norwa
 
 Another concept we can study is seasonal variations in the infection rate. Certian diseases, such as influenza, have a large variance in infection rate based on the time of year. This can be modeled by setting $a$ to be
 \begin{align}
-a ( t ) = A \cos ( \omega t ) + a _ { 0 },
+a ( t ) = A \sin ( \omega t ) + a _ { 0 },
 \end{align}
 where $a0$ is the average transmission rate, $A$ is the maximum deviation from $a_0$, and $\omega$ is the frequency of oscillation. We set $\omega = 2 \pi/365.25$ so that $a$ would have a variance of a year, like most diseases. Fist we set $A=1$ and $a0=4$ for population $A$ and $D$. Then we observed population $B$, and set $A=2$, and $a0=4$ and $6$. 
 
@@ -160,13 +160,14 @@ Exactly what $f$ is can vary. We will be studing three cases:
 
 \subsection{RungeKutta}
 
+The resulting plots for population $A$ to $E$ can be seen in figure \ref{fig:opp_a_A} to \ref{fig:opp_a_E}. The resulting end values can alos be seen in table \ref{tab:opp_a_A} to \ref{tab:opp_a_E}.
 
 \begin{figure}
 	\centering
 	\begin{minipage}{0.49\textwidth}
 		\centering
 		\includegraphics[scale=0.6]{../plots/opp_a_A.pdf}
-		\caption{figure caption goes here}\label{fig:opp_a_A}
+		\caption{A plot of the population distribution for the SIRS-modell, for population $A$, where $a=4$, $b=1$ and $c=0.5$. }\label{fig:opp_a_A}
 	\end{minipage}
 	\begin{minipage}{0.49\textwidth}
 		\centering
@@ -174,11 +175,11 @@ Exactly what $f$ is can vary. We will be studing three cases:
 		\begin{tabular}{|l|l|l|l|}
 			\hline
 			Group & Expected & Analytical   & Number  \\ \hline
-			$s*$ & 0.25 & 0.2499 & 100.0 \\ \hline
-			$i*$ & 0.25 & 0.2516 & 100.6 \\ \hline
-			$r*$ & 0.5  & 0.5035 & 201.4 \\ \hline
+			$s^*$ & 0.25 & 0.2499 & 100.0 \\ \hline
+			$i^*$ & 0.25 & 0.2516 & 100.6 \\ \hline
+			$r^*$ & 0.5  & 0.5035 & 201.4 \\ \hline
 		\end{tabular}
-		\caption{table caption goes  here}\label{tab:opp_a_A}
+		\caption{The corresponding end values for figure \ref{fig:opp_a_A}. The excpected values are derived from equation \ref{SIRS_eq}, the analytical values are the potion of the population found by RK4, and number are the total number  of people this corresponds to.}\label{tab:opp_a_A}
 	\end{minipage}
 %	\caption{stuff}
 \end{figure}
@@ -188,7 +189,7 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	\begin{minipage}{0.49\textwidth}
 		\centering
 		\includegraphics[scale=0.6]{../plots/opp_a_B.pdf}
-		\caption{figure caption goes here}\label{fig:opp_a_B}
+		\caption{A plot of the population distribution for the SIRS-modell, for population $B$, where $a=4$, $b=2$ and $c=0.5$. }\label{fig:opp_a_B}
 	\end{minipage}
 	\begin{minipage}{0.49\textwidth}
 		\centering
@@ -196,11 +197,11 @@ Exactly what $f$ is can vary. We will be studing three cases:
 		\begin{tabular}{|l|l|l|l|}
 			\hline
 			Group & Expected & Analytical   & Number  \\ \hline
-			$s*$ & 0.5 & 0.5001 & 200.1 \\ \hline
-			$i*$ & 0.1 & 0.1006 & 40.2 \\ \hline
-			$r*$ & 0.4 & 0.4011 & 160.5 \\ \hline
+			$s^*$ & 0.5 & 0.5001 & 200.1 \\ \hline
+			$i^*$ & 0.1 & 0.1006 & 40.2 \\ \hline
+			$r^*$ & 0.4 & 0.4011 & 160.5 \\ \hline
 		\end{tabular}
-		\caption{table caption goes  here}\label{tab:opp_a_B}
+		\caption{The corresponding end values for figure \ref{fig:opp_a_B}. The excpected values are derived from equation \ref{SIRS_eq}, the analytical values are the potion of the population found by RK4, and number are the total number  of people this corresponds to.}\label{tab:opp_a_B}
 	\end{minipage}
 	%	\caption{stuff}
 \end{figure}
@@ -210,7 +211,7 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	\begin{minipage}{0.49\textwidth}
 		\centering
 		\includegraphics[scale=0.6]{../plots/opp_a_C.pdf}
-		\caption{figure caption goes here}\label{fig:opp_a_C}
+		\caption{A plot of the population distribution for the SIRS-modell, for population $C$, where $a=4$, $b=3$ and $c=0.5$. }\label{fig:opp_a_C}
 	\end{minipage}
 	\begin{minipage}{0.49\textwidth}
 		\centering
@@ -218,11 +219,11 @@ Exactly what $f$ is can vary. We will be studing three cases:
 		\begin{tabular}{|l|l|l|l|}
 			\hline
 			Group & Expected & Analytical   & Number  \\ \hline
-			$s*$ & 0.75 & 0.7511 & 300.5 \\ \hline
-			$i*$ & 0.0357 & 0.0360 & 14.4 \\ \hline
-			$r*$ & 0.2143 & 0.2145 & 85.8 \\ \hline
+			$s^*$ & 0.75 & 0.7511 & 300.5 \\ \hline
+			$i^*$ & 0.0357 & 0.0360 & 14.4 \\ \hline
+			$r^*$ & 0.2143 & 0.2145 & 85.8 \\ \hline
 		\end{tabular}
-		\caption{table caption goes  here}\label{tab:opp_a_C}
+		\caption{The corresponding end values for figure \ref{fig:opp_a_C}. The excpected values are derived from equation \ref{SIRS_eq}, the analytical values are the potion of the population found by RK4, and number are the total number  of people this corresponds to.}\label{tab:opp_a_C}
 	\end{minipage}
 	%	\caption{stuff}
 \end{figure}
@@ -232,7 +233,7 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	\begin{minipage}{0.49\textwidth}
 		\centering
 		\includegraphics[scale=0.6]{../plots/opp_a_D.pdf}
-		\caption{figure caption goes here}\label{fig:opp_a_D}
+		\caption{A plot of the population distribution for the SIRS-modell, for population $D$, where $a=4$, $b=4$ and $c=0.5$. }\label{fig:opp_a_D}
 	\end{minipage}
 	\begin{minipage}{0.49\textwidth}
 		\centering
@@ -240,11 +241,11 @@ Exactly what $f$ is can vary. We will be studing three cases:
 		\begin{tabular}{|l|l|l|l|}
 			\hline
 			Group & Expected & Analytical   & Number  \\ \hline
-			$s*$ & 1.0 & 0.9974 & 399.0 \\ \hline
-			$i*$ & 0.0 & 0.0006 & 0.2 \\ \hline
-			$r*$ & 0.0 & 0.0047 & 1.9 \\ \hline
+			$s^*$ & 1.0 & 0.9974 & 399.0 \\ \hline
+			$i^*$ & 0.0 & 0.0006 & 0.2 \\ \hline
+			$r^*$ & 0.0 & 0.0047 & 1.9 \\ \hline
 		\end{tabular}
-		\caption{table caption goes  here}\label{tab:opp_a_D}
+		\caption{The corresponding end values for figure \ref{fig:opp_a_D}. The excpected values are derived from equation \ref{SIRS_eq}, the analytical values are the potion of the population found by RK4, and number are the total number  of people this corresponds to.}\label{tab:opp_a_D}
 	\end{minipage}
 	%	\caption{stuff}
 \end{figure}
@@ -254,7 +255,7 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	\begin{minipage}{0.49\textwidth}
 		\centering
 		\includegraphics[scale=0.6]{../plots/opp_a_E.pdf}
-		\caption{figure caption goes here}\label{fig:opp_a_E}
+		\caption{A plot of the population distribution for the SIRS-modell, for population $E$, where $a=4$, $b=5$ and $c=0.5$. }\label{fig:opp_a_E}
 	\end{minipage}
 	\begin{minipage}{0.49\textwidth}
 		\centering
@@ -262,11 +263,11 @@ Exactly what $f$ is can vary. We will be studing three cases:
 		\begin{tabular}{|l|l|l|l|}
 			\hline
 			Group & Expected & Analytical   & Number  \\ \hline
-			$s*$ & 1.25 & 1.0034 & 401.4 \\ \hline
-			$i*$ & -0.0227 & $4.7119\cdot 10^{-11}$ & $1.9\cdot 10^{-8}$ \\ \hline
-			$r*$ & -0.2273 & $8.4064\cdot 10^{-5}$ & $3.4\cdot 10^{-2}$ \\ \hline
+			$s^*$ & 1.25 & 1.0034 & 401.4 \\ \hline
+			$i^*$ & -0.0227 & $4.7119\cdot 10^{-11}$ & $1.9\cdot 10^{-8}$ \\ \hline
+			$r^*$ & -0.2273 & $8.4064\cdot 10^{-5}$ & $3.4\cdot 10^{-2}$ \\ \hline
 		\end{tabular}
-		\caption{table caption goes  here}\label{tab:opp_a_E}
+		\caption{The corresponding end values for figure \ref{fig:opp_a_E}. The excpected values are derived from equation \ref{SIRS_eq}, the analytical values are the potion of the population found by RK4, and number are the total number  of people this corresponds to.}\label{tab:opp_a_E}
 	\end{minipage}
 	%	\caption{stuff}
 \end{figure}
@@ -274,6 +275,7 @@ Exactly what $f$ is can vary. We will be studing three cases:
 
 \subsection{Monte Carlo}
 
+Stuff
 
 \subsection{Vital dynamics}
 
@@ -282,28 +284,44 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
 	\includegraphics[scale=0.56]{../plots/opp_c_A0.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_c_A1.pdf}
+	\caption{Plots of population $A$ when accounting for vital dynamics. On the left $d_i=0$ and on the rigth $d_i=0.1$.}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{opp_c0A}
+\end{figure}
+\begin{figure}[!htb]
 	\includegraphics[scale=0.56]{../plots/opp_c_B0.pdf}
-	\includegraphics[scale=0.56]{../plots/opp_c_B1.pdf}	
+	\includegraphics[scale=0.56]{../plots/opp_c_B1.pdf}
+	\caption{Plots of population $B$ when accounting for vital dynamics. On the left $d_i=0$ and on the rigth $d_i=0.1$.}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{opp_c0B}
+\end{figure}	
+\begin{figure}[!htb]
 	\includegraphics[scale=0.56]{../plots/opp_c_C0.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_c_C1.pdf}
+	\caption{Plots of population $C$ when accounting for vital dynamics. On the left $d_i=0$ and on the rigth $d_i=0.1$.}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{opp_c0C}
+\end{figure}
+\begin{figure}[!htb]
 	\includegraphics[scale=0.56]{../plots/opp_c_D0.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_c_D1.pdf}	
-	\caption{fyll inn}
+	\caption{Plots of population $D$ when accounting for vital dynamics. On the left $d_i=0$ and on the rigth $d_i=0.1$.}
 	%Label gjør det enkelt å referere til ulike bilder.
-	\label{opp_c0}
+	\label{opp_c0D}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering 
 	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
-	\includegraphics[scale=0.56]{../plots/opp_c_k0.pdf}
-	\includegraphics[scale=0.56]{../plots/opp_c_k1.pdf}
-	%trenger kansjke ikke begge disse
-	\includegraphics[scale=0.56]{../plots/opp_c_k2.pdf}
-	\includegraphics[scale=0.56]{../plots/opp_c_k2l.pdf}	
 	\includegraphics[scale=0.56]{../plots/opp_c_k3.pdf} %kan kaskje være først?
+	\includegraphics[scale=0.56]{../plots/opp_c_k0.pdf}
+	\caption{Plots of population $A$ when accounting for vital dynamics. On the left $d_i=0.01$ and on the rigth $d_i=3$. The left $d_i$ is to low to effectively kill the entire population, while the one is too large.}
+%	\includegraphics[scale=0.56]{../plots/opp_c_k1.pdf}
+	%trenger kansjke ikke begge disse
+%	\includegraphics[scale=0.56]{../plots/opp_c_k2.pdf}
+	\includegraphics[scale=0.56]{../plots/opp_c_k2l.pdf}	
 	%mulig jeg bør splitte denne
-	\caption{fyll inn}
+	\caption{Plots of population $A$ when accounting for vital dynamics with $d_i=0.1$. Here $d_i$ is the correct size to kill the entire population. }
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{opp_c1}
 \end{figure}
@@ -314,7 +332,7 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	\includegraphics[scale=0.56]{../plots/opp_c_h_10000.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_c_h_20000.pdf}	
 	\includegraphics[scale=0.56]{../plots/opp_c_h_100000.pdf}
-	\caption{fyll inn}
+	\caption{Plots of popualtion $B$  when accounting for vital dynamics with $d_i=0.1$, and $d$ and $e$ is increased by a factor of 1000, 2000 and 10000 respectively.}
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{opp_c2}
 \end{figure}
@@ -326,12 +344,17 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	\centering 
 	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
 	\includegraphics[scale=0.56]{../plots/opp_d_A.pdf}
-	\includegraphics[scale=0.56]{../plots/opp_d_B.pdf}	
-	\includegraphics[scale=0.56]{../plots/opp_d_C.pdf}
-	\includegraphics[scale=0.56]{../plots/opp_d_D.pdf}
-	\caption{fyll inn}
+	\includegraphics[scale=0.56]{../plots/opp_d_B.pdf}
+	\caption{Plots of population $A$ in the left and $D$ on the rigth when $a$ varies with time. $A=1$ and $a0=4$.}
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{opp_d0}
+\end{figure}
+\begin{figure}[!htb]
+	\includegraphics[scale=0.56]{../plots/opp_d_C.pdf}
+	\includegraphics[scale=0.56]{../plots/opp_d_D.pdf}
+	\caption{Plots of population $B$ when $a$ varies with time. $A=2$, while $a0=4$ on the left and $a0=6$ on the rigth.}
+	%Label gjør det enkelt å referere til ulike bilder.
+	\label{opp_d1}
 \end{figure}
 
 
@@ -344,7 +367,7 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	\includegraphics[scale=0.56]{../plots/opp_e_B0.pdf}	
 	\includegraphics[scale=0.56]{../plots/opp_e_C0.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_e_D0.pdf}
-	\caption{fyll inn}
+	\caption{Plots of population $A$ to $D$ with constant vaccination $f=1$.}
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{opp_e0}
 \end{figure}
@@ -352,16 +375,16 @@ Exactly what $f$ is can vary. We will be studing three cases:
 \begin{figure}[!htb]
 	\centering 
 	%Scale angir størrelsen på bildet. Bildefilen må ligge i samme mappe som tex-filen. 
-	\includegraphics[scale=0.56]{../plots/opp_e_A1.pdf}
+%	\includegraphics[scale=0.56]{../plots/opp_e_A1.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_e_A2.pdf}
 %	\includegraphics[scale=0.56]{../plots/opp_e_A3.pdf}
-	\includegraphics[scale=0.56]{../plots/opp_e_B1.pdf}	
+%	\includegraphics[scale=0.56]{../plots/opp_e_B1.pdf}	
 	\includegraphics[scale=0.56]{../plots/opp_e_B2.pdf}	
-	\includegraphics[scale=0.56]{../plots/opp_e_C1.pdf}
+%	\includegraphics[scale=0.56]{../plots/opp_e_C1.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_e_C2.pdf}
-	\includegraphics[scale=0.56]{../plots/opp_e_D1.pdf}
+%	\includegraphics[scale=0.56]{../plots/opp_e_D1.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_e_D2.pdf}
-	\caption{fyll inn}
+	\caption{Plots of population $A$ to $D$ with linear vaccination $f=0.1 t$.}
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{opp_e1}
 \end{figure}
@@ -373,7 +396,7 @@ Exactly what $f$ is can vary. We will be studing three cases:
 	\includegraphics[scale=0.56]{../plots/opp_e_fb.pdf}	
 	\includegraphics[scale=0.56]{../plots/opp_e_fc.pdf}
 	\includegraphics[scale=0.56]{../plots/opp_e_fd.pdf}
-	\caption{fyll inn}
+	\caption{Plots of population $A$ to $D$ with a vaccination campaign from day 2 to 9, where $f=0.3$, while it's 0 the rest of the time.}
 	%Label gjør det enkelt å referere til ulike bilder.
 	\label{opp_e2}
 \end{figure}
