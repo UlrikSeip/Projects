@@ -72,9 +72,32 @@
 
 \subsection{The SIRS method}
 
+In the SIRS model we observe an isolated population of $N$ people which are divided into three separate groups:
+\begin{itemize}
+	\item $S$ for susceptible individuals, people who can become infected from the disease,
+	\item $I$ for infected individuals, people who currently have the disease,
+	\item $R$ for recovered individuals, people who no longer are sick and currently are immune to the disease.
+\end{itemize}
+The total population $N = S(t) + I(t) + R(t)$ will at least for now remain constant. An individual can move from $S$ to $I$, from $I$ to $R$, and from $R$ to $S$. The rate at which they do this will be referred to as $a$, $b$ and $c$ respectively. When an susceptible individual is in contact with an infected individual there is a chance that they become infected, while the rate of recovery and the rate of immunity loss is independent from the other groups. This can then be written as three coupled differential equations:
+\begin{align}
+S ^ { \prime } & = c R - \frac { a S I } { N } \\
+I ^ { \prime } & = \frac { a S I } { N } - b I \\
+R ^ { \prime } & = b I - c R \label{SIRS}
+\end{align}
+
+This set does not have a analytical solution, but we can easily study the equilibrium solutions. By setting \ref{SIRS} to 0 we get 
+\begin{align} 
+s ^ { * } & = \frac { b } { a }, \\ 
+i ^ { * } & = \frac { 1 - \frac { b } { a } } { 1 + \frac { b } { c } }, \\ 
+r ^ { * } & = \frac { b } { c } \frac { 1 - \frac { b } { a } } { 1 +  \frac{b}{c} }, \label{SIRS_eq}
+\end{align}
+where $s$, $i$ and $r$ denotes the fraction of people in $S$, $I$ and $R$, respectively, and $^*$ means that they are at equilibrium. These should add up to 1, and be between 0 and 1. 
+One thing we can denote from this is that we need $b < a$ for the disease to establish itself in the population. However if $b>a$ the model brakes, as $s^*$ becomes larger than 1, and $i^*$ and $r^*$ becomes less than zero. This makes sense, as this would make the rate of recovery larger than the rate of infection, and the disease wouldn't be able to spread. 
+These will serve as a good comparison for our numerical approximations. 
+
 
 \subsection{RungeKutta}
-To solve equation (sett inn her) we will first be using the 4th. order Runge Kutta method. This is a pretty standar method for solving differntial equations. One cycle of the method is
+To solve equation \ref{SIRS} we will first be using the 4th. order Runge Kutta method. This is a pretty standar method for solving differntial equations. One cycle of the method is
 \begin{align}
 k_1 &= f(t_n,y_n) \\
 k_2 &= f(t_n + \frac{\Delta t}{2},y_n + \frac{\Delta t}{2} k_1) \\
@@ -85,27 +108,51 @@ y_{n+1} &= y_n + \frac{\Delta t}{6} \left( k_1 + 2k_2 + 2k_3 + k_4 \right),
 where $y_n$ is the current step, $y_{n+1}$ is the next step, $t_n$ is the current time, $\Delta t$ is the timestep, and $f$ is the differntial equation. 
 One problem ...
 
-We will be using/looking at/observing ...
+We will be observing four different populations $A$, $B$, $C$ and $D$. All of them are of size $N = 400$, and we start with 300 susceptible individuals and 100 infected individuals. We also set $a=4$ and $c=0.5$, but $b$ will vary from 1 to 4. We will set $\Delta t = 0.01 days$ and run the simulation until the equilibrium situation has been reached. 
+
+We will also study a population $E$ where we set $b=5$ to se how this affects the situation. 
+
 
 \subsection{Monte Carlo}
 
-In the SIRS model we observe an isolated population of $N$ people which are divided into three separate groups:
-\begin{itemize}
-	\item S for susceptible individuals, people who can become infected from the disease,
-	\item I for infected individuals, people who currently have the disease,
-	\item R for recovered individuals, people who no longer are sick and currently are immune to the disease.
-\end{itemize}
 
 
 \subsection{Vital dynamics}
 
+Now that we have a basic modell we can extended it to include more details about the population and disease. First we are going to include vital dynamics, meaning death and birth rate. We let $e$ be birth rate, $d$ be death rate and $d_i$ be the death rate from the disease. We assume that individuals from all the groups can give brith, but that children born into the population are initially susceptible. This makes differential equations into 
+\begin{align} 
+S ^ { \prime } & = c R - \frac { a S I } { N } - d S + e N, \\ 
+I ^ { \prime } & = \frac { a S I } { N } - b I - d I - d _ { I } I, \\ 
+R ^ { \prime } & = b I - c R - d R.
+\end{align}
+
+We tried to base the values for $d$ and $e$ on the death and birth rate in Norway. From (kilde) we find that these become $d=0.00002242299$ and $e=0.00002948891$ per day. We applied these to the populations $A$, $B$, $C$ and $D$, and observed how these were affected by setting $d_i=0$ and $d_i=0.1$. We then tried different values for $d_i$ on population $A$ to see if these would result in the entire population dying. Finally, as the values of $d$ and $e$ we found are quite low, we tried seeing how population $B$ would be affected by increasing these by a factor of 1000, 2000 and 10000. 
+
 
 \subsection{Seasonal Variation}
+
+Another concept we can study is seasonal variations in the infection rate. Certian diseases, such as influenza, have a large variance in infection rate based on the time of year. This can be modeled by setting $a$ to be
+\begin{align}
+a ( t ) = A \cos ( \omega t ) + a _ { 0 },
+\end{align}
+where $a0$ is the average transmission rate, $A$ is the maximum deviation from $a_0$, and $\omega$ is the frequency of oscillation. We set $\omega = 2 \pi/365.25$ so that $a$ would have a variance of a year, like most diseases. Fist we set $A=1$ and $a0=4$ for population $A$ and $D$. Then we observed population $B$, and set $A=2$, and $a0=4$ and $6$. 
 
 
 \subsection{Vaccination}
 
+For many diseases a vaccine gets developed. A vaccine causes an susceptible individual to become immune, effectively moving them to the recovered group. We assume that the rate of vaccination $f$ is independent from how many people already have been vaccinated, but that it can vary with time. We also assume that vaccinated individuals loose their immunity at the same rate as people who have recovered from the disease. The differential equations then becomes
+\begin{align} 
+S ^ { \prime } & = c R - \frac { a S I } { N } - d S -f, \\ 
+I ^ { \prime } & = \frac { a S I } { N } - b I , \\ 
+R ^ { \prime } & = b I - c R + f.
+\end{align}
 
+Exactly what $f$ is can vary. We will be studing three cases:
+\begin{itemize}
+	\item Constant $f$, meaning $f = f_c S$, where $f_c$ is some constant. We sat $f_c = 1$ for population $A$, $B$, $C$ and $D$.
+	\item Linear $f$, meaning $f = (t \cdot f_l + f_0) \cdot I$, where $f_0$ is the initial value of $f$, and $f_l$ is the rate at which $f$ increases with time. We sat $f_0 = 0$ and $f_l = 0.01$ for population $A$, $B$, $C$ and $D$.
+	\item Vaccination campaign $f$. This method is meant to modell a how many governments respond to an outbreak of an epidemic, by distributing vaccines during a certian time period, often called an vaccination campaign. This can be written as $f = f_c S$ if $t \in [t_0,t_1]$ and $f = f_n S$ if $t \notin [t_0,t_1]$, where $f_c >> f_n$. We sat $f_n=0$, $f_c=0.3$, $t_0=2$ and $t_1=9$ for population $A$, $B$, $C$ and $D$. 
+\end{itemize}
 
 \section{RESULTS}
 
