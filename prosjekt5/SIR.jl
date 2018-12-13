@@ -132,3 +132,38 @@ function f_campaign(t,fvar)
         return f0
     end
 end
+
+function dSall(t,S,var)
+    """
+    A function that finds the change in susceptible individuals in the SIRS
+    model, when acounting for all the things.
+    """
+    c,R,A,a0,om,I,N,d,e,f_funk,fvar = var
+    a = da(A,a0,om,t)
+    f = f_funk(t,fvar)
+    s = c*R - a*S*I/N - d*S + e*N - f*S
+    return s
+end
+
+function dIall(t,I,var)
+    """
+    A function that finds the change in infected individuals in the SIRS
+    model, when acounting for all the things.
+    """
+    A,a0,om,S,N,b,d,di = var
+    a = da(A,a0,om,t)
+    i =  a*S*I/N - b*I - d*I - di*I
+    return i
+end
+
+function dRall(t,R,var)
+    """
+    A function that finds the change in recovered individuals in the SIRS
+    model, when acounting for all the things.
+    """
+    c,I,b,d,S,f_funk,fvar = var
+    f = f_funk(t,fvar)
+    r = b*I - c*R - d*R + f*S
+    return r
+end
+
