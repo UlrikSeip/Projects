@@ -129,7 +129,7 @@ I ^ { \prime } & = \frac { a S I } { N } - b I - d I - d _ { I } I, \\
 R ^ { \prime } & = b I - c R - d R.
 \end{align}
 
-We tried to base the values for $d$ and $e$ on the death and birth rate in Norway. From (kilde) we find that these become $d=0.00002242299$ and $e=0.00002948891$ per day. We applied these to the populations $A$, $B$, $C$ and $D$, and observed how these were affected by setting $d_i=0$ and $d_i=0.1$. We then tried different values for $d_i$ on population $A$ to see if these would result in the entire population dying. Finally, as the values of $d$ and $e$ we found are quite low, we tried seeing how population $B$ would be affected by increasing these by a factor of 1000, 2000 and 10000. 
+We tried to base the values for $d$ and $e$ on the death and birth rate in Norway. It can be shown that these become $d=0.00002242299$ and $e=0.00002948891$ per day  (\cite{wiki-d.rate}, \cite{ssb-f.rate}, \cite{wb-bef}). We applied these to the populations $A$, $B$, $C$ and $D$, and observed how these were affected by setting $d_i=0$ and $d_i=0.1$. We then tried different values for $d_i$ on population $A$ to see if these would result in the entire population dying. Finally, as the values of $d$ and $e$ we found are quite low, we tried seeing how population $B$ would be affected by increasing these by a factor of 1000, 2000 and 10000. 
 
 
 \subsubsection{Seasonal Variation}
@@ -425,8 +425,14 @@ All the calculations were done using the programing language Julia. The programs
 	
 %\section{REFERENCES}
 \begin{thebibliography}{9}
-	\bibitem{lecture notes}
-	Computational Physics, Lecture Notes Fall 2015, Morten Hjort-Jensen p. 419-424
+%	\bibitem{lecture notes}
+%	Computational Physics, Lecture Notes Fall 2015, Morten Hjort-Jensen p. 419-424
+	\bibitem{wiki-d.rate}
+	\url{https://en.wikipedia.org/wiki/List_of_sovereign_states_and_dependent_territories_by_mortality_rate}
+	\bibitem{ssb-f.rate}
+	\url{https://www.ssb.no/fodte/}
+	\bibitem{wb-bef}
+	\url{https://data.worldbank.org/indicator/SP.POP.TOTL?end=2017&start=2015&year_high_desc=true}
 \end{thebibliography}
 
 
