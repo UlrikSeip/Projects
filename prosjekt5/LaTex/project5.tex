@@ -72,7 +72,8 @@
 
 \subsection{The SIRS method}
 
-In the SIRS model we observe an isolated population of $N$ people which are divided into three separate groups:
+In the SIRS model we observe an isolated population of $N$ people which are divided into three separate groups:
+
 \begin{itemize}
 	\item $S$ for susceptible individuals, people who can become infected from the disease,
 	\item $I$ for infected individuals, people who currently have the disease,
@@ -96,7 +97,7 @@ One thing we can denote from this is that we need $b < a$ for the disease to est
 These will serve as a good comparison for our numerical approximations. 
 
 
-\subsection{RungeKutta}
+\subsection{Runge Kutta}
 To solve equation \ref{SIRS} we will first be using the 4th. order Runge Kutta method. This is a pretty standar method for solving differntial equations. One cycle of the method is
 \begin{align}
 k_1 &= f(t_n,y_n) \\
@@ -115,11 +116,13 @@ We will also study a population $E$ where we set $b=5$ to se how this affects th
 
 \subsection{Monte Carlo}
 
+\subsection{Improving the modell}
 
+Now that we have a basic modell we can extended it to include more details about the population and disease. Following are three different methods (?) that can improve the modell to make it more realistic. (We are going to implemet them independently at first, but then we are going to attempt to include all of them at the same time).
 
-\subsection{Vital dynamics}
+\subsubsection{Vital dynamics}
 
-Now that we have a basic modell we can extended it to include more details about the population and disease. First we are going to include vital dynamics, meaning death and birth rate. We let $e$ be birth rate, $d$ be death rate and $d_i$ be the death rate from the disease. We assume that individuals from all the groups can give brith, but that children born into the population are initially susceptible. This makes differential equations into 
+First we are going to include vital dynamics, meaning death and birth rate. This can be usefull if we are going to modell a population over a longer time period. We let $e$ be birth rate, $d$ be death rate and $d_i$ be the death rate from the disease. We assume that individuals from all the groups can give brith, but that children born into the population are initially susceptible. This makes differential equations into 
 \begin{align} 
 S ^ { \prime } & = c R - \frac { a S I } { N } - d S + e N, \\ 
 I ^ { \prime } & = \frac { a S I } { N } - b I - d I - d _ { I } I, \\ 
@@ -129,7 +132,7 @@ R ^ { \prime } & = b I - c R - d R.
 We tried to base the values for $d$ and $e$ on the death and birth rate in Norway. From (kilde) we find that these become $d=0.00002242299$ and $e=0.00002948891$ per day. We applied these to the populations $A$, $B$, $C$ and $D$, and observed how these were affected by setting $d_i=0$ and $d_i=0.1$. We then tried different values for $d_i$ on population $A$ to see if these would result in the entire population dying. Finally, as the values of $d$ and $e$ we found are quite low, we tried seeing how population $B$ would be affected by increasing these by a factor of 1000, 2000 and 10000. 
 
 
-\subsection{Seasonal Variation}
+\subsubsection{Seasonal Variation}
 
 Another concept we can study is seasonal variations in the infection rate. Certian diseases, such as influenza, have a large variance in infection rate based on the time of year. This can be modeled by setting $a$ to be
 \begin{align}
@@ -138,7 +141,7 @@ a ( t ) = A \sin ( \omega t ) + a _ { 0 },
 where $a0$ is the average transmission rate, $A$ is the maximum deviation from $a_0$, and $\omega$ is the frequency of oscillation. We set $\omega = 2 \pi/365.25$ so that $a$ would have a variance of a year, like most diseases. Fist we set $A=1$ and $a0=4$ for population $A$ and $D$. Then we observed population $B$, and set $A=2$, and $a0=4$ and $6$. 
 
 
-\subsection{Vaccination}
+\subsubsection{Vaccination}
 
 For many diseases a vaccine gets developed. A vaccine causes an susceptible individual to become immune, effectively moving them to the recovered group. We assume that the rate of vaccination $f$ is independent from how many people already have been vaccinated, but that it can vary with time. We also assume that vaccinated individuals loose their immunity at the same rate as people who have recovered from the disease. The differential equations then becomes
 \begin{align} 
@@ -149,10 +152,13 @@ R ^ { \prime } & = b I - c R + f.
 
 Exactly what $f$ is can vary. We will be studing three cases:
 \begin{itemize}
-	\item Constant $f$, meaning $f = f_c S$, where $f_c$ is some constant. We sat $f_c = 1$ for population $A$, $B$, $C$ and $D$.
-	\item Linear $f$, meaning $f = (t \cdot f_l + f_0) \cdot I$, where $f_0$ is the initial value of $f$, and $f_l$ is the rate at which $f$ increases with time. We sat $f_0 = 0$ and $f_l = 0.01$ for population $A$, $B$, $C$ and $D$.
+	\item Constant $f$, meaning $f = f_c S$, where $f_c$ is some constant. We sat $f_c = 1$ for population $A$, $B$, $C$ and $D$. For some diseases a vaccine is offered to children at a specific age, which would constitute a constant vaccination rate. However, these vaccines usally induce a permanent or a long lasting immunity, so this method migth not fit well with our modell.
+	\item Linear $f$, meaning $f = (t \cdot f_l + f_0) \cdot I$, where $f_0$ is the initial value of $f$, and $f_l$ is the rate at which $f$ increases with time. We sat $f_0 = 0$ and $f_l = 0.01$ for population $A$, $B$, $C$ and $D$. 
+	This is meant to modell that as awareness and medical research increases, more people take the vaccine and the vaccine becomes more effective. If having this increase linearly is the most realistic way is unknown, but we assume it's a good approximation. By setting $f_0 = 0$ we start the simmualtion at the point when vaccination starts.
 	\item Vaccination campaign $f$. This method is meant to modell a how many governments respond to an outbreak of an epidemic, by distributing vaccines during a certian time period, often called an vaccination campaign. This can be written as $f = f_c S$ if $t \in [t_0,t_1]$ and $f = f_n S$ if $t \notin [t_0,t_1]$, where $f_c >> f_n$. We sat $f_n=0$, $f_c=0.3$, $t_0=2$ and $t_1=9$ for population $A$, $B$, $C$ and $D$. 
 \end{itemize}
+
+\subsection{more monte carlo}
 
 \section{RESULTS}
 

@@ -90,4 +90,4 @@ function MC_sol(a,b,c,S0,I0,R0,T,sims,filename)
     plt.show()
 end
 
-MC_sol(4, 1, 0.5, 300, 100, 0, 20, 10, "b.pdf")
+MC_sol(4, 1, 0.5, 300, 100, 0, 20, 1e3, "b.pdf")
