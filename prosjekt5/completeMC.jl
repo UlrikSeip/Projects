@@ -18,18 +18,19 @@ function getf(t, f0, F, omegaf)
     F*cos(omegaf*t) + f0
 end
 
-function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sims, filename)
+function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sims, filename, dt = 0)
     """
-    Takes the inputs rate of transmission a, rate of recovery b, rate of
-    immunity loss c, initial values of susceptible, infected and 
-    recovered individuals, S0, I0 and R0 respectively, the total simulation
-    time T in days, the timestep dt, and file filename.
+    Takes the inputs rate of transmission a0, variance in transmission A, frequency of transmission function omega,
+    rate of recovery b, rate of immunity loss c, rate of death d, rate of death by sickness di, rate of birth bi,
+    rate of vaccination f0, variance in vaccination F, frequency of variance in vaccination omegaF,
+    initial values of susceptible , infected and recovered individuals, S0, I0 and R0 respectively,
+    the total simulation time T in days, and file filename. Can allso take a custom dt.
     Plots the resulting arrays and saves the file as filename.
     """
     a = geta(0, a0, A, omega)
     N0 = S0+I0+R0 #the total population
     tmins = [4/(a*N0), 1/(b*N0), 1/c*N0]
-    dt = minimum(tmins)
+    dt == 0 ? dt = minimum(tmins) : dt = dt
     t = 0:dt:T+dt #an array of timesteps
     nts = length(t) #number of timesteps
     Ns = []
@@ -69,50 +70,49 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sim
     @time Ravg, Rstd = statisticsinator(Rs)
 
     #prints and plots the results
+    is = (-(b/a)+1)/(1 + (b/c))
     rs = (b/c)*(1-(b/a))/(1 + (b/c))
 
-    print("Final tally: N=")
-    println(Savg[end]+Iavg[end]+Ravg[end])
-    print("Expected: ")
-    print("S=" * string(b/a) * ", I="*string((-(b/a)+1)/(1 + (b/c))))
-    println(", R=" * string(rs))
-    print("Found: S=" * string(Savg[end]/Navg[end]) * ", I=" * string(Iavg[end]/Navg[end]))
-    println(", R=" * string(Ravg[end]/Navg[end])* ".")
-    print("Number: S=" * string(Savg[end]) * ", I=" * string(Iavg[end]))
-    println(", R=" * string(Ravg[end])* ".")
-    #print("Total dec, D=")
-    #println(D[end])
+
+    println("Final tally: N=$(sum(Savg[end]+Iavg[end]+Ravg[end]))")
+    println("Expected: S=$(b/a), I=$is, R=$rs")
+    println("Found: S=$(Savg[end]/Navg[end]), I=$(Iavg[end]/Navg[end]), R=$(Ravg[end]/Navg[end])")
+    println("Number: S=$(Savg[end]), I=$(Iavg[end]), R=$(Ravg[end])")
     println("Standard deviations: S=$Sstd, I=$Istd, R=$Rstd")
     println()
     plt.plot(t,Savg)
     plt.plot(t,Iavg)
     plt.plot(t,Ravg)
-    #plt.plot(t,D)
-    #plt.plot(t,N)
     plt.grid()
     plt.legend(["Susceptible", "Infected", "Recovered", "Total"]) #"Dead",
     plt.xlabel("Days")
     plt.ylabel("People")
-    #plt.savefig("C:\\Users\\Bendik\\Documents\\GitHub\\Projects\\prosjekt5\\plots/"*filename)
-    #plt.savefig("/plots/"*filename)
+    plt.savefig(filename)
     plt.show()
 end
 
 a0 = 4              #lingerling chem trails
 A = 3               #set A = 0 to disable oscillator (size of chem trails)
-omega = 1/100       #frequency of chem-trails
-b = 0.5             #effectiveness of healing crystals
+omega = 2*pi/360    #frequency of chem-trails
+b = 1               #effectiveness of healing crystals
 c = 0.5             #levels of atheism
-d = 0.00002242299
-di = 0
-bi = 0.00002948891
-f0 = 0.001           #f = 0 for effective anti-vac campaigns
-F = 1
-omegaf = 1/364
+d = 0.00002242299   #government abductions
+di = 0              #rate of purge
+bi = 0.00002948891  #newborn heathens
+f0 = 0.0001         #f = 0 for effective anti-vac campaigns
+F = 1   
+omegaf = 2*pi/364
 S0 = 300            
 I0 = 100
 R0 = 0
 T = 1000
 sims = 1000
+dt = 1e-3
 
-MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sims, "MC.pdf")
+filename = "$a0 $A $omega $b $c $d $di $bi $f0 $F $omegaf $S0 $I0 $R0 $T $sims $dt.pdf"
+
+if dt == "auto"
+    dt = 0
+end
+
+MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sims, filename, dt)
