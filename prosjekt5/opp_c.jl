@@ -76,6 +76,7 @@ d =  0.00002242299
 di = 0
 e =  0.00002948891
 
+#=
 #generic models with d,e and di
 ODE_sol(4,1,0.5,d,di,e, 300,100,0, 15,.01, "opp_c_A0.pdf")
 ODE_sol(4,1,0.5,d,0.1,e, 300,100,0, 25,.01, "opp_c_A1.pdf")
@@ -85,14 +86,14 @@ ODE_sol(4,3,0.5,d,di,e, 300,100,0, 35,.01, "opp_c_C0.pdf")
 ODE_sol(4,3,0.5,d,.1,e, 300,100,0, 35,.01, "opp_c_C1.pdf")
 ODE_sol(4,4,0.5,d,di,e, 300,100,0, 27,.01, "opp_c_D0.pdf")
 ODE_sol(4,4,0.5,d,.1,e, 300,100,0, 27,.01, "opp_c_D1.pdf")
-
+=#
 #different attempts to kill the entire population
-ODE_sol(4,1,0.5, d,3,e, 300,100,0, 50,.01, "opp_c_k0.pdf")
-ODE_sol(4,1,0.5, d,5,e, 300,100,0, 50,.01, "opp_c_k1.pdf")
-ODE_sol(4,1,0.5, d,.1,e, 300,100,0, 50,.01, "opp_c_k2.pdf")
-ODE_sol(4,1,0.5, d,.1,e, 300,100,0, 350,.01, "opp_c_k2l.pdf")
-ODE_sol(4,1,0.5, d,.01,e, 300,100,0, 50,.01, "opp_c_k3.pdf")
-
+#ODE_sol(4,1,0.5, d,3,e, 300,100,0, 60,.01, "opp_c_k0.pdf")
+#ODE_sol(4,1,0.5, d,5,e, 300,100,0, 50,.01, "opp_c_k1.pdf")
+#ODE_sol(4,1,0.5, d,.1,e, 300,100,0, 50,.01, "opp_c_k2.pdf")
+#ODE_sol(4,1,0.5, d,.1,e, 300,100,0, 350,.01, "opp_c_k2l.pdf")
+ODE_sol(4,1,0.5, d,.01,e, 300,100,0, 350,.01, "opp_c_k3.pdf")
+#=
 #the growth when d and e are larger
 mod = 1e3
 ODE_sol(4,2,0.5, d*mod,.05,e*mod, 300,100,0, 50,.01, "opp_c_h_"*string(mod)*".pdf")
@@ -100,4 +101,5 @@ mod = 2e3
 ODE_sol(4,2,0.5, d*mod,.05,e*mod, 300,100,0, 50,.01, "opp_c_h_"*string(mod)*".pdf")
 mod = 1e4
 ODE_sol(4,2,0.5, d*mod,.05,e*mod, 300,100,0, 50,.01, "opp_c_h_"*string(mod)*".pdf")
-
+=#
+#ODE_sol(4,2,0.5,d,di,e, 300,100,0, 365.25*10,.01, "opp_c_B0.pdf")
