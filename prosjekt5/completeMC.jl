@@ -1,4 +1,3 @@
-include("SIR.jl")
 include("MC_SIR_step.jl")
 include("utils.jl")
 println("Importing things")
@@ -18,7 +17,7 @@ function getf(t, f0, F, omegaf)
     F*cos(omegaf*t) + f0
 end
 
-function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sims, filename, dt = 0)
+function MC_sol(a0, A, omega, b, c, d, di, bi, f0, df, F, omegaf, S0, I0, R0, T, sims, filename, dt = 0, antivac = false)
     """
     Takes the inputs rate of transmission a0, variance in transmission A, frequency of transmission function omega,
     rate of recovery b, rate of immunity loss c, rate of death d, rate of death by sickness di, rate of birth bi,
@@ -31,6 +30,7 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sim
     N0 = S0+I0+R0 #the total population
     tmins = [4/(a*N0), 1/(b*N0), 1/c*N0]
     dt == 0 ? dt = minimum(tmins) : dt = dt
+    println(dt)
     t = 0:dt:T+dt #an array of timesteps
     nts = length(t) #number of timesteps
     Ns = []
@@ -49,7 +49,14 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sim
         @inbounds for q = 1:length(t)-1
             #new a in case of oscillation
             a = geta(t[q], a0, A, omega)
-            f = getf(t[q], f0, F, omegaf)
+            f = getf(t[q], f0+(t[q]*df), F, omegaf)
+            if antivac
+                if I[q] < 5
+                    f = 0
+                    f0 = 0
+                    df = 0
+                end
+            end
             #finds the new values for S,I,R and N
             s, i, r = mcStep(A, omega, t[q], a0, b, c, d, di, bi, f, S[q], I[q], R[q], N[q], dt)
             push!(N,s+i+r)
@@ -62,7 +69,7 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sim
         push!(Is, I)
         push!(Rs, R)
     end
-    
+    """
     println("Extracting data")
     @time Navg, Nstd = statisticsinator(Ns)
     @time Savg, Sstd = statisticsinator(Ss)
@@ -80,6 +87,7 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sim
     println("Number: S=$(Savg[end]), I=$(Iavg[end]), R=$(Ravg[end])")
     println("Standard deviations: S=$Sstd, I=$Istd, R=$Rstd")
     println()
+    plt.figure()
     plt.plot(t,Savg)
     plt.plot(t,Iavg)
     plt.plot(t,Ravg)
@@ -88,31 +96,32 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sim
     plt.xlabel("Days")
     plt.ylabel("People")
     plt.savefig(filename)
-    plt.show()
+    #plt.show()
+    """
 end
 
-a0 = 4              #lingerling chem trails
-A = 3               #set A = 0 to disable oscillator (size of chem trails)
-omega = 2*pi/360    #frequency of chem-trails
-b = 1               #effectiveness of healing crystals
-c = 0.5             #levels of atheism
-d = 0.00002242299   #government abductions
-di = 0              #rate of purge
-bi = 0.00002948891  #newborn heathens
-f0 = 0.0001         #f = 0 for effective anti-vac campaigns
-F = 1   
-omegaf = 2*pi/364
+a0 = 4                         #lingerling chem trails
+A = 0                          #A = 0 to disable oscillator (size of chem trails)
+omega = 2*pi/360.25            #frequency of chem-trails
+b = 1                          #effectiveness of healing crystals
+c = 0.5                          #levels of atheism
+d = 0 #0.00002242299              #government abductions
+di = 0                         #rate of purge
+bi = 0 #0.00002948891             #newborn heathens
+f0 = 0                         #f = 0 for effective anti-vac campaigns
+df = 0                         #
+F = 0                          #
+omegaf = 2*pi/365.25
 S0 = 300            
 I0 = 100
 R0 = 0
-T = 1000
-sims = 1
-dt = 1e-3
-
-filename = "$a0 $A $omega $b $c $d $di $bi $f0 $F $omegaf $S0 $I0 $R0 $T $sims $dt.pdf"
+T = 356.25*5
+sims = 1000
+dt = "auto"
+antivac = false
+filename = "opp_a_E_MC.pdf"#$a0 $A $omega $b $c $d $di $bi $f0 $F $omegaf $S0 $I0 $R0 $T $sims $dt.pdf"
 
 if dt == "auto"
     dt = 0
 end
-
-MC_sol(a0, A, omega, b, c, d, di, bi, f0, F, omegaf, S0, I0, R0, T, sims, filename, dt)
+MC_sol(a0, A, omega, b, c, d, di, bi, f0, df, F, omegaf, S0, I0, R0, T, sims, filename, dt, antivac)
