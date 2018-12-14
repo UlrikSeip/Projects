@@ -58,24 +58,24 @@ function main(A,a0,om,b,c,d,di,e,f_funk,fvar,S0,I0,R0,T,dt,filename)
 end
 
 
-a0 = 4              #lingerling chem trails
+a0 = 6              #lingerling chem trails
 A = 3               #set A = 0 to disable oscillator (size of chem trails)
 om = 2*pi/356.25 #frequency of chem-trails
 b = 1               #effectiveness of healing crystals, pop A
 c = 0.5             #levels of atheism
 d =  0.00002242299  #natural death rate
-di = 0.000         #disease death rate
+di = 0.000          #disease death rate
 e =  0.00002948891  #birth rate
 f0 = 0.00           #f = 0 for effective anti-vac campaigns
-Df = 0.0001
+Df = 0.001
 fvar = [f0,Df]
 S0 = 300            
 I0 = 100
 R0 = 0
-T = 365.25*1.5
+T = 365.25*5
 dt = 0.01
 
-main(A,a0,om,b,c,d,di,e,df,fvar,S0,I0,R0,25,dt,"RK4_comp.pdf")
-main(A,a0,om,b,c,d,di,e,df,fvar,S0,I0,R0,100,dt,"RK4_comp.pdf")
+#main(A,a0,om,b,c,d,di,e,df,fvar,S0,I0,R0,25,dt,"RK4_comp.pdf")
+#main(A,a0,om,b,c,d,di,e,df,fvar,S0,I0,R0,100,dt,"RK4_comp.pdf")
 main(A,a0,om,b,c,d,di,e,df,fvar,S0,I0,R0,T,dt,"RK4_comp.pdf")
 
