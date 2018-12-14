@@ -10,14 +10,14 @@ const threads = Sys.CPU_THREADS
 Threads.nthreads() = threads
 
 function geta(t, a0, A, omega)
-    return A*cos(omega*t) + a0
+    return A*sin(omega*t) + a0
 end
 
 function getf(t, f0, F, omegaf)
-    F*cos(omegaf*t) + f0
+    F*sin(omegaf*t) + f0
 end
 
-function MC_sol(a0, A, omega, b, c, d, di, bi, f0, df, F, omegaf, S0, I0, R0, T, sims, filename, dt = 0, antivac = false)
+function MC_sol(a0, A, omega, b, c, d, di, bi, f0, ft0, ft1, df, F, omegaf, S0, I0, R0, T, sims, filename, dt = 0, antivac = false, camp = false)
     """
     Takes the inputs rate of transmission a0, variance in transmission A, frequency of transmission function omega,
     rate of recovery b, rate of immunity loss c, rate of death d, rate of death by sickness di, rate of birth bi,
@@ -30,7 +30,6 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, df, F, omegaf, S0, I0, R0, T,
     N0 = S0+I0+R0 #the total population
     tmins = [4/(a*N0), 1/(b*N0), 1/c*N0]
     dt == 0 ? dt = minimum(tmins) : dt = dt
-    println(dt)
     t = 0:dt:T+dt #an array of timesteps
     nts = length(t) #number of timesteps
     Ns = []
@@ -50,6 +49,12 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, df, F, omegaf, S0, I0, R0, T,
             #new a in case of oscillation
             a = geta(t[q], a0, A, omega)
             f = getf(t[q], f0+(t[q]*df), F, omegaf)
+            if camp
+                f = 0
+                if t[q] > ft0 && t[q] < ft1
+                    f = f0
+                end
+            end
             if antivac
                 if I[q] < 5
                     f = 0
@@ -69,7 +74,7 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, df, F, omegaf, S0, I0, R0, T,
         push!(Is, I)
         push!(Rs, R)
     end
-    """
+
     println("Extracting data")
     @time Navg, Nstd = statisticsinator(Ns)
     @time Savg, Sstd = statisticsinator(Ss)
@@ -97,31 +102,31 @@ function MC_sol(a0, A, omega, b, c, d, di, bi, f0, df, F, omegaf, S0, I0, R0, T,
     plt.ylabel("People")
     plt.savefig(filename)
     #plt.show()
-    """
+
 end
 
 a0 = 4                         #lingerling chem trails
-A = 0                          #A = 0 to disable oscillator (size of chem trails)
-omega = 2*pi/360.25            #frequency of chem-trails
+A = 2                          #A = 0 to disable oscillator (size of chem trails)
+omega = 2*pi/365.25            #frequency of chem-trails
 b = 1                          #effectiveness of healing crystals
-c = 0.5                          #levels of atheism
-d = 0 #0.00002242299              #government abductions
-di = 0                         #rate of purge
-bi = 0 #0.00002948891             #newborn heathens
-f0 = 0                         #f = 0 for effective anti-vac campaigns
-df = 0                         #
-F = 0                          #
+c = 0.5                        #levels of atheism
+d = 0.00002242299              #government abductions
+di = 0                       #rate of purge
+bi = 0.00002948891             #newborn heathens
+f0 = 0                       #f = 0 for effective anti-vac campaigns
+df = 0                         
+ft0 = 2
+ft1 = 9
+F = 0                          
 omegaf = 2*pi/365.25
 S0 = 300            
 I0 = 100
 R0 = 0
-T = 356.25*5
+T = 356.25*2
 sims = 1000
-dt = "auto"
+dt = 0
 antivac = false
-filename = "opp_a_E_MC.pdf"#$a0 $A $omega $b $c $d $di $bi $f0 $F $omegaf $S0 $I0 $R0 $T $sims $dt.pdf"
+camp = false
+filename = "opp_d_C_MC.pdf"
 
-if dt == "auto"
-    dt = 0
-end
-MC_sol(a0, A, omega, b, c, d, di, bi, f0, df, F, omegaf, S0, I0, R0, T, sims, filename, dt, antivac)
+MC_sol(a0, A, omega, b, c, d, di, bi, f0, ft0, ft1, df, F, omegaf, S0, I0, R0, T, sims, filename, dt, antivac, camp)
