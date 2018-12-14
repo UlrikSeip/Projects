@@ -106,7 +106,7 @@ S0 = 300
 I0 = 100
 R0 = 0
 T = 1000
-sims = 1000
+sims = 1
 dt = 1e-3
 
 filename = "$a0 $A $omega $b $c $d $di $bi $f0 $F $omegaf $S0 $I0 $R0 $T $sims $dt.pdf"
